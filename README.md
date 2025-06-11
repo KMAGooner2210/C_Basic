@@ -288,3 +288,299 @@ int main() {
     return x * x;
  }
  ```
+</details> 
+
+<details>
+	<summary><strong>PHẦN 2: Mảng và chuỗi</strong></summary>
+
+## **PHẦN 2: Mảng và chuỗi**
+
+### **1.Mảng**
+
+#### **1.1.Định nghĩa:** 
+
+  * Mảng là một tập hợp các phần tử cùng kiểu dữ liệu, được lưu trữ liên tiếp trong bộ nhớ
+
+  * Mỗi phần tử trong mảng được truy cập thông qua **chỉ số(index)**, bắt đầu từ 0 
+  
+#### **1.2.Khai báo và khởi tạo:**
+
+  * Cú pháp khai báo
+  ```
+  kiểu_dữ_liệu tên_mảng[kích_thước];
+  ```
+  ```
+  VD: int arr[5];
+  ```
+  
+  * Khởi tạo
+  ```
+  Khởi tạo trực tiếp :
+  int arr[5]={1, 2, 3, 4, 5};
+
+  Khởi tạo một phần (các phần tử còn lại mặc định là 0):
+  int arr[5]={1, 2}; // arr = {1, 2, 0, 0, 0}
+
+  Không chỉ định kích thước (trình biên dịch tự suy ra):
+  int arr[]={1, 2, 3, 4, 5}; //Tự động là arr[5]
+
+  ```
+
+   * Truy cập phần tử
+   ```
+   Sử dụng chỉ số truy cập
+   arr[0]; //phần tử đầu tiên
+   arr[4]; //phần tử cuối cùng (kích thước = 5)
+
+
+   ```
+#### **1.4.Mảng đa chiều:**
+
+   * Mảng đa chiều là mảng của các mảng, thường dùng để biểu diễn ma trận hoặc dữ liệu dạng lưới
+
+   * Khai báo
+
+   ```
+   kiểu_dữ_liệu tên_mảng[số_hàng][số_cột];
+   ```
+   ```
+   int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
+   ```
+   * Truy cập
+
+   ```
+   matrix[0][0]; // phần tử hàng 0, cột 0 (giá trị 1)
+   matrix[1][2]; // phần tử hàng 1, cột 2 (giá trị 6)
+   ```
+
+   * Khởi tạo từng hàng
+   
+   ```
+   int matrix[2][3] = {
+     {1, 2, 3},  // Hàng 0
+     {4, 5, 6}   // Hàng 1
+   }
+   ```
+   
+#### **1.5.Lưu trữ trong bộ nhớ:**
+
+   * Mảng được lưu trữ liên tiếp trong bộ nhớ,giúp truy cập nhanh qua chỉ số_cột
+
+   * Với mảng đa chiều, các phần tử được lưu theo **row-major order (ưu tiên hàng): các phần tử của hàng 0 được lưu trước, tiếp theo là hàng 1**
+
+#### **1.6.Ứng dụng:**
+
+   * Lưu trữ danh sách dữ liệu 
+
+   * Xử lý ma trận trong đồ họa, toán học, hoặc xử lý dữ liệu
+
+   * Tối ưu hóa bộ nhớ
+
+#### **1.7.Lưu ý:**
+
+   * **Kích thước mảng** phải là hằng số tại thời điểm biên dịch (trừ mảng động được cấp phát bằng `malloc`)
+
+   * **Truyền mảng vào hàm:** Mảng được truyền dưới dạng con trỏ, hàm nhận địa chỉ của phần tử đầu tiên
+
+   ```
+   void print_array(int arr[], int size){
+     for(int i = 0; i < size; i++){
+       printf("%d", arr[i]);
+     }
+   }
+
+   ``` 
+
+### **2.Chuỗi**
+
+#### **2.1.Định nghĩa**
+
+   * Chuỗi trong C là một mảng ký tự (char) kết thúc bằng ký tự null(`\0`),đánh dấu điểm kết thúc của Chuỗi
+
+   * Chuỗi được sử dụng để lưu trữ văn bản hoặc dữ liệu dạng ký tự 
+
+#### **2.2.Khai báo và khởi tạo**
+
+   * **Khai báo chuỗi:**
+   
+    char str[] = "Hello"; \\tự động thêm \0
+  ◦ Kích thước thực tế là `strlen(str) + 1` bao gồm `\0`
+
+   * **Khai báo mảng ký tự:**
+
+    char str[6] = {'H','e','l','l','o','\0'};
+
+   * **Khai báo với kích thước rõ ràng:**
+
+    char str[10] = "Hello"; //Các phần tử còn lại là \0
+
+#### **2.3.Thư viện <string.h>**  
+
+   * **strlen(str)** :Trả về độ dài chuỗi (không tính `\0`)
+   ```
+   char str[] = "Hello";
+   printf("%lu\n", strlen(str)); //In 5
+   ```
+
+   * **strcpy(dest, src)** : Sao chép chuỗi `src` (bao gồm `\0`) vào `dest`
+   ```
+   char dest[10];
+   strcpy(dest, "Hello");
+   prinf("%s\n", dest);  // In Hello
+   ```
+
+   * **strcat(dest, src)** : Nối chuỗi `src` vào cuối chuỗi `dest` (đảm bảo `dest` đủ lớn)
+
+   ```
+   char dest[10] = "Hello";
+   strcat(dest, "!");
+   printf("%s\n", dest); //In Hello!
+   ```
+
+   * **strcmp(str1, str2)** : So sánh 2 Chuỗi
+
+   ◦  Trả về `0` nếu bằng nhau
+
+   ◦  Trả về `<0` nếu `str1 < str2` (theo thứ tự từ điển)
+
+   ◦  Trả về `>0` nếu `str1 > str2`
+   ```
+   char str1[] = "apple";
+   char str2[] = "banana";
+   printf("%d\n", strcmp(str1, str2)); // In <0 (apple < banana)
+
+   ```
+   * **strncmp(str1, str2, n):** So sánh n ký tự đầu
+
+   * **strchr(str, c):** Tìm ký tự c đầu tiên trong Chuỗi
+
+   * **strstr(str, substr):** Tìm chuỗi con `substr` trong `str`
+
+
+#### **2.4.Nhập/xuất chuỗi**  
+
+   * **Nhập chuỗi:**
+
+   ◦ Sử dụng `scanf`
+
+   ```
+   char str[100];
+   scanf("%s", str);  //Không cần &str, chỉ đọc đến dấu cách 
+   ``` 
+   ◦ Sử dụng `fgets`(tốt hơn)
+
+   ```
+   char str[100];
+   fgets(str, 100, stdin); //Đọc cả dòng, bao gồm dấu cách
+   ```
+
+   * **Xuất chuỗi:**
+
+   ◦ Sử dụng `printf` với `%s`
+
+   ```
+   printf("%sƯ, str);
+   ```
+
+   ◦ Sử dụng `puts`
+
+   ```
+   puts(str); //tự động thêm \n
+   ```
+
+#### **2.5.Thao tác thủ công trên chuỗi**
+
+   * Vì chuỗi là mảng ký tự, có thể thao tác từng ký Tự
+   
+   ```
+   char str[] = "Hello";
+   str[0] = 'h';
+   printf("%s", str); // In hello
+   ```
+
+   * Tính độ dài chuỗi thủ công
+
+   ```
+   int len = 0;
+   while (str[len] != '\0') len++;
+   printf("Do dai: %d\n", len);
+   ```
+
+#### **2.6.Ứng dụng**
+
+   * Xử lý văn bản: Tìm kiếm, thay thế, phân tích chuỗi
+
+   * Lưu trữ dự liệu dạng ký tự
+
+   * Giao tiếp với người dùng
+
+#### **2.7.Lưu ý**
+
+   * Đảm bảo chuỗi đích đủ lớn khi dùng strcpy, strcat để tránh lỗi buffer overflow.
+
+   * Luôn đảm bảo chuỗi kết thúc bằng `\0`, nếu không các hàm chuỗi có thể hoạt động sai.
+
+   * `scanf` vs `fgets`
+
+     ◦ scanf("%s") chỉ đọc đến dấu cách, không phù hợp cho chuỗi có khoảng trắng.
+
+     ◦ fgets là lựa chọn tốt hơn cho nhập chuỗi đầy đủ.
+
+#### **VD**
+
+   * **Mảng**
+   ```
+   #include <stdio.h>
+   int main() {
+    int arr[5] = {10, 20, 30, 40, 50};
+    // In mảng
+        for (int i = 0; i < 5; i++) {
+        printf("%d ", arr[i]);
+        }
+    // Ma trận 2x3
+    int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
+        for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+       }
+      return 0;
+    }
+    
+    
+
+   ```
+    10 20 30 40 50
+    1 2 3
+    4 5 6
+    
+   * **Chuỗi**
+
+    
+    #include <stdio.h>
+    #include <string.h>
+    int main() {
+    char str[] = "Hello";
+    printf("Chuoi: %s\n", str);
+    printf("Do dai: %lu\n", strlen(str));
+
+    // Nối chuỗi
+    char dest[20] = "Hi, ";
+    strcat(dest, str);
+    printf("Sau khi noi: %s\n", dest);
+
+    // So sánh
+    char str2[] = "Hello";
+    if (strcmp(str, str2) == 0) {
+        printf("Hai chuoi bang nhau\n");
+    }
+    return 0;
+    }
+    
+   ```
+   Chuoi: Hello
+   Do dai: 5
+   Sau khi noi: Hi, Hello
+   Hai chuoi bang nhau
+   ``` 
