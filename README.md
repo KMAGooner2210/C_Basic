@@ -584,3 +584,63 @@ int main() {
    Sau khi noi: Hi, Hello
    Hai chuoi bang nhau
    ``` 
+
+### **3.Ma trận**
+
+#### **3.1.Định nghĩa**
+
+   * Ma trận là một mảng 2 chiều được sử dụng để lưu trữ dữ liệu dạng lưới thường biểu diên dưới dạng các hàng và cột
+
+   * Mỗi phần tử trong ma trận được truy cập thông qua 2 chỉ số: chỉ số hàng(`i`) và chỉ số cột(`j`),bắt đầu từ 0 
+
+#### **3.2.Khai báo và khởi tạo**
+
+   * **Cú pháp khai báo:**
+    
+    kiểu_dữ_liệu  tên_ma_trận[số_hàng][số_cột];
+    
+    VD:
+    int matrix[3][3];
+    
+
+   * **Khởi tạo:**
+
+◦ Khởi tạo trực tiếp:
+    
+    int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
+    
+◦ Khởi tạo một phần (các phần tử còn lại mặc định là 0):
+    
+    int matrix[2][3] = {{1, 2}}; //matrix = {{1, 2, 0}, {0, 0, 0}}
+    
+◦ Khởi tạo từng hàng:
+
+    int matrix[2][3] = {
+        {1, 2, 3}, //Hàng 0
+        {4, 5, 6} //Hàng 1
+    };
+
+◦ Không chỉ định kích thước:
+
+    int matrix[][] = {{1, 2}, {3, 4}}; //Tự động là matrix[2][2]
+
+#### **3.3.Truy cập phần tử**
+
+* **Sử dụng 2 chỉ số để truy cập:**
+```
+matrix[0][0]; //Phần tử hàng 0, cột 0
+matrix[1][2]; //Phần tử hàng 1, cột 2
+```
+    
+#### **3.4.Lưu trữ trong bộ nhớ**
+
+* Ma trận trong C được lưu trữ liên tiếp trong bộ nhớ theo `row-major-order` (ưu tiên hàng):
+
+    ◦ Các phần tử của hàng 0 được lưu trước, tiếp theo là hàng 1, 2,...
+
+    ◦ VD: với ma trận int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}}, thứ tự lưu trong bộ nhớ là: 1, 2, 3, 4, 5, 6
+
+* Điều này giúp truy cập phần tử nhanh qua chỉ số, vì địa chỉ bộ nhớ của matrix[i][j] có thể được tính bằng công thức
+
+    ◦ Địa chỉ matrix[i][j] = địa chỉ cơ sở + (i * số_cột + j) * kích_thước_kiểu_dữ_liệu
+</details> 
