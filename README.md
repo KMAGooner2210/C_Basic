@@ -838,3 +838,120 @@ free(ptr);
 ```
 </details>
 
+<details>
+	<summary><strong>PHẦN 4: Quản lý bộ nhớ cơ bản</strong></summary>
+
+## **PHẦN 4: Quản lý bộ nhớ cơ bản**
+
+### **1.Stack và Heap**
+
+  * **Stack:**
+
+    ◦ Là vùng bộ nhớ dùng để lưu trữ các biến cục bộ và thông tin gọi hàm
+
+    ◦ Bộ nhớ trên stack được cấp phát và giải phóng tự động bởi trình biên dịch khi biến ra khỏi phạm vi (scope)
+
+    ◦ Kích thước stack thường cố định, giới hạn bởi hệ thống, do đó không phù hợp cho dữ liệu lớn hoặc tồn tại lâu dài
+    ```
+    void function() {
+    int x = 10; // Biến x được lưu trên stack, tự động giải phóng khi hàm kết thúc
+    }
+    ``` 
+
+  * **Heap:** 
+    
+    ◦ Là vùng bộ nhớ động, được sử dụng để lưu trữ dữ liệu cần tồn tại lâu hơn hoặc kích thước không xác định trước
+
+    ◦ Bộ nhớ trên heap phải được cấp phát và giải phóng thủ công bởi coder
+
+    ◦ Nếu không quản lý đúng cách có thể dẫn tới memory leak hoặc truy cập bộ nhớ không hợp lệ
+    ```
+    int *ptr = malloc(sizeof(int)); // Cấp phát bộ nhớ trên heap cho một số nguyên
+    *ptr = 10; // Gán giá trị
+    free(ptr); // Giải phóng bộ nhớ
+    ```  
+
+### **2.Cấp phát và giải phóng bộ nhớ**
+
+
+   * Thư viện `<stdlib.h>` cung cấp các hàm để quản lý bộ nhớ động trên heap
+    
+    ◦ malloc(size): Cấp phát một khối bộ nhớ có kích thước `size` byte, trả về con trỏ void* trỏ đến khối bộ nhớ này.Nội dung bộ nhớ không được khởi tạo
+
+    ◦ calloc(n, size): Cấp phát bộ nhớ cho n phần tử, mỗi phần tử có kích thước size byte, và khởi tạo tất cả giá trị bằng 0
+
+    ◦ realloc(ptr, new_size): Thay đổi kích thước của bộ nhớ đã được cấp phát trước đó, bảo toàn dữ liệu nếu có thể
+
+    ◦ free(ptr): Giải phóng bộ nhớ được cấp phát bởi `malloc`,`calloc` hoặc `realloc`
+```    
+#include<stdlib.h>
+int main(){
+
+    //Cấp phát mảng 5 số nguyên trên heap
+    int *arr = malloc(sizeof(int) * 5);
+    if (arr == NULL){
+        return -1;
+    }
+    for(int i = 0; i < 5; i++){
+        arr[i] = i + 1;
+    }
+
+    // Thay đổi kích thước mảng thành 10 số nguyên
+    arr = realloc(arr, sizeof(int) * 10);
+    if(arr == NULL){
+        return -1;
+    }
+
+    //Giải phóng bộ nhớ
+    free(arr);
+    arr = NULL;
+    return 0;
+}
+
+
+```
+    
+### **3. Lỗi phổ biến trong quản lý bộ nhớ**
+
+**Memory leak:**
+
+ ◦ Xảy ra khi bộ nhớ được cấp phát trên heap nhưng không được giải phóng, dẫn đến lãng phí tài nguyên.
+```
+int *ptr = malloc(sizeof(int));
+ptr = malloc(sizeof(int)); // Lỗi: mất con trỏ đến bộ nhớ được cấp phát trước đó
+```
+ => **Cách khắc phục: Luôn gọi free() cho bộ nhớ đã cấp phát khi không còn sử dụng.**
+
+**Dangling pointer:**
+
+ ◦ Xảy ra khi con trỏ vẫn trỏ đến vùng bộ nhớ đã được giải phóng, dẫn đến hành vi không xác định nếu truy cập.
+```
+int *ptr = malloc(sizeof(int));
+free(ptr);
+*ptr = 10; // Lỗi: truy cập bộ nhớ đã giải phóng
+```
+
+=> **Cách khắc phục: Gán con trỏ về NULL sau khi giải phóng bộ nhớ.**
+
+**Truy cập ngoài vùng bộ nhớ cấp phát:**
+
+ ◦ Xảy ra khi truy cập bộ nhớ ngoài phạm vi đã cấp phát, gây lỗi nghiêm trọng như crash chương trình.
+```
+int *arr = malloc(sizeof(int) * 5);
+arr[5] = 10; // Lỗi: truy cập ngoài giới hạn mảng
+```
+
+### **4. Nguyên tắc quản lý bộ nhớ hiệu quả**
+
+* Luôn kiểm tra giá trị trả về của malloc, calloc, realloc để đảm bảo cấp phát thành công (trả về NULL nếu thất bại).
+
+* Gọi free() đúng cách và chỉ gọi một lần cho mỗi khối bộ nhớ.
+
+* Gán con trỏ về NULL sau khi giải phóng để tránh dangling pointer.
+
+* Sử dụng các công cụ như Valgrind để phát hiện rò rỉ bộ nhớ và lỗi truy cập không hợp lệ.
+
+* Hiểu rõ phạm vi và vòng đời của biến để chọn giữa stack và heap một cách phù hợp.
+</details>
+
+
