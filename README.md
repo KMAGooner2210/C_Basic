@@ -644,3 +644,197 @@ matrix[1][2]; //Phần tử hàng 1, cột 2
 
     ◦ Địa chỉ matrix[i][j] = địa chỉ cơ sở + (i * số_cột + j) * kích_thước_kiểu_dữ_liệu
 </details> 
+<details>
+	<summary><strong>PHẦN 3: Con trỏ</strong></summary>
+
+## **PHẦN 3: Con trỏ**
+
+### **1.Định nghĩa**
+
+  * Con trỏ là một biến đặc biệt **lưu trữ địa chỉ bộ nhớ** của một biến hoặc đối tượng khác trong bộ nhớ
+
+  * Mỗi con trỏ được liên kết với một **kiểu dữ liệu** cụ thể( vd: `int *`, `char *`), xác định kiểu của dữ liệu mà con trỏ trỏ tới
+
+  * Con trỏ cho phép thao tác trực tiếp với địa chỉ bộ nhớ, giúp quản lý tài nguyên hiệu quả và thực hiện các thao tác cấp thấp
+  
+
+### **2.Khai báo và khởi tạo**
+
+#### **2.1.Cú pháp khai báo**
+
+```
+kiểu_dữ_liệu  *tên_con_trỏ;
+```
+
+VD:
+```
+int *ptr; //Con trỏ trỏ tới dữ liệu kiểu int
+char *ptr; //Con trỏ trỏ tới dư liệu kiểu char
+float *ptr; //Con trỏ trỏ tới dữ liệu kiểu float
+```
+#### **2.2.Toán tử con trỏ**
+
+   * **&(Toán tử lấy địa chỉ):** Trả về địa chỉ bộ nhớ của 1 biến
+    
+    int x = 10;
+    int *ptr = &x; //ptr lưu địa chỉ của 
+    
+   * **`*`(Toán tử giải tham chiếu):** Truy cập hoặc sủa đổi giá trị tại địa chỉ mà con trỏ trỏ tới 
+   ```
+   *ptr = 20; //Thay đổi giá trị của x thành 20
+   ```
+
+#### **2.3.Khởi tạo**  
+
+   * **Khởi tạo với địa chỉ của biến:**
+   ```
+   int x = 10;
+   int *ptr = &x;  //ptr trỏ tới địa chỉ của x
+   ```
+
+   * **Khởi tạo với NULL (tránh lỗi truy cập bộ nhớ không hợp lệ:**
+   ```
+   int *ptr = NULL;
+   ```
+
+   * **Khởi tạo với chuỗi ký tự hằng:**
+   ```
+   char *str = "Hello";
+   ```
+   
+#### **2.4.Con trỏ void**
+
+   * Con trỏ kiểu `void*` là con trỏ có thể trỏ tới bất kỳ kiểu dữ liệu nào
+
+   * Cần ép kiểu trước khi giải tham chiếu
+   ```
+   void *ptr;
+   int x = 10;
+   ptr = &x;
+   printf("%d\n", *(int*)ptr); // Ép kiểu void* thành int* để truy cập giá trị
+   ```
+
+### **3.Lưu trữ và cách hoạt động trong bộ nhớ**
+
+   * Con trỏ lưu trữ **địa chỉ bộ nhớ**
+
+   * Kích thước con trỏ phụ thuộc vào kiến trúc hệ thống
+
+     32-bit: Con trỏ thường chiếm 4 byte
+     64-bit: Con trỏ thường chiếm 8 byte
+
+   * Khi giải tham chiếu (`*ptr`), chương trình truy cập giá trị tại địa chỉ mà con trỏ lưu trữ 
+
+### **4. Thao tác với con trỏ**
+
+#### **4.1. Truy cập và sửa đổi giá trị**
+
+   * **Truy cập giá trị:**
+    
+    int x = 10;
+    int *ptr = &x;
+    printf("Gia tri tai ptr: %d\n", *ptr);
+    
+
+   * **Sửa đổi giá trị:**
+
+    *ptr = 20; // Giá trị của x thay đổi thành 20
+    printf("Gia tri cua x: %d\n", x); // In 20
+
+
+#### **4.2. Con trỏ và mảng**
+
+* Tên mảng là con trỏ trỏ tới **phần tử đầu tiên** của mảng: `arr` tương đương `&arr[0]`
+
+* **Truy cập phần tử mảng:**
+`arr[i]` tương đương `*(arr + i)`
+
+  VD: 
+```
+int arr[5] = {1, 2, 3, 4, 5};
+int *ptr = arr;
+printf("%d\n", *(ptr + 2)); // In 3 (phần tử arr[2])
+```
+
+* **Duyệt mảng bằng con trỏ:**
+```
+for (int i = 0; i < 5; i++) {
+    printf("%d ", *(ptr + i)); // In 1 2 3 4 5
+}
+```
+#### **4.3. Con trỏ và chuỗi**
+
+* Chuỗi trong C là mảng ký tự kết thúc bằng `\0`, và con trỏ kiểu `char*` 
+
+* **Khởi tạo chuỗi:**
+```
+char *str = "Hello"; // str trỏ tới chuỗi hằng
+```
+* **Truy cập ký tự:**
+```
+printf("%c\n", *(str + 1)); // In 'e'
+```
+* **Lưu ý: Không thể sửa đổi chuỗi hằng**
+```
+str[0] = 'h'; // LỖI: Chuỗi hằng không thể sửa đổi
+```
+* **Để sửa đổi chuỗi, cần khai báo mảng ký tự:**
+```
+char str[] = "Hello"; // Mảng ký tự, có thể sửa đổi
+str[0] = 'h';
+printf("%s\n", str); // In "hello"
+```
+#### **4.4. Con trỏ và hàm**
+
+* Con trỏ có thể được truyền vào hàm để sửa đổi giá trị của biến bên ngoài (pass-by-reference).
+```
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int x = 10, y = 20;
+    swap(&x, &y);
+    printf("x = %d, y = %d\n", x, y); // In: x = 20, y = 10
+}
+
+=> Con trỏ a và b trỏ tới địa chỉ của x và y, cho phép hàm swap thay đổi giá trị của chúng.
+```
+#### **4.5. Con trỏ và bộ nhớ động**
+
+* Con trỏ thường được dùng để cấp phát bộ nhớ động bằng malloc và giải phóng bằng free
+```
+#include<stdio.h>
+int *ptr = malloc(sizeof(int)); // Cấp phát bộ nhớ cho 1 số nguyên
+if(ptr == NULL){
+    printf("Cap phat that bai!\n");
+    return 1;
+}
+*ptr = 42;
+printf("Gia tri: %d\n", *ptr); //In: 42
+free(ptr);
+```
+#### **4.6. Lỗi phổ biến khi dùng con trỏ**
+
+* **Truy cập con trỏ NULL**
+```
+int *ptr = NULL;
+printf("%d\n", *ptr);  // LỖI: Truy cập con trỏ NULL
+```
+
+* **Con trỏ không khởi tạo**
+```
+int *ptr; // Không khởi tạo
+*ptr = 10; // LỖI: Truy cập địa chỉ ngẫu nhiên
+```
+
+* **Con trỏ lơ lửng (dangling pointer)**
+```
+int *ptr = malloc(sizeof(int));
+free(ptr);
+*ptr = 10; // LỖI: Truy cập bộ nhớ đã giải phóng
+```
+</details>
+
