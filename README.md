@@ -954,4 +954,164 @@ arr[5] = 10; // Lỗi: truy cập ngoài giới hạn mảng
 * Hiểu rõ phạm vi và vòng đời của biến để chọn giữa stack và heap một cách phù hợp.
 </details>
 
+<details>
+	<summary><strong>PHẦN 5: Nhập/xuất cơ bản</strong></summary>
+
+## **PHẦN 5: Nhập/xuất cơ bản**
+
+### **1.Nhập/xuất với printf và scanf**
+
+  * **Thư viện:** `<stdio.h>`
+  * **printf(format,args):**
+
+    ◦ Chức năng: In dữ liệu ra màn hình theo định dạng được chỉ định.
+
+    ◦ Các định dạng phổ biến:
+
+    ```
+    %d: Số nguyên (int).
+    %f: Số thực (float).
+    %lf: Số thực (double).
+    %c: Ký tự (char).
+    %s: Chuỗi (string).
+    ``` 
+    ◦ Ký tự đặc biệt: `\n`(xuống dòng) ,'\t`(tab)
+
+    ```
+    int age = 25;
+    float height = 1.75;
+    printf("Age: %d, Height: %.2f\n", age, height); // In: Age: 25, Height: 1.75
+
+    ```
+  
+  * **scanf(format, &args):** 
+    
+    ◦ Chức năng: Nhập dữ liệu từ bàn phím theo định dạng được chỉ định.
+
+    ◦ Sử dụng & trước tên biến để truyền địa chỉ (trừ chuỗi %s, không cần &).
+
+    ◦ Kiểm tra giá trị trả về của scanf để đảm bảo dữ liệu nhập hợp lệ (trả về số lượng tham số được nhập thành công).
+
+    ```
+    int age;
+    char name[50];
+    printf("Enter age and name: ");
+    scanf("%d %s", &age, name);
+    printf("Age: %d, Name: %s\n", age, name);
+    ```  
+
+    ◦ Lưu ý khi sử dụng scanf:
+    ```
+    Dữ liệu nhập phải khớp với định dạng, nếu không có thể gây lỗi hoặc hành vi không xác định.
+
+    Để nhập chuỗi chứa dấu cách, sử dụng fgets thay vì %s trong scanf.
+    ```
+    ```
+    char buffer[100];
+    printf("Enter a sentence: ");
+    fgets(buffer, sizeof(buffer), stdin); // Nhập cả dòng, kể cả dấu cách
+    printf("You entered: %s", buffer);
+    ```
+### **2.Xử lý file cơ bản**
+
+
+* Thư viện: <stdio.h>
+
+* **fopen(filename, mode):** Mở file với chế độ được chỉ định
+
+    * **Các chế độ phổ biến:**
+    ```
+    ◦ "r": Đọc file (file phải tồn tại)
+
+    ◦ "w": Ghi file (tạo mới hoặc ghi đè)
+
+    ◦ "a": Thêm vào cuối file (tạo mới nếu file không tồn tại)
+
+    ◦ "r+": Đọc và ghi (file phải tồn tại)
+
+    ◦ "w+": Đọc và ghi (tạo mới hoặc ghi đè)
+    ```
+    * **Trả về con trỏ `FILE*` hoặc NULL nếu mở thất bại**
+
+* **fclose(file):** Đóng file, giải phóng tài nguyên
+* **fprintf(file, format, args):** Ghi dữ liệu vào file theo định dạng
+* **fscanf(file, format, &args):** Đọc dữ liệu từ file vào theo định dạng
+* **fgets(str, size, file):** Đọc 1 dòng từ file vào chuỗi `str` (tối đa `size-1` ký tự)
+* **fputs(str, file):** Ghi chuỗi str vào file
+* **feof(file):** Kiểm tra xem đã đến cuối file chưa (trả về giá trị khác 0 nếu đúng)
+
+
+* **VD GHI FILE**
+```    
+FILE *file = fopen("data.txt", "w");
+if(file == NULL){
+    printf("Error opening file!\n");
+    return -1;
+}
+fprintf(file, "Hello, File! Number: %d\n", 42);
+fclose(file);
+
+```
+
+* **VD ĐỌC FILE**
+```
+FILE *file = fopen("data.txt", "r");
+if(file == NULL){
+    printf("Error opening file!\n");
+    return -1;
+}
+char buffer[100];
+while(fgets(buffer,sizeof(buffer),file)){
+    printf("%s", buffer);
+}
+fclose(file);
+```
+### **3. Lỗi phổ biến khi xử lý nhập/xuất**
+
+**Lỗi nhập liệu với scanf:**
+
+ ◦ Nhập sai định dạng (ví dụ: nhập chuỗi vào %d) gây hành vi không xác định.
+
+ ◦ Không làm sạch bộ đệm nhập (stdin) sau khi nhập, dẫn đến lỗi khi sử dụng fgets sau scanf.
+
+ => **Cách khắc phục: Sử dụng getchar() hoặc fflush(stdin) (lưu ý: fflush(stdin) không chuẩn trên một số hệ thống).**
+```
+int c;
+while ((c = getchar()) != '\n' && c != EOF); // Xóa bộ đệm
+
+```
+
+**Lỗi xử lý file:**
+
+ ◦ Không kiểm tra `NULL` khi mở file bằng `fopen`
+
+ ◦ Quên đóng file bằng `fclose`, dẫn đến rò rỉ tài nguyên
+
+ ◦ Đọc/ghi ngoài phạm vi file hoặc khi file đã đóng
+
+
+
+=> **Cách khắc phục:**
+
+    Luôn kiểm tra giá trị trả về của fopen.
+
+    Đảm bảo gọi fclose sau khi hoàn tất.
+
+    Kiểm tra feof hoặc giá trị trả về của fscanf/fgets khi đọc file.
+
+### **4. Nguyên tắc nhập/xuất hiệu quả**
+
+* **Kiểm tra lỗi:** Luôn kiểm tra giá trị trả về của scanf, fopen, fscanf, v.v., để phát hiện lỗi sớm.
+
+* **Quản lý bộ đệm:** Xóa bộ đệm nhập khi cần thiết, đặc biệt khi kết hợp scanf và fgets.
+
+* **Đóng file:** Đảm bảo gọi fclose sau khi hoàn tất thao tác với file.
+
+* **Sử dụng định dạng phù hợp:** Chọn đúng định dạng (%d, %f, %s, v.v.) để tránh lỗi nhập/xuất.
+
+* **Xử lý chuỗi an toàn:** Sử dụng fgets thay vì gets (đã bị loại bỏ) để đọc chuỗi an toàn.
+
+* **Kiểm tra giới hạn:** Đảm bảo không ghi/đọc ngoài kích thước bộ đệm hoặc file.
+</details>
+
 
