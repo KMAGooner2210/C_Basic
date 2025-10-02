@@ -745,8 +745,351 @@
 
     ◦ Khắc phục: Luôn kiểm tra giá trị trả về (số tham số gán hoặc -1).
 
-</details>
 
+### **III. Toán tử**
+
+#### **1. Định nghĩa**
+
+* Là các ký hiệu hoặc từ khóa đặc biệt trong C dùng để thực hiện các phép toán trên biến hoặc giá trị (gọi là toán hạng - operands)
+
+* Toán tử giúp thao tác dữ liệu, từ các phép tính số học cơ bản đến xử lý logic, so sánh, gán giá trị, hoặc thao tác trực tiếp trên bit.
+
+#### **2. Toán tử Số học (Arithmetic Operators)**
+
+##### **2.1. Định nghĩa:**
+
+* Toán tử số học thực hiện các phép toán cơ bản trên các kiểu dữ liệu số (như int, float, double)
+
+##### **2.2. Danh sách toán tử số học**
+
+*  **`+:`** Cộng hai toán hạng (ví dụ: `a + b`).
+
+*  **`-:`** Trừ hai toán hạng (ví dụ: `a - b`).
+
+*  **`*:`** Nhân hai toán hạng (ví dụ: `a * b`).
+
+*  **`/:`** Chia hai toán hạng (ví dụ: `a / b`).
+
+*  **`%:`** Chia lấy dư (chỉ áp dụng cho kiểu nguyên int, ví dụ: `a % b`).
+
+*  **`++:`** Tăng giá trị toán hạng lên 1 (tiền tố: `++i`, hậu tố: `i++`).
+
+*  **`--:`** Giảm giá trị toán hạng đi 1 (tiền tố: `--i`, hậu tố: `i--`).
+
+##### **2.3. Lưu ý**
+
+*  **Phép chia (/):**
+
+    ◦ Với `int / int`, kết quả là số nguyên, phần thập phân bị bỏ (ví dụ: `7 / 2 = 3`).
+
+    ◦ Với `float` hoặc `double`, kết quả bao gồm phần thập phân (ví dụ: `7.0 / 2 = 3.5`).
+
+    ◦ Chia cho 0 gây lỗi undefined behavior (cho `int`) hoặc trả về giá trị đặc biệt như `inf`/`nan` (cho `float`/`double`).
+
+
+*  **Toán tử tăng/giảm (++, --):** 
+
+    ◦ **Tiền tố (++i, --i):** Tăng/giảm giá trị trước, rồi sử dụng giá trị mới.
+
+    ◦ **Hậu tố (i++, i--):** Sử dụng giá trị hiện tại, rồi tăng/giảm sau.
+
+        int i = 5;
+        printf("%d\n", ++i); // In: 6 (tăng trước, in sau)
+        printf("%d\n", i++); // In: 6 (in trước, tăng sau)
+        printf("%d\n", i);   // In: 7
+
+
+*  **Tràn số (Overflow):** 
+
+    ◦ Với kiểu int, nếu kết quả vượt quá phạm vi (INT_MAX hoặc INT_MIN), hành vi không xác định. Sử dụng kiểu lớn hơn như long hoặc long long nếu cần.
+
+#### **3. Toán tử Logic (Logical Operators)**
+
+##### **3.1. Định nghĩa:**
+
+* Toán tử logic thực hiện các phép toán logic trên giá trị boolean (thường được biểu diễn bằng 0 - sai, hoặc khác 0 - đúng). Kết quả của toán tử logic luôn là `0` (sai) hoặc `1` (đúng).
+
+##### **3.2. Danh sách toán tử logic**
+
+*  **`&&:`** AND logic (và) - Đúng nếu cả hai vế đều đúng.
+
+*  **`||:`** OR logic (hoặc) - Đúng nếu ít nhất một vế đúng.
+
+*  **`!:`** NOT logic (phủ định) - Đảo ngược giá trị logic (0 thành 1, khác 0 thành 0)
+
+##### **3.3. Short-circuit Evaluation**
+
+*  **Với &&:** Nếu vế trái sai (0), vế phải không được đánh giá (vì kết quả đã là sai).
+
+*  **Với ||:** Nếu vế trái đúng (khác 0), vế phải không được đánh giá (vì kết quả đã là đúng).
+
+        #include <stdio.h>
+        int main() {
+            int a = 5, b = 0;
+            if (a && b) {
+                printf("Cả hai đúng\n"); // Không in vì b = 0
+            }
+            if (a || b) {
+                printf("Một trong hai đúng\n"); // In vì a = 5
+            }
+            if (!b) {
+                printf("b là sai\n"); // In vì !0 = 1
+            }
+            // Short-circuit ví dụ
+            int *ptr = NULL;
+            if (ptr != NULL && *ptr == 5) { // Vế phải không chạy nếu ptr là NULL
+                printf("Không in\n");
+            }
+            return 0;
+        }
+
+#### **4. Toán tử so sánh (Relational Operators)**
+
+##### **4.1. Định nghĩa:**
+
+* Toán tử so sánh dùng để so sánh hai toán hạng, trả về `1 (đúng)` hoặc `0 (sai)`. Chúng thường được sử dụng trong các câu lệnh điều kiện (`if, while`) hoặc vòng lặp.
+
+##### **4.2. Danh sách toán tử logic**
+
+*  **`==:`** Bằng
+
+*  **`!=:`** Không bằng
+
+*  **`<:`** Nhỏ hơn
+
+*  **`>:`** Lớn hơn
+
+*  **`<=:`** Nhỏ hơn hoặc bằng
+
+*  **`>=:`** Lớn hơn hoặc bằng
+
+##### **4.3. Đặc điểm**
+
+*  Kết quả luôn là `0` hoặc `1`.
+
+*  Có thể so sánh các kiểu số (`int`, `float`, `double`) và ký tự (`char`, so sánh mã ASCII).
+
+*  Với số thực (`float`, `double`), cẩn thận với lỗi làm tròn (rounding error).
+
+        #include <stdio.h>
+        int main() {
+            int a = 10, b = 20;
+            printf("a == b: %d\n", a == b); // 0 (sai)
+            printf("a != b: %d\n", a != b); // 1 (đúng)
+            printf("a < b: %d\n", a < b);   // 1 (đúng)
+            printf("a >= b: %d\n", a >= b); // 0 (sai)
+            return 0;
+        }
+
+#### **5. Toán tử gán (Assignment Operators)**
+
+##### **5.1. Định nghĩa:**
+
+* Toán tử gán dùng để gán giá trị cho biến. Toán tử gán cơ bản là `=`, nhưng C cũng hỗ trợ các toán tử gán kết hợp (compound assignment) để thực hiện phép toán và gán cùng lúc.
+
+##### **5.2. Danh sách toán tử gán**
+
+*  **`&`:** AND bitwise - Lấy bit 1 nếu cả hai bit tương ứng là 1.
+
+*  **`|`:** OR bitwise - Lấy bit 1 nếu ít nhất một bit tương ứng là 1.
+
+*  **`^`:** XOR bitwise - Lấy bit 1 nếu hai bit tương ứng khác nhau.
+
+*  **`~:`** NOT bitwise - Đảo ngược tất cả bit (0 thành 1, 1 thành 0).
+
+*  **`<<`:** Dịch trái - Dịch các bit sang trái, thêm 0 vào bên phải.
+
+*  **`>>`:** Dịch phải - Dịch các bit sang phải, thêm bit dấu (cho signed) hoặc 0 (cho unsigned).
+
+
+        #include <stdio.h>
+        int main() {
+            unsigned int a = 5;  // 0101
+            unsigned int b = 3;  // 0011
+            printf("a & b: %d\n", a & b);    // 0001 = 1
+            printf("a | b: %d\n", a | b);    // 0111 = 7
+            printf("a ^ b: %d\n", a ^ b);    // 0110 = 6
+            printf("~a: %u\n", ~a);          // ~0101 = 1111...1010 (phụ thuộc kích thước)
+            printf("a << 2: %d\n", a << 2);  // 0101 << 2 = 10100 = 20
+            printf("b >> 1: %d\n", b >> 1);  // 0011 >> 1 = 0001 = 1
+            return 0;
+        }
+
+##### **5.3. Lưu ý**
+
+*  Toán tử bitwise chỉ áp dụng cho kiểu nguyên, không dùng cho `float/double`.
+
+*  Dịch phải (`>>`) với số có dấu phụ thuộc vào trình biên dịch (sign extension).
+
+#### **6. Toán tử điều kiện (Ternary Operator: `?:`)**
+
+##### **6.1. Định nghĩa:**
+
+* Toán tử điều kiện (`?:`) là toán tử ba ngôi (ternary) duy nhất trong C, hoạt động như một câu lệnh `if-else` ngắn gọn.
+
+* Nó đánh giá một biểu thức logic và trả về một trong hai giá trị dựa trên kết quả của biểu thức đó.
+
+##### **6.2. Cú pháp**
+
+        biểu_thức ? giá_trị_1 : giá_trị_2;
+
+*  **biểu_thức:** Điều kiện logic, trả về `0` (sai) hoặc khác `0` (đúng).
+
+*  **giá_trị_1:** Giá trị được trả về nếu biểu thức đúng.
+
+*  **giá_trị_2:** Giá trị được trả về nếu biểu thức sai.
+
+##### **6.3. Cách hoạt động**
+
+*  Nếu `biểu_thức` đúng (khác `0`), toán tử trả về `giá_trị_1`.
+
+*  Nếu `biểu_thức` sai (`0`), toán tử trả về `giá_trị_2`.
+
+* Toán tử này có thể được sử dụng trong biểu thức hoặc gán giá trị, thay thế cho câu lệnh `if-else` trong các trường hợp đơn giản.
+
+        #include <stdio.h>
+        int main() {
+            int a = 10, b = 20;
+            int max = (a > b) ? a : b; // Nếu a > b đúng, chọn a; ngược lại chọn b
+            printf("Max: %d\n", max);   // In: 20
+
+            // Sử dụng trong printf
+            printf("Số %d là %s\n", a, (a % 2 == 0) ? "chẵn" : "lẻ"); // In: Số 10 là chẵn
+            return 0;
+        }
+
+
+#### **7. Toán tử sizeof**
+
+##### **7.1. Định nghĩa:**
+
+* Toán tử `sizeof` trả về kích thước (tính bằng byte) của một kiểu dữ liệu hoặc một biến
+
+* Đây là toán tử một ngôi , được xử lý tại thời điểm biên dịch (compile-time), không phải runtime, trừ trường hợp mảng kích thước biến đổi (VLA) trong C99.
+
+##### **7.2. Cú pháp**
+
+        sizeof(biến);
+        sizeof(kiểu_dữ_liệu);
+
+*  **Kết quả:** Trả về giá trị kiểu `size_t` (thường là `unsigned long` hoặc `unsigned int`, định nghĩa trong `<stddef.h>`).
+
+*  Dùng với `%zu` trong printf để in giá trị `size_t`.
+
+##### **7.3. Cách hoạt động**
+
+*  Với biến: Trả về kích thước vùng nhớ mà biến chiếm.
+
+*  Với kiểu dữ liệu: Trả về kích thước của kiểu (ví dụ: `sizeof(int)`).
+
+*  Với mảng: Trả về kích thước tổng cộng của mảng (trừ khi mảng bị suy biến thành con trỏ trong hàm).
+
+        #include <stdio.h>
+        int main() {
+            int x = 10;
+            double d = 3.14;
+            char arr[5] = "abcd";
+            
+            printf("sizeof(int): %zu\n", sizeof(int));         // Thường in: 4
+            printf("sizeof(x): %zu\n", sizeof x);             // In: 4
+            printf("sizeof(double): %zu\n", sizeof(double));   // Thường in: 8
+            printf("sizeof(arr): %zu\n", sizeof(arr));         // In: 5 (kích thước mảng)
+            return 0;
+        }    
+
+##### **7.4. Lưu ý**
+
+*  **Mảng trong hàm:** Khi truyền mảng vào hàm, sizeof trả về kích thước con trỏ, không phải mảng.
+
+        void func(int arr[]) {
+            printf("%zu\n", sizeof(arr)); // In kích thước con trỏ (4 hoặc 8)
+        }
+
+*  **Không áp dụng cho void:** sizeof(void) không hợp lệ, nhưng sizeof(void*) trả về kích thước con trỏ (4 hoặc 8 byte).
+
+
+        #include <stdio.h>
+        struct Point {
+            int x;
+            double y;
+        };
+        int main() {
+            struct Point p;
+            printf("sizeof(struct Point): %zu\n", sizeof(struct Point)); // In: 16 (4 + 8 + padding)
+            printf("sizeof(p.x): %zu\n", sizeof(p.x));                  // In: 4
+            return 0;
+        }
+
+
+#### **8. Toán tử dấu phẩy (Comma Operator)**
+
+##### **8.1. Định nghĩa:**
+
+* Toán tử dấu phẩy (,) cho phép thực hiện nhiều biểu thức tuần tự trong một dòng, trả về giá trị của biểu thức cuối cùng. Đây là toán tử có ưu tiên thấp nhất trong C.
+
+
+##### **8.2. Cú pháp**
+
+        biểu_thức_1, biểu_thức_2, ..., biểu_thức_n;
+
+*  Các biểu thức được thực hiện từ trái sang phải.
+
+*  Giá trị của toàn bộ biểu thức dấu phẩy là giá trị của biểu thức cuối cùng.
+
+
+        #include <stdio.h>
+        int main() {
+            int a = 5, x;
+            x = (a = a + 1, a * 2, a + 3); // Thực hiện: a = 6, 6*2, 6+3
+            printf("x: %d, a: %d\n", x, a); // In: x: 9, a: 6
+            return 0;
+        } 
+
+#### **9. Toán tử con trỏ (`*` và `&`)**
+
+##### **9.1. Định nghĩa:**
+
+* Toán tử con trỏ (`*` và `&`) dùng để làm việc với con trỏ, một khái niệm quan trọng trong C để quản lý địa chỉ bộ nhớ và truy cập dữ liệu gián tiếp.
+
+    ◦ `&` **(Address-of):** Lấy địa chỉ bộ nhớ của một biến.
+
+    ◦ `*` **(Dereference):** Truy cập giá trị tại địa chỉ mà con trỏ trỏ tới.
+
+##### **9.2. Cú pháp**
+
+
+*  `&biến`: Trả về địa chỉ của biến (kiểu con trỏ).
+
+*  `*con_trỏ`: Truy cập hoặc sửa đổi giá trị tại địa chỉ mà con trỏ trỏ tới.
+
+##### **9.3. Cách hoạt động**
+
+*  Mỗi biến trong C được lưu tại một địa chỉ bộ nhớ duy nhất.
+
+*  `&` tạo con trỏ trỏ đến biến.
+
+*  `*` lấy hoặc gán giá trị tại địa chỉ đó.
+
+        #include <stdio.h>
+        int main() {
+            int x = 10;
+            int *ptr = &x; // ptr trỏ đến địa chỉ của x
+            printf("Địa chỉ của x: %p\n", (void*)&x); // In địa chỉ
+            printf("Giá trị ptr trỏ tới: %d\n", *ptr); // In: 10
+            *ptr = 20; // Thay đổi giá trị x qua con trỏ
+            printf("x sau khi thay đổi: %d\n", x); // In: 20
+            return 0;
+        }
+
+##### **9.4. Lưu ý**
+
+*  **Con trỏ null:** Tránh sử dụng `*` trên con trỏ `NULL`, gây lỗi segmentation fault.
+
+*  **Kiểu con trỏ:** Con trỏ phải khớp với kiểu của biến (trừ `void*`, con trỏ tổng quát).
+
+*  **Dùng %p trong printf:** Luôn ép kiểu con trỏ sang `void*` khi in.
+ 
+</details>
 
 <details>
 	<summary><strong>PHẦN 2: Mảng và chuỗi</strong></summary>
