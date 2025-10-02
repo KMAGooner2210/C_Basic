@@ -1089,7 +1089,123 @@
 
 *  **Dùng %p trong printf:** Luôn ép kiểu con trỏ sang `void*` khi in.
  
+### **IV. Câu lệnh điều kiện**
+
+#### **1. Câu lệnh if-else**
+
+##### **1.1. Định nghĩa**
+
+* Câu lệnh `if-else` kiểm tra một biểu thức logic (điều kiện) và thực thi một khối mã nếu điều kiện đúng, hoặc một khối mã khác nếu điều kiện sai. 
+
+* Đây là cơ chế điều kiện cơ bản và linh hoạt nhất trong C.
+
+##### **1.2. Cú pháp**
+
+        if (biểu_thức) {
+            // Khối mã thực thi nếu biểu_thức đúng (khác 0)
+        } else if (biểu_thức_khác) {
+            // Khối mã thực thi nếu biểu_thức_khác đúng
+        } else {
+            // Khối mã thực thi nếu tất cả điều kiện trên sai
+        }
+
+*  **biểu_thức**: Một biểu thức logic trả về giá trị 0 (sai) hoặc khác 0 (đúng).
+
+*  `else` và `else if` là tùy chọn.
+
+*  Khối mã có thể là một câu lệnh hoặc nhiều câu lệnh trong {}.
+
+##### **1.3. Cách hoạt động**
+
+*  Nếu `biểu_thức` đúng (khác 0), khối mã trong `if` được thực thi.
+
+*  Nếu sai (`0`), chương trình kiểm tra các `else if` (nếu có), hoặc thực thi khối `else` (nếu có).
+
+        #include <stdio.h>
+        int main() {
+            int score = 85;
+            if (score >= 90) {
+                printf("Xếp loại A\n");
+            } else if (score >= 70) {
+                printf("Xếp loại B\n"); // In: Xếp loại B
+            } else if (score >= 50) {
+                printf("Xếp loại C\n");
+            } else {
+                printf("Xếp loại D\n");
+            }
+            return 0;
+        }
+
+#### **2. Câu lệnh switch-case**
+
+##### **2.1. Định nghĩa**
+
+* Câu lệnh `switch-case` cung cấp cách xử lý nhiều trường hợp dựa trên giá trị của một biểu thức nguyên (`int`, `char`, hoặc `enum`). 
+
+* Nó là một thay thế gọn gàng cho nhiều `if-else` khi kiểm tra giá trị cụ thể.
+
+
+##### **2.2. Cú pháp**
+
+        switch (biểu_thức) {
+            case giá_trị_1:
+                // Mã thực thi nếu biểu_thức == giá_trị_1
+                break;
+            case giá_trị_2:
+                // Mã thực thi nếu biểu_thức == giá_trị_2
+                break;
+            default:
+                // Mã thực thi nếu không khớp giá trị nào
+        }
+
+*  **biểu_thức:** Phải trả về giá trị nguyên (`int`, `char`, hoặc `enum`). Không hỗ trợ float hoặc chuỗi.
+
+*  **giá_trị_n:** Hằng số nguyên (constant expression, ví dụ: `1`, `'A'`, hoặc hằng enum).
+
+*  **break:** Thoát khỏi `switch` để tránh thực thi các case tiếp theo (fall-through).
+
+*  **default:** Xử lý trường hợp không khớp, tùy chọn
+
+##### **2.3. Cách hoạt động**
+
+*  `biểu_thức` được đánh giá một lần và so sánh với các giá trị trong `case`.
+
+*   Nếu khớp, khối mã tương ứng được thực thi.
+
+*   Nếu không có `break`, chương trình tiếp tục thực thi các `case` tiếp theo (fall-through).
+
+*   `default` được thực thi nếu không có `case` nào khớp.
+
+##### **2.4. Đặc điểm fall-through**
+
+*  Nếu không có `break`, tất cả mã từ case khớp đến cuối `switch`  sẽ chạy.
+
+*  Ứng dụng fall-through: Dùng khi nhiều case chia sẻ cùng một khối mã.
+
+
+        #include <stdio.h>
+        int main() {
+            int score = 85;
+            switch (score / 10) {
+                case 9:
+                    printf("Xếp loại A\n");
+                    break;
+                case 8:
+                case 7:
+                    printf("Xếp loại B\n"); // In: Xếp loại B
+                    break;
+                case 6:
+                    printf("Xếp loại C\n");
+                    break;
+                default:
+                    printf("Xếp loại D\n");
+            }
+            return 0;
+        }
+
+        
 </details>
+
 
 <details>
 	<summary><strong>PHẦN 2: Mảng và chuỗi</strong></summary>
