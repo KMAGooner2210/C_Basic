@@ -1,294 +1,752 @@
 # C_Basic
 <details>
-	<summary><strong>PHẦN 1: Cú pháp cơ bản</strong></summary>
+	<summary><strong>PHẦN 1: PREPROCESSOR DIRECTIVES</strong></summary>
 
-## **PHẦN 1: Cú pháp cơ bản**
+## **PHẦN 1: PREPROCESSOR DIRECTIVES**
 
-### **Lý thuyết**
+### **I. Preprocessor Directives**
 
-#### **1.Biến và kiểu dữ liệu**
+#### **1. Định nghĩa**
 
-* **1.1.Biến:** 
+* **Preprocessor Directives (chỉ thị tiền xử lý)** là các lệnh bắt đầu bằng ký tự # trong mã nguồn C/C++.
 
-  ◦ Là một tên gọi đại diện cho một vùng nhớ, được sử dụng để lưu trữ giá trị.
+* Chúng được xử lý bởi **preprocessor (bộ tiền xử lý)** trước khi mã nguồn được biên dịch thành mã máy
+
+* Preprocessor không phải là một phần của trình biên dịch mà là một công cụ riêng biệt, thực hiện các tác vụ như thay thế văn bản, nhúng tệp, hoặc kiểm tra điều kiện biên dịch.
+
+#### **2. Vai trò**
+
+* Thay thế các macro (thay văn bản đơn giản).
+
+* Nhúng các tệp header hoặc mã nguồn khác.
+
+* Kiểm tra điều kiện biên dịch (ví dụ, chỉ biên dịch một đoạn mã nếu điều kiện đúng).
+
+* Tùy chỉnh hành vi biên dịch dựa trên cấu hình hoặc môi trường.
+
+#### **3. Các Preprocessor Directives phổ biến**
+
+* **`#include`**
+
+  ◦ Chức năng: Nhúng nội dung của một tệp (thường là tệp header `.h`) vào mã nguồn tại vị trí chỉ thị.
+
+  ◦ Cú pháp:
+
+        #include <tên_tệp>  // Dùng cho thư viện chuẩn (stdio.h, stdlib.h,...)
+        #include "tên_tệp"  // Dùng cho tệp do người dùng định nghĩa
+
+  ◦ Ứng dụng:
+
+        Nhúng các hàm thư viện chuẩn như printf (<stdio.h>), quản lý bộ nhớ động (<stdlib.h>), toán học (<math.h>).
+
+        Nhúng các tệp header do người dùng viết để tái sử dụng mã.
+
+
+* **`#define`**
+
+  ◦ Chức năng: Định nghĩa macro, có thể là hằng số hoặc hàm macro. Macro là một đoạn văn bản được thay thế trực tiếp vào mã nguồn trước khi biên dịch.
+
+  ◦ Cú pháp:
+
+        #define TÊN GIÁ_TRỊ
+        #define TÊN(param) biểu_thức
+
+  ◦ Ứng dụng:
+
+        Định nghĩa hằng số (ví dụ: #define PI 3.14159).
+
+        Tạo các hàm macro để thay thế các đoạn mã lặp lại.
+
+  ◦ Lưu ý:
+
+        Macro không kiểm tra kiểu dữ liệu, dễ gây lỗi nếu không cẩn thận.
+
+        Nên dùng ngoặc để tránh lỗi ưu tiên toán tử.
+
+  ◦ VD:
+
+        #define PI 3.14159
+        #define SQUARE(x) ((x) * (x))
+        int main() {
+            printf("PI: %.5f\n", PI);          // In: 3.14159
+            printf("Square of 5: %d\n", SQUARE(5)); // In: 25
+            return 0;
+        }
+
+* **`#ifdef, #ifndef, #else, #endif`**
+
+  ◦ Chức năng: Kiểm tra điều kiện biên dịch, chỉ biên dịch một đoạn mã nếu điều kiện được thỏa mãn.
+
+  ◦ Cú pháp:
+
+        #ifdef TÊN_MACRO
+            // Mã được biên dịch nếu TÊN_MACRO đã được định nghĩa
+        #endif
+        #ifndef TÊN_MACRO
+            // Mã được biên dịch nếu TÊN_MACRO chưa được định nghĩa
+        #endif
+
+  ◦ Ứng dụng:
+
+        Bật/tắt các đoạn mã trong quá trình debug.
+
+        Hỗ trợ biên dịch có điều kiện dựa trên nền tảng hoặc cấu hình.
+
+
+  ◦ VD:
+
+        #define DEBUG 1
+        int main() {
+            #ifdef DEBUG
+                printf("Debug mode is ON\n");
+            #else
+                printf("Debug mode is OFF\n");
+            #endif
+            return 0;
+        }
+
+  ◦ Có thể định nghĩa macro DEBUG khi biên dịch bằng lệnh:
+
+        gcc -DDEBUG file.c.
+
+* **`#pragma`**
+
+  ◦ Chức năng: Cung cấp các chỉ thị đặc biệt cho trình biên dịch, phụ thuộc vào trình biên dịch cụ thể.
+
+  ◦ Ví dụ phổ biến:
+
+        #pragma once: Ngăn tệp header được nhúng nhiều lần (tương tự header guards).
+
+        #pragma pack: Điều chỉnh cách trình biên dịch căn chỉnh dữ liệu trong bộ nhớ.
+
+* **`#error`** và **`#warning`**
+
+  ◦ Chức năng: 
   
-  ◦ Mỗi biến có một kiểu dữ liệu xác định kích thước và cách lưu trữ trong bộ nhớ
+        #error "Thông báo": Dừng quá trình biên dịch và hiển thị thông báo lỗi.
 
-* **1.2.Kiểu dữ liệu:**
+        #warning "Thông báo": Hiển thị cảnh báo nhưng vẫn tiếp tục biên dịch.
 
-  ◦ `int`: Lưu trữ số nguyên (4 byte với hệ 32/64 bit) 
+  ◦ VD:
 
-  ◦ `char`:Lưu ký tự (1 byte), biểu diễn dưới dạng mã ASCII
+        #if __STDC_VERSION__ < 201112L
+            #error "Yêu cầu C11 trở lên"
+        #else
+            #warning "Kiểm tra cấu hình trước khi chạy"
+        #endif
+        
+### **II. Header Guards & Macro Safety**
 
-  ◦ `float`: Số thực dấu chấm động (thường 4 byte),độ chính xác khoảng 6-7 chữ số thập phân
+#### **1. Header Guards**
 
-  ◦ `double`: Số thực (thường 8 byte),độ chính xác khoảng 15-16 chữ số thập phân
+* **Định nghĩa:**
 
-  ◦ `void`: Không chứa giá trị,dùng cho hàm không trả về hoặc con trỏ tổng quát `void*`
+  ◦ Header Guards là kỹ thuật sử dụng các chỉ thị `#ifndef`, `#define`, và `#endif` để ngăn tệp header được nhúng nhiều lần, tránh lỗi redefinition (định nghĩa lại hàm, biến, hoặc kiểu dữ liệu).   
 
-  ◦ `short/long`: Mở rộng kích thước của `int` (`short int` thường 2byte, `long int` có thể 4 hoặc 8 byte)
+* **Cú pháp:**
 
-  ◦ `unsigned`: Chỉ lưu giá trị không âm
+        /* file: myheader.h */
+        #ifndef MYHEADER_H
+        #define MYHEADER_H
+        // Nội dung của header
+        void my_function(void);
+        #endif 
 
-* **1.3.Khai báo và khởi tạo:**
+* **Cách hoạt động:**
 
-  ```
-  int age = 25;
-  float pi = 3.14f;
-  double large_num = 1.23e-4;
-  ```
+  ◦ `#ifndef MYHEADER_H`: Kiểm tra xem macro `MYHEADER_H` có được định nghĩa chưa.  
 
-* **1.4.Phạm vi và thời gian sống:**
+  ◦ Nếu chưa, định nghĩa `MYHEADER_H` và nhúng nội dung header.
 
-  ◦ **Phạm vi:** Biến cục bộ (trong hàm), biến toàn cục (ngoài hàm), biến tĩnh(`static`) lưu giữ giá trị giữa các lần gọi hàm
+  ◦ Nếu đã được định nghĩa (do tệp header đã được nhúng trước đó), bỏ qua nội dung giữa `#ifndef` và `#endif.`
 
-  ◦ **Thời gian sống:** Biến cục bộ bị hủy khi thoát hàm, biến tĩnh/toàn cục tồn tại suốt chương trình
+* **Thay thế bằng cách khác:**
 
+  ◦ `#pragma once:` Đơn giản hơn header guards, chỉ cần một dòng để đảm bảo tệp header chỉ được nhúng một lần.
 
-#### **2.Toán tử**
+  ◦ VD:
 
-* **2.1.Toán tử số học:**
+        #pragma once
+        void my_function(void);
 
-  ◦ `+, -, *, /`: Cộng, trừ, nhân, chia. Lưu ý: Chia nguyên (int / int) cho kết quả nguyên, bỏ phần thập phân.
+#### **2. Macro Safety**
 
-  ◦ `%`: Lấy nguyên chia dư
-    ```
-	10 % 3 = 1
-    ```
-  ◦ Tăng,giảm : `++ (tăng 1)`, `-- (giảm 1)`. Có thể dùng `tiền tố (++i)` hoặc `hậu tố (i++)`
+* **Vấn đề với macro:**
 
-* **2.2.Toán tử logic:**
+  ◦ Macro là thay thế văn bản thuần túy, không kiểm tra kiểu dữ liệu hoặc ngữ nghĩa.  
 
-  ◦ `&&`:AND, đúng khi cả hai vế đúng
+  ◦ Dễ gây lỗi do ưu tiên toán tử nếu không sử dụng ngoặc hợp lý.
 
-  ◦ `||`:OR, đúng khi ít nhất một vế đúng.
+* **Nguyên tắc an toàn khi viết macro:**
 
-  ◦ `!`: NOT, đảo ngược giá trị logic.
+  ◦ Dùng ngoặc cho tham số và toàn bộ biểu thức 
 
-  ◦ `Short-circuit evaluation:` 
+        #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-    Với **&&**, nếu vế trái sai vế phải không được kiểm tra
+  ◦ Macro dài hoặc phức tạp khó debug. Thay vào đó, sử dụng hàm inline (C99 trở lên) để đảm bảo an toàn kiểu dữ liệu.
 
-	Với **||**, nếu vế trái đúng vế phải không kiểm tra
+        inline int max(int a, int b) {
+                return a > b ? a : b;
+        }
 
-  ```
-  int x = 0; y = 5;
-  if (x && y++) //y không tăng vì x = 0
-	printf("%d\n", y); // In 5
-  ```
+  ◦ Sử dụng #undef khi cần hủy định nghĩa macro nếu không còn cần thiết
 
-* **2.3.Toán tử so sánh:**
-
-  ◦ `==`,`!=`,`<`,`>`,`<=`, `>=` : Trả về 1 (đúng) , 0 (sai) 
-
-* **2.4.Toán tử gán:**
-
-  ◦ `=`: Gán giá trị
-
-  ◦ Toán tử ghép: `+=` , `-=`, `*=`, `/=`, `%=`
-
-* **2.5.Toán tử ưu tiên:**
-
-  ◦ Ưu tiên: `()` > `++`,`--` > `*`,`/`,`%` > `+`,`-` > so sánh > logic > gán
-
-  ◦ Dùng ngoặc `()` để điều chỉnh ưu tiên
+        #define TEMP 100
+        // Sử dụng TEMP
+        #undef TEMP
 
 
-#### **3.Câu lệnh điều kiện**
 
-* **3.1.if-else**
+* **Cách hoạt động:**
 
-  ◦ Thực thi mã dựa trên điều kiện.Có thể lồng nhau hoặc dùng else if để kiểm tra nhiều trường hợp.
+  ◦ `#ifndef MYHEADER_H`: Kiểm tra xem macro `MYHEADER_H` có được định nghĩa chưa.  
 
-   ```
-	if (score >= 90) {
-    printf("A\n");
-	} else if (score >= 70) {
-    printf("B\n");
-	} else {
-    printf("C\n");
-	}
-	```
+  ◦ Nếu chưa, định nghĩa `MYHEADER_H` và nhúng nội dung header.
 
-  ◦ Lưu ý: Tránh lỗi lặp lại điều kiện (VD: **if (x > 0) { if (x < 10) { ... } }** có thể gộp thành **if (x > 0 && x < 10)**).
-  
-* **3.2.switch-case**
+  ◦ Nếu đã được định nghĩa (do tệp header đã được nhúng trước đó), bỏ qua nội dung giữa `#ifndef` và `#endif.`
 
-  ◦ Dùng để xử lý nhiều trường hợp dựa trên giá trị nguyên hoặc ký tự
+* **Thay thế bằng cách khác:**
 
-  ◦ **break:** Ngăn các case thực thi liên tiếp
+  ◦ `#pragma once:` Đơn giản hơn header guards, chỉ cần một dòng để đảm bảo tệp header chỉ được nhúng một lần.
 
-  ◦ **default:** Xử lý các trường hợp không khớp
-  
-  ```
-  switch (day) {
-    case 1: printf("Monday\n"); break;
-    case 2: printf("Tuesday\n"); break;
-    default: printf("Invalid\n");
-	}
-  ```
+  ◦ VD:
 
-  ◦ Lưu ý: Nếu thiếu `break`, chương trình sẽ tiếp tục thực thi các case tiếp theo ("fall-through").
+        #pragma once
+        void my_function(void);
 
-* **3.3.Toán tử điều kiện**
+### **III. VD TỔNG HỢP**
 
-  ◦ C cung cấp **toán tử ba ngôi (?:)** để thay thế cho các câu lệnh if-else đơn giản.
 
-  ◦ Cú pháp
-  ```
-  condition ? expression1 : expression2
-  ```
-  VD:
-  ```
-  int age = 20;
-  printf("%s\n", age >= 18 ? "Adult" : "Minor"); // In Adult
-  ```
+        /* file: myheader.h */
+        #pragma once
+        #define MAX(a, b) ((a) > (b) ? (a) : (b))
+        void print_max(int a, int b);
 
-#### **4.Vòng lặp**
+        /* file: myheader.c */
+        #include "myheader.h"
+        #include <stdio.h>
+        void print_max(int a, int b) {
+            printf("Max of %d and %d is %d\n", a, b, MAX(a, b));
+        }
 
-* **4.1.for:**
+        /* file: main.c */
+        #include <stdio.h>
+        #include "myheader.h"
 
-  ◦ Dùng khi biết số lần lặp
+        #define DEBUG 1
 
-  ◦ Cú pháp: 
-  ```
-  for(khởi tạo; điều kiện; bước nhảy)
-  ```
-  
-  ```
-  for (int i = 0; i < 5; i++) {
-  printf("%d\n", i); // In 0, 1, 2, 3, 4
-  }
-  ```
+        int main() {
+            #if DEBUG
+                printf("Debug mode is ON\n");
+            #endif
 
-* **4.2.while:**
+            print_max(10, 20); // In: Max of 10 and 20 is 20
 
-  ◦ Lặp khi điều kiện đúng, kiểm tra trước khi thực thi
+            #if __STDC_VERSION__ < 201112L
+                #error "This program requires C11 or later"
+            #else
+                #warning "Check your configuration before running"
+            #endif
 
-  ```
-  	int i = 0;
-	while (i < 5) {
-    printf("%d\n", i);
-    i++;
-	}
-  ```
-* **4.3.do-while:**  
+            return 0;
+        }
 
-  ◦ Lặp ít nhất một lần, kiểm tra điều kiện sau khi thực thi.
-  
-  ```
-  	int i = 0;
-	do {
-    printf("%d\n", i);
-    i++;
-	} while (i < 5);
-  ```
 
-* **4.4.Điều khiển vòng lặp:**
+</details>
 
-  ◦ **break:** Thoát vòng lặp ngay lập tức.
+<details>
+	<summary><strong>PHẦN 2: CÚ PHÁP CƠ BẢN</strong></summary>
 
-  ◦ **continue:** Bỏ qua phần còn lại của vòng lặp hiện tại, chuyển sang lần lặp tiếp theo.
+## **PHẦN 2: CÚ PHÁP CƠ BẢN**
 
-  ```
-  for (int i = 0; i < 5; i++) {
-    if (i == 3) continue; // Bỏ qua i = 3
-    printf("%d\n", i); // In 0, 1, 2, 4
-	}
-  ```
+### **I. Biến và kiểu dữ liệu**
 
-#### **5.Hàm**
+#### **1. Biến**
 
-* **Định nghĩa:** Hàm là khối mã thực hiện nhiệm vụ cụ thể,giúp tái sử dụng và tổ chức mã tốt hơn
+* Là một tên gọi đại diện cho một vùng nhớ, được sử dụng để lưu trữ giá trị.
+
+* Mỗi biến có một kiểu dữ liệu xác định kích thước và cách lưu trữ trong bộ nhớ
+
+#### **2. Kiểu dữ liệu**
+
+##### **2.1. Phân loại kiểu dữ liệu**
+
+* C hỗ trợ các kiểu dữ liệu cơ bản (primitive), kiểu dữ liệu dẫn xuất (derived như mảng, con trỏ), và kiểu dữ liệu do người dùng định nghĩa (user-defined như struct, union, enum).
+
+##### **2.2. Kiểu dữ liệu cơ bản (Primitive Types)**
+
+*  **`int (Integer):`** Lưu trữ số nguyên (có dấu hoặc không dấu).
+
+    ◦ Kích thước: Thường 4 byte (32-bit) trên hệ thống 32/64-bit, nhưng phụ thuộc vào kiến trúc máy (xem <limits.h> để kiểm tra).
+
+    ◦ Phạm vi: -2^31 đến 2^31-1 (-2147483648 đến 2147483647); Unsigned: 0 đến 2^32-1.
+
+    ◦ Ứng dụng: Đếm, chỉ số mảng, vòng lặp.
+
+*  **`char (Character):`** Lưu trữ ký tự đơn hoặc số nguyên nhỏ.
+
+    ◦ Kích thước: Luôn 1 byte (8-bit).
+
+    ◦ Phạm vi: -128 đến 127; Unsigned: 0 đến 255.
+
+    ◦ Mã hóa: Thường dùng ASCII (ví dụ: 'A' = 65), hỗ trợ Unicode trong C11 với wchar_t.
+
+    ◦ Ứng dụng: Xử lý chuỗi ký tự, dữ liệu byte.
+
+*  **`float (Floating-point):`** Lưu trữ số thực dấu chấm động đơn chính xác
+
+    ◦ Kích thước: 4 byte.
+
+    ◦ Phạm vi: Khoảng 1.2E-38 đến 3.4E+38.
+
+    ◦ Độ chính xác: Khoảng 6-7 chữ số thập phân (IEEE 754 single-precision).
+
+    ◦ Ứng dụng: Tính toán khoa học cơ bản, đồ họa.
+
+*  **`double (Double-precision floating-point):`** Lưu trữ số thực độ chính xác cao.
+
+    ◦ Kích thước: 8 byte.
+
+    ◦ Phạm vi: Khoảng 2.3E-308 đến 1.7E+308.
+
+    ◦ Độ chính xác: Khoảng 15-16 chữ số thập phân (IEEE 754 double-precision).
+
+    ◦ Ứng dụng: Tính toán chính xác cao, mô phỏng khoa học.
+
+##### **2.3. Bộ sửa đổi kiểu dữ liệu (Type Modifiers)**
+
+*  **`short`** và **`long`**: Điều chỉnh kích thước của `int`.
+
+    ◦ `short int:` Thường 2 byte (-32768 đến 32767).
+
+    ◦ `long int:` 4 byte (trên 32-bit) hoặc 8 byte (trên 64-bit).
+
+    ◦ `long long int:` 8 byte (-2^63 đến 2^63-1).
+
+*  **`unsigned`**: Chỉ lưu giá trị không âm, tăng gấp đôi phạm vi dương.
+
+    ◦  Ví dụ: unsigned int: 0 đến 4,294,967,295.
+
+    ◦  Lưu ý: Tránh sử dụng với số âm để tránh lỗi undefined behavior.
+
+*  **`signed`**: Mặc định cho hầu hết kiểu, cho phép giá trị âm.
+
+##### **2.4. Constants và Qualifiers**
+
+*  **`const (Constant)`**: Biến không thể thay đổi giá trị sau khi khởi tạo.
+
+    ◦ Ứng dụng: Định nghĩa hằng số (constants) để tăng tính an toàn và đọc mã.
+
+    ◦ Ví dụ: `const int MAX_USERS = 100`;.
+
+    ◦ Lưu ý: Có thể dùng với con trỏ (ví dụ: const int* ptr - con trỏ trỏ đến dữ liệu không thay đổi).
+
+*  **`volatile (Volatile)`**: Chỉ thị rằng giá trị biến có thể thay đổi bất ngờ (ngoài luồng chương trình, như từ phần cứng hoặc đa luồng).
+
+    ◦  Ứng dụng: Lập trình nhúng, giao tiếp phần cứng (ví dụ: thanh ghi CPU).
+
+    ◦  Ví dụ: volatile int sensor_value; - Trình biên dịch không tối ưu hóa đọc/ghi biến này.
+
+    ◦  Lưu ý: Ngăn trình biên dịch cache giá trị trong thanh ghi.
+
+*  **`restrict (C99 trở lên)`**: Gợi ý rằng con trỏ là cách duy nhất truy cập dữ liệu, giúp trình biên dịch tối ưu hóa mã tốt hơn (giảm aliasing).
+
+    ◦  Ứng dụng: Trong hàm với nhiều con trỏ, tăng hiệu suất.
+
+    ◦  Ví dụ: void copy(int *restrict dest, const int *restrict src);.
+
+    ◦  Lưu ý: Chỉ là gợi ý, không thay đổi hành vi chương trình nếu sai.
+
+##### **2.5. Lưu ý**
+
+
+    ◦  Kích thước và phạm vi phụ thuộc vào trình biên dịch và kiến trúc (sử dụng sizeof() để kiểm tra).
+
+    ◦  Tràn số (overflow): Ví dụ, int vượt quá phạm vi dẫn đến undefined behavior.
+
+    ◦  Thư viện `<limits.h>` và `<float.h>` cung cấp macro cho phạm vi tối đa/min (ví dụ: `INT_MAX`).
+
+#### **3. Khai báo và khởi tạo**
+
+* **Khai báo:** Xác định kiểu và tên biến mà không gán giá trị ban đầu (giá trị mặc định là rác - garbage value).
+
+* **Khởi tạo:** Khai báo và gán giá trị ban đầu cùng lúc.
 
 * **Cú pháp:** 
-```
-return_type function_name(parameter_type parameter1, parameter_type parameter2) {
-    // Code
-    return value; // Nếu return_type không phải void
-}
-```
 
-vd:
-```
-int add(int a, int b) {
-    return a + b;
-}
-int main() {
-    printf("Sum: %d\n", add(3, 4)); // In 7
-    return 0;
-}
-```
+        kiểu_dữ_liệu tên_biến = giá_trị;
 
-* **Tham số:**
+* **VD:**
 
- ◦ **Pass-by-value:** Tham số được sao chép, hàm không thay đổi giá trị gốc
- 
- ◦ **Pass-by-reference:** Dùng con trỏ để thay đổi giá trị gốc
+        const float PI = 3.14159f; // f chỉ rõ literal là float, tránh cast ngầm.
 
-* **Hàm không tham số:**
+        volatile int sensor_value = 0; // Khởi tạo để tránh giá trị rác.
 
-```
-void say_hello() {
-    printf("Hello, World!\n");
-}
-```
+        int age = 25; // Số nguyên.
 
-* **Khai báo hàm(prototype):** Định nghĩa hàm trước main hoặc khai báo prototype ở đầu file
+        float height = 1.75f; // Số thực float.
 
-```
-int add(int, int); // Prototype
-int main() {
-    printf("%d\n", add(3, 4));
-    return 0;
-}
-int add(int a, int b) {
-    return a + b;
-}
-```
+        double large_num = 1.23e-4; // Ký hiệu khoa học (exponential notation): 1.23 * 10^-4.
 
-* **Biến tĩnh trong hàm:**
+        char grade = 'A'; // Ký tự đơn, dùng dấu nháy đơn.
 
- ◦ Dùng `static` để giữ giá trị giữa các lần gọi hàm.
+        unsigned long long big_num = 18446744073709551615ULL; // ULL chỉ rõ unsigned long long literal.
 
-```
-void counter() {
-    static int count = 0;
-    count++;
-    printf("Count: %d\n", count);
-}
-int main() {
-    counter(); // In 1
-    counter(); // In 2
-    return 0;
-}
-```
+* **Lưu ý:** 
 
-* **Hàm đệ quy:**
+    ◦ Khởi tạo biến cục bộ để tránh lỗi (giá trị rác).
 
- ◦ Hàm gọi chính nó để giải quyết vấn đề. Cần điều kiện dừng để tránh lặp vô hạn.
+    ◦ Biến toàn cục/toàn cục tĩnh mặc định là 0.
 
- ```
- int factorial(int n) {
-    if (n <= 1) return 1;
-    return n * factorial(n - 1);
- }
-  int main() {
-    printf("5! = %d\n", factorial(5)); // In 120
-    return 0;
-  }
- ```
+#### **4. Phạm vi và thời gian sống**
 
-* **Hàm inline:**
+* **Phạm vi (Scope):** Vùng mã nơi biến có thể được truy cập.
 
- ◦ Dùng từ khóa `inline` để gợi ý trình biên dịch chèn mã hàm trực tiếp vào nơi gọi, giảm chi phí gọi hàm.
+  ◦ **Cục bộ (Local Scope):** Trong hàm hoặc khối lệnh (block) { }. Chỉ tồn tại trong phạm vi đó.
 
- ```
- inline int square(int x) {
-    return x * x;
- }
- ```
-</details> 
+  ◦ **Toàn cục (Global Scope):** Khai báo ngoài hàm, có thể truy cập toàn chương trình.
+
+  ◦ **Tĩnh (Static Scope):** Sử dụng static để giữ phạm vi cục bộ nhưng thời gian sống toàn cục.
+
+  ◦ **Hàm (Function Scope):** Áp dụng cho nhãn (labels) trong goto.
+
+
+* **Thời gian sống (Lifetime):** Thời gian biến tồn tại trong bộ nhớ.
+
+  ◦ **Cục bộ (Automatic):** Tạo khi vào phạm vi, hủy khi thoát (stack allocation).
+
+  ◦ **Toàn cục/Toàn cục tĩnh:** Tồn tại suốt chương trình (data segment).
+
+  ◦ **Tĩnh cục bộ:** Giống toàn cục, nhưng chỉ truy cập trong hàm.
+
+  ◦ **Động (Dynamic):** Sử dụng `malloc()` để cấp phát, tồn tại đến khi `free()` (heap allocation).
+
+
+* **VD:**
+
+        #include <stdio.h>
+
+        int global_var = 10;       // Toàn cục, thời gian sống suốt chương trình
+        static int global_static = 20; // Toàn cục tĩnh, tương tự nhưng chỉ trong tệp này
+
+        void counter() {
+            static int count = 0;  // Tĩnh cục bộ: Phạm vi trong hàm, thời gian sống suốt chương trình
+            int local_var = 5;     // Cục bộ: Phạm vi trong hàm, hủy khi thoát hàm
+            count++;
+            printf("Count: %d, Local: %d\n", count, local_var);
+        }
+
+        int main() {
+            counter();  // In: Count: 1, Local: 5
+            counter();  // In: Count: 2, Local: 5 (local_var được tạo mới mỗi lần)
+            printf("Global: %d\n", global_var);  // In: 10
+            return 0;
+        }
+
+
+#### **5.Typedef và Enum**
+
+##### **5.1. Typedef**
+
+* **Định nghĩa:** Tạo bí danh (alias) cho kiểu dữ liệu hiện có, tăng tính đọc và bảo trì mã. Không tạo kiểu mới, chỉ đổi tên.
+
+* **Cú pháp:** `typedef kiểu_cũ tên_mới`;
+
+* **Ứng dụng:** Rút gọn kiểu phức tạp (ví dụ: struct, union), tăng tính portable.
+
+* **VD:**
+
+        typedef unsigned long ulong_t;
+        ulong_t large_num = 123456789UL;  // UL: Unsigned long literal
+
+##### **5.2. Enum (Enumeration)**
+
+* **Định nghĩa:** Định nghĩa tập hợp hằng số nguyên có tên, bắt đầu từ 0 mặc định.
+
+* **Cú pháp:** `enum { TEN1, TEN2, ... }; hoặc typedef enum { ... } ten_enum;`
+
+* **Ứng dụng:** Đại diện trạng thái, lựa chọn (ví dụ: ngày trong tuần), tăng tính đọc thay vì dùng số nguyên trực tiếp.
+
+* **VD:**
+
+        typedef enum { 
+            FALSE = 0, TRUE = 1 
+            } bool_t;
+
+        bool_t flag = TRUE;
+        printf("Flag: %d\n", flag);  // In: 1
+
+        enum Weekday { 
+            MON = 1, 
+            TUE, 
+            WED,
+            THU, 
+            FRI, 
+            SAT, 
+            SUN 
+            };
+        enum Weekday today = WED;    // Giá trị: 3
+
+### **II. Nhập/Xuất cơ bản**
+
+#### **1. Hàm printf**
+
+*  **Định nghĩa:** Hàm printf (print formatted) dùng để xuất dữ liệu ra thiết bị đầu ra chuẩn (thường là màn hình) với định dạng được chỉ định.
+
+*  **Cú pháp:** 
+
+        int printf(const char *format, ...);
+
+        ◦ `format`: Chuỗi định dạng, chứa văn bản và các đặc tả định dạng (format specifiers) như %d, %f.
+
+        ◦ `...`: Các tham số tương ứng với các đặc tả định dạng.
+
+        ◦ Giá trị trả về: Số ký tự được in (thành công) hoặc giá trị âm (lỗi).
+
+*  **Đặc tả định dạng (Format Specifiers):** 
+
+
+        ◦ `%d` hoặc `%i`: Số nguyên (int).
+
+        ◦ `%u`: Số nguyên không dấu (unsigned int).
+
+        ◦ `%f`: Số thực (float hoặc double, mặc định 6 chữ số thập phân).
+
+        ◦ `%lf`: Số thực double (dùng trong scanf, không cần trong printf)
+
+        ◦ `%c`: Ký tự (char).
+
+        ◦ `%s`: Chuỗi ký tự (string, kết thúc bằng \0).
+
+        ◦ `%p`: Con trỏ (địa chỉ, thường in dạng hex).
+
+        ◦ `%x` hoặc `%X`: Số nguyên dạng hex (chữ thường hoặc hoa).
+
+        ◦ `%o`: Số nguyên dạng bát phân (octal).
+
+        ◦ `%%`: In dấu %.       
+
+*  **Ký tự điều khiển đặc biệt:** 
+
+
+    ◦ Width: Chỉ định số ký tự tối thiểu để hiển thị
+
+        %10d: In số nguyên, chiếm 10 ký tự, căn phải (điền khoảng trắng bên trái).
+
+        %-10d: Căn trái, chiếm 10 ký tự.
+
+    ◦ Precision: Chỉ định số chữ số thập phân cho số thực hoặc độ dài chuỗi
+
+        %.2f: In float/double với 2 chữ số thập phân.
+
+        %.5s: In tối đa 5 ký tự của chuỗi.
+
+    ◦ Flags
+
+        -: Căn trái.
+
+        +: Luôn hiển thị dấu (+/-) cho số.
+
+        0: Điền số 0 thay vì khoảng trắng cho số.
+
+        #: Thêm tiền tố (ví dụ: 0x cho hex, 0 cho octal).
+
+    ◦ Dynamic width/precision
+
+        %*d: Độ rộng được cung cấp qua tham số (printf("%*d", 5, 42) in 42 với 5 ký tự).
+
+        %.*f: Độ chính xác được cung cấp qua tham số (printf("%.*f", 2, 3.14159) in 3.14).
+
+*  **VD:**
+
+        #include <stdio.h>
+        int main() {
+            int num = 123;
+            float pi = 3.14159;
+            printf("%-10s %10d\n", "Tên", num);     // In: Tên          123
+            printf("%+d %.2f\n", 42, pi);           // In: +42 3.14
+            printf("%*d\n", 5, num);                // In:    123
+            printf("%08d\n", num);                  // In: 00000123
+            printf("%#x\n", num);                   // In: 0x7b
+            return 0;
+        }
+
+#### **2. Hàm scanf**
+
+*  **Định nghĩa:** Hàm scanf (scan formatted) dùng để đọc dữ liệu từ đầu vào chuẩn (thường là bàn phím) dựa trên định dạng được chỉ định.
+
+*  **Cú pháp:** 
+
+        int scanf(const char *format, ...);
+
+        ◦ `format`: Chuỗi định dạng, tương tự printf nhưng yêu cầu địa chỉ biến (&biến).
+
+        ◦ `...`: Các con trỏ đến biến lưu giá trị nhập.
+
+        ◦ Giá trị trả về: Số lượng tham số được gán thành công, hoặc EOF (-1) nếu gặp lỗi hoặc hết dữ liệu.
+
+*  **Đặc tả định dạng (Format Specifiers):** 
+
+
+        ◦ `%d` hoặc `%i`: Số nguyên (int).
+
+        ◦ `%u`: Số nguyên không dấu (unsigned int).
+
+        ◦ `%f`: Số thực (float hoặc double, mặc định 6 chữ số thập phân).
+
+        ◦ `%lf`: bắt buộc cho double trong scanf.
+
+        ◦ `%c`: Đọc một ký tự, kể cả khoảng trắng hoặc \n.
+
+        ◦ `%s`: Đọc chuỗi đến khi gặp khoảng trắng hoặc \n (thêm \0 vào cuối).
+
+        ◦ `%p`: Con trỏ (địa chỉ, thường in dạng hex).
+
+        ◦ `%x` hoặc `%X`: Số nguyên dạng hex (chữ thường hoặc hoa).
+
+        ◦ `%o`: Số nguyên dạng bát phân (octal).
+
+        ◦ `%%`: In dấu %.       
+
+*  **Lưu ý:** 
+
+    ◦ Luôn sử dụng toán tử `&` để truyền địa chỉ biến (trừ `%s` với chuỗi vì mảng đã là con trỏ).
+
+    ◦ Kiểm tra giá trị trả về của scanf để xác nhận nhập thành công.
+
+    ◦ Ký tự khoảng trắng trong chuỗi định dạng (" %d %f") bỏ qua khoảng trắng hoặc ký tự xuống dòng..
+
+*  **Xử lý lỗi nhập:** 
+
+    ◦ Nhập sai định dạng (ví dụ: nhập chuỗi cho %d) khiến scanf trả về số lượng tham số nhỏ hơn mong đợi.
+
+    ◦ Bộ đệm (buffer) có thể giữ lại ký tự như \n, gây lỗi ở lần nhập tiếp theo.
+
+*  **Khắc phục bộ đệm:** 
+
+    ◦ Dùng vòng lặp để xóa bộ đệm:
+
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+    ◦ Hoặc thêm khoảng trắng vào định dạng: scanf(" %d", &num); (bỏ qua ký tự trắng).
+
+        #include <stdio.h>
+        int main() {
+            int num;
+            char ch;
+            printf("Nhập số và ký tự: ");
+            if (scanf("%d", &num) == 1) {
+                while ((ch = getchar()) != '\n' && ch != EOF); // Xóa bộ đệm
+                scanf("%c", &ch);
+                printf("Số: %d, Ký tự: %c\n", num, ch);
+            }
+            return 0;
+        }
+
+*  **VD:**
+
+        #include <stdio.h>
+        int main() {
+            int age;
+            float height;
+            printf("Nhập tuổi và chiều cao: ");
+            if (scanf("%d %f", &age, &height) == 2) {
+                printf("Tuổi: %d, Chiều cao: %.2f\n", age, height);
+            } else {
+                printf("Nhập lỗi!\n");
+            }
+            return 0;
+        }
+
+#### **3. Hàm getline**
+
+*  **Định nghĩa:** Hàm `getline` là một hàm POSIX (không thuộc chuẩn C, nhưng phổ biến trên Linux/Unix) dùng để đọc toàn bộ một dòng từ đầu vào (bao gồm cả khoảng trắng), tránh lỗi tràn bộ đệm khi dùng `%s` với `scanf`.
+
+*  **Cú pháp:** 
+
+        #include <stdio.h>
+        ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+
+        ◦ `lineptr`: Con trỏ tới bộ đệm động (tự cấp phát nếu NULL).
+
+        ◦ `n`: Kích thước bộ đệm (cập nhật nếu cấp phát lại).
+
+        ◦ `stream`: Luồng đầu vào (thường là stdin).
+
+        ◦ Giá trị trả về: Số ký tự đọc được (bao gồm \n), hoặc -1 nếu lỗi/hết dữ liệu.
+
+*  **Ưu điểm:** 
+
+    ◦ Tự động cấp phát bộ nhớ, tránh tràn bộ đệm (buffer overflow).
+
+    ◦ Đọc cả dòng, bao gồm khoảng trắng, không giống %s trong scanf.
+
+        #include <stdio.h>
+        #include <stdlib.h>
+        int main() {
+            char *line = NULL;  // Bộ đệm động
+            size_t len = 0;     // Kích thước bộ đệm
+            printf("Nhập chuỗi: ");
+            if (getline(&line, &len, stdin) != -1) {
+                printf("Bạn nhập: %s", line);
+            } else {
+                printf("Lỗi đọc dòng!\n");
+            }
+            free(line);  // Giải phóng bộ nhớ
+            return 0;
+        }
+
+*  **Lưu ý:** 
+
+
+    ◦ Luôn giải phóng bộ nhớ bằng free(line) sau khi dùng.
+
+    ◦ Thay thế: Dùng fgets trong chuẩn C để đọc dòng với kích thước cố định
+
+
+
+#### **4. Lỗi phổ biến và cách khắc phục**
+
+*  **Nhập sai định dạng:** 
+
+    ◦ Vấn đề: Người dùng nhập chuỗi (ví dụ: "abc") khi scanf mong đợi %d.
+
+    ◦ Hậu quả: scanf trả về số lượng tham số nhỏ hơn mong đợi, biến không được gán giá trị.
+
+    ◦ Khắc phục
+
+        int num;
+        while (scanf("%d", &num) != 1) {
+            printf("Vui lòng nhập số nguyên: ");
+            while (getchar() != '\n' && getchar() != EOF); // Xóa bộ đệm
+        }    
+
+*  **Bộ đệm lưu ký tự thừa:** 
+
+    ◦ Vấn đề: Ký tự \n hoặc khoảng trắng từ lần nhập trước còn sót trong bộ đệm, gây lỗi cho scanf hoặc getchar.
+
+    ◦ Hậu quả: Chương trình bỏ qua hoặc đọc sai dữ liệu.
+
+    ◦ Khắc phục: Xóa bộ đệm trước khi đọc
+
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);  
+
+*  **Tràn bộ đệm khi đọc chuỗi:** 
+
+    ◦ Vấn đề: `%s` trong `scanf` không giới hạn độ dài chuỗi, gây tràn bộ đệm.
+
+    ◦ Khắc phục: Chỉ định độ dài tối đa: scanf("%99s", str); (cho mảng char str[100]), sử dụng fgets hoặc getline thay thế.
+
+*  **Không kiểm tra giá trị trả về:** 
+
+    ◦ Vấn đề: Không kiểm tra kết quả của scanf hoặc getline, dẫn đến xử lý dữ liệu không hợp lệ.
+
+    ◦ Khắc phục: Luôn kiểm tra giá trị trả về (số tham số gán hoặc -1).
+
+</details>
+
 
 <details>
 	<summary><strong>PHẦN 2: Mảng và chuỗi</strong></summary>
