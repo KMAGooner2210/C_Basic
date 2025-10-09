@@ -635,3 +635,588 @@
         Stringified message: Program terminated
 
 </details>
+
+<details>
+	<summary><strong>CHƯƠNG 2: CÚ PHÁP CƠ BẢN</strong></summary>
+
+## **CHƯƠNG 2: CÚ PHÁP CƠ BẢN**
+
+### **I. Biến và kiểu dữ liệu**
+
+#### **1.1. Biến**
+
+##### **1.1.1. Định nghĩa**
+
+* **Biến** là một tên gọi (identifier) đại diện cho một vùng nhớ trong bộ nhớ máy tính, được sử dụng để lưu trữ giá trị.
+
+* Mỗi biến có một kiểu dữ liệu cụ thể, xác định:
+
+  ◦ **Kích thước vùng nhớ:** Số byte mà biến chiếm trong bộ nhớ (ví dụ: 4 byte cho int trên hệ thống 32/64-bit).
+
+  ◦ **Cách lưu trữ và giải thích dữ liệu:** Quy định cách giá trị được lưu trữ và sử dụng (ví dụ: số nguyên, số thực, ký tự).
+
+* Giá trị của biến có thể thay đổi trong quá trình thực thi chương trình, trừ khi biến được khai báo là hằng (`const`).
+
+##### **1.1.2. Quy tắc đặt tên biến**
+
+* **Ký tự bắt đầu:** 
+
+  ◦ Chữ cái (a-z hoặc A-Z).
+
+  ◦ Dấu gạch dưới (`_`).
+
+  ◦ Không được bắt đầu bằng số hoặc ký tự đặc biệt (ngoại trừ `_`).
+
+* **Ký tự tiếp theo:** 
+
+  ◦ Chữ cái (a-z, A-Z).
+
+  ◦ Số (0-9).
+
+  ◦ Dấu gạch dưới (`_`).
+
+* **Phân biệt hoa/thường:** 
+
+  ◦ Ngôn ngữ C phân biệt chữ hoa và chữ thường (case-sensitive). Ví dụ: `age` và `Age` là hai biến khác nhau.
+
+* **Không sử dụng từ khóa:** 
+
+  ◦ Tên biến không được trùng với các từ khóa của C, ví dụ: `int`, `return`, `if`, `while`, `for`, `switch`, v.v.
+
+* **Độ dài tên biến:** 
+
+  ◦ C không giới hạn độ dài tên biến, nhưng chỉ các ký tự đầu tiên (thường là 31 hoặc 63, tùy trình biên dịch) được sử dụng để phân biệt.
+
+
+##### **1.1.3. VD**
+
+* **Ví dụ tên biến hợp lệ:**
+
+        int age;
+        float _temperature;
+        char studentName;
+        unsigned long long total_count;
+
+  ◦ **Ví dụ tên biến không hợp lệ**
+
+        int 2age;        // Lỗi: Bắt đầu bằng số
+        int my-var;      // Lỗi: Chứa ký tự đặc biệt "-"
+        int return;      // Lỗi: Trùng từ khóa
+
+
+#### **1.2. Kiểu dữ liệu**
+
+##### **1.2.1. Kiểu dữ liệu cơ bản**
+
+* **int** 
+
+  ◦ **Mô tả:** Lưu trữ số nguyên (integer), không chứa phần thập phân.
+
+  ◦ **Kích thước:** Thường 4 byte trên hệ thống 32/64-bit (có thể thay đổi tùy trình biên dịch).
+
+  ◦ **Phạm vi:** 
+
+        Với signed int (mặc định): -2,147,483,648 đến 2,147,483,647 (cho 4 byte).
+
+        Với unsigned int: 0 đến 4,294,967,295.
+
+  ◦ **VD:** 
+
+        int count = 42;
+        unsigned int max = 1000U; // U chỉ rõ unsigned
+
+* **char** 
+
+  ◦ **Mô tả:** Lưu trữ ký tự, sử dụng mã ASCII (1 ký tự = 1 byte).
+
+  ◦ **Kích thước:** 1 byte.
+
+  ◦ **Phạm vi:** 
+
+        Với signed char: -128 đến 127.
+
+        Với unsigned char: 0 đến 255.
+
+  ◦ **VD:** 
+
+        char letter = 'A'; // Lưu ký tự 'A' (mã ASCII 65)
+        unsigned char code = 65; // Cũng lưu ký tự 'A'
+
+* **float** 
+
+  ◦ **Mô tả:** Lưu trữ số thực dấu chấm động (floating-point) với độ chính xác đơn.
+
+  ◦ **Kích thước:** 4 byte.
+
+  ◦ **Độ chính xác:** Khoảng 6-7 chữ số thập phân.
+
+  ◦ **VD:** 
+
+        float temperature = 36.6f; // f chỉ rõ kiểu float
+
+* **double** 
+
+  ◦ **Mô tả:** Lưu trữ số thực dấu chấm động với độ chính xác cao (double precision).
+
+  ◦ **Kích thước:** 8 byte.
+
+  ◦ **Độ chính xác:** Khoảng 15-16 chữ số thập phân.
+
+  ◦ **VD:** 
+
+        double pi = 3.14159265359;
+        double scientific = 1.23e-4; // Ký hiệu khoa học: 0.000123
+
+* **void** 
+
+  ◦ **Mô tả:** Không chứa giá trị. Được sử dụng trong:
+
+        Hàm không trả về giá trị (void function()).
+
+        Con trỏ tổng quát (void*), có thể trỏ đến bất kỳ kiểu dữ liệu nào.
+
+  ◦ **VD:** 
+
+        void printMessage() {
+            printf("Hello, World!\n");
+        }
+        void* ptr; // Con trỏ tổng quát
+
+* **_Bool** 
+
+  ◦ **Mô tả:** Kiểu dữ liệu boolean, lưu trữ giá trị 0 (false) hoặc 1 (true).
+
+  ◦ **Kích thước:** Thường 1 byte.
+
+  ◦ **Ứng dụng:** Sử dụng để biểu diễn giá trị logic.
+
+  ◦ **VD:** 
+
+        #include <stdbool.h>
+
+        _Bool flag1 = 1;        // C99
+        bool flag2 = true;      // Với stdbool.h
+
+##### **1.2.2. Xác định kích thước và phạm vi dữ liệu**
+
+* **Sử dụng toán tử sizeof:** 
+
+  ◦ sizeof là một toán tử trong C dùng để xác định kích thước (tính bằng byte) của một kiểu dữ liệu hoặc biến
+
+  ◦ Trả về kiểu `size_t` (kiểu không dấu)
+
+  ◦ Cú pháp: 
+
+        sizeof(type)      // Với kiểu dữ liệu
+        sizeof(variable)  // Với biến
+        sizeof expression // Với biểu thức
+
+  ◦ Ví dụ:
+
+        #include <stdio.h>
+
+        int main() {
+            int a = 10;
+            double b = 3.14;
+            char c = 'X';
+            
+            // Sử dụng với kiểu dữ liệu
+            printf("Kích thước int: %zu bytes\n", sizeof(int));
+            printf("Kích thước double: %zu bytes\n", sizeof(double));
+            printf("Kích thước char: %zu bytes\n", sizeof(char));
+            
+            // Sử dụng với biến
+            printf("Kích thước biến a: %zu bytes\n", sizeof(a));
+            printf("Kích thước biến b: %zu bytes\n", sizeof(b));
+            printf("Kích thước biến c: %zu bytes\n", sizeof(c));
+            
+            // Sử dụng với biểu thức
+            printf("Kích thước a + b: %zu bytes\n", sizeof(a + b));
+            
+            return 0;
+        }
+
+* **Sử dụng thư viện <limits.h>:** 
+
+  ◦ Thư viện <limits.h> chứa các hằng số định nghĩa giới hạn của các kiểu số nguyên
+
+  ◦ Cung cấp cả giá trị lớn nhất và nhỏ nhất cho mỗi kiểu
+
+  ◦ Các hằng số quan trọng trong `<limits.h>` cho kiểu char 
+
+        CHAR_BIT    // Số bit trong 1 byte (thường là 8)
+        CHAR_MIN    // Giá trị nhỏ nhất của char
+        CHAR_MAX    // Giá trị lớn nhất của char
+        SCHAR_MIN   // Giá trị nhỏ nhất của signed char
+        SCHAR_MAX   // Giá trị lớn nhất của signed char
+        UCHAR_MAX   // Giá trị lớn nhất của unsigned char
+
+  ◦ Các hằng số quan trọng trong `<limits.h>` cho kiểu int
+
+        INT_MIN     // Giá trị nhỏ nhất của int
+        INT_MAX     // Giá trị lớn nhất của int
+        UINT_MAX    // Giá trị lớn nhất của unsigned int
+        SHRT_MIN    // Giá trị nhỏ nhất của short int
+        SHRT_MAX    // Giá trị lớn nhất của short int
+        USHRT_MAX   // Giá trị lớn nhất của unsigned short int
+        LONG_MIN    // Giá trị nhỏ nhất của long int
+        LONG_MAX    // Giá trị lớn nhất của long int
+        ULONG_MAX   // Giá trị lớn nhất của unsigned long int
+        LLONG_MIN   // Giá trị nhỏ nhất của long long int (C99)
+        LLONG_MAX   // Giá trị lớn nhất của long long int (C99)
+        ULLONG_MAX  // Giá trị lớn nhất của unsigned long long int (C99)
+
+* **Sử dụng thư viện <float.h>:** 
+
+  ◦ Thư viện `<float.h>` chứa các hằng số định nghĩa giới hạn và đặc tính của các kiểu số thực
+
+  ◦ Cung cấp thông tin về độ chính xác, phạm vi, và các đặc tính khác
+
+  ◦ Các hằng số quan trọng trong `<float.h>` cho kiểu float 
+
+        FLT_MIN         // Số dương nhỏ nhất có thể biểu diễn
+        FLT_MAX         // Số dương lớn nhất có thể biểu diễn
+        FLT_EPSILON     // Chênh lệch nhỏ nhất giữa 1.0 và số tiếp theo
+        FLT_DIG         // Số chữ số thập phân có độ chính xác
+        FLT_MANT_DIG    // Số bit trong phần định trị (mantissa)
+
+  ◦ Các hằng số quan trọng trong `<float.h>` cho kiểu double
+
+        DBL_MIN         // Số dương nhỏ nhất có thể biểu diễn
+        DBL_MAX         // Số dương lớn nhất có thể biểu diễn
+        DBL_EPSILON     // Chênh lệch nhỏ nhất giữa 1.0 và số tiếp theo
+        DBL_DIG         // Số chữ số thập phân có độ chính xác
+        DBL_MANT_DIG    // Số bit trong phần định trị
+
+  ◦ Các hằng số quan trọng trong `<float.h>` cho kiểu long double
+
+        LDBL_MIN        // Số dương nhỏ nhất có thể biểu diễn
+        LDBL_MAX        // Số dương lớn nhất có thể biểu diễn
+        LDBL_EPSILON    // Chênh lệch nhỏ nhất giữa 1.0 và số tiếp theo
+        LDBL_DIG        // Số chữ số thập phân có độ chính xác
+        LDBL_MANT_DIG   // Số bit trong phần định trị
+
+##### **1.2.3. Bộ sửa đổi (Modifiers)**
+
+* **short và long:**
+
+  ◦ **Mô tả:** Điều chỉnh kích thước của kiểu int hoặc các kiểu khác.
+
+  ◦ **VD:**
+
+        short int: Thường 2 byte, phạm vi -32,768 đến 32,767.
+        long int: Thường 4 hoặc 8 byte (tùy hệ thống).
+        long long int: Thường 8 byte, phạm vi rất lớn.
+
+* **unsigned:**
+
+  ◦ **Mô tả:** Chỉ lưu trữ giá trị không âm, tăng phạm vi dương của kiểu dữ liệu.
+
+  ◦ **VD:**
+
+        unsigned int: 0 đến 4,294,967,295 (4 byte).
+        unsigned char: 0 đến 255.
+
+* **signed:**
+
+  ◦ **Mô tả:** Cho phép lưu trữ cả giá trị âm và dương. Đây là mặc định cho `int` và `char`.
+
+  ◦ **VD:**
+
+        signed int num = -42;
+
+##### **1.2.4. Constants và Qualifiers**
+
+* **const:**
+
+  ◦ **Mô tả:** Biến được khai báo với `const` không thể thay đổi giá trị sau khi khởi tạo.
+
+  ◦ **Ứng dụng:** Đảm bảo tính toàn vẹn dữ liệu, đặc biệt khi giá trị không cần thay đổi.
+
+  ◦ **Ví dụ:**
+
+        const int MAX = 100;
+        MAX = 200; // Lỗi: Không thể thay đổi giá trị của const
+
+
+* **volatile:**
+
+  ◦ **Mô tả:** Chỉ định rằng giá trị của biến có thể thay đổi ngoài sự kiểm soát của chương trình (ví dụ: bởi phần cứng, ngắt, hoặc hệ thống).
+
+  ◦ **Ứng dụng:** Thường dùng trong lập trình nhúng hoặc khi làm việc với phần cứng.
+
+  ◦ **Ví dụ:**
+
+        volatile int sensor_value; // Giá trị có thể thay đổi bất ngờ
+
+* **restrict:**
+
+  ◦ **Mô tả:** Gợi ý trình biên dịch rằng con trỏ là cách duy nhất để truy cập dữ liệu, giúp tối ưu hóa hiệu suất.
+
+  ◦ **Ứng dụng:** Tăng hiệu quả truy cập bộ nhớ trong các chương trình phức tạp.
+
+  ◦ **Ví dụ:**
+
+        int *restrict ptr; // Chỉ ptr có thể truy cập dữ liệu
+
+#### **1.3. Khai báo và khởi tạo**
+
+##### **1.3.1. Khai báo**
+
+* Khai báo là quá trình định nghĩa một biến với kiểu dữ liệu và tên, nhưng chưa gán giá trị.
+
+* Cú pháp:
+
+        <kiểu_dữ_liệu> <tên_biến>;
+
+* VD:
+
+        int age;
+        float height;
+        char grade;
+
+##### **1.3.2. Khởi tạo**
+
+* Khởi tạo là gán giá trị ban đầu cho biến khi khai báo.
+
+* Cú pháp:
+
+        <kiểu_dữ_liệu> <tên_biến> = <giá_trị>;
+
+* VD:
+
+        const float PI = 3.14159; // Hằng số
+        volatile int sensor_value = 0; // Biến có thể thay đổi bất ngờ
+        int age = 25;
+        float height = 1.75f; // f để chỉ rõ float
+        double large_num = 1.23e-4; // Ký hiệu khoa học
+        char grade = 'A';
+
+
+* Lưu ý:
+
+  ◦ Nếu biến không được khởi tạo:
+
+        Biến cục bộ: Giá trị là không xác định (undefined behavior, có thể là giá trị rác).
+
+        Biến toàn cục hoặc tĩnh: Tự động khởi tạo bằng 0.
+
+  ◦ Ví dụ:
+
+        void example() {
+            int uninitialized;    // Giá trị rác - undefined behavior
+            static int s_var;     // Tự động = 0
+            int initialized = 0;  // Luôn khởi tạo biến cục bộ!
+        }
+
+#### **1.4. Phạm vi và thời gian sống**
+
+##### **1.4.1. Phạm vi (Scope)**
+
+* **Cục bộ (Local):**
+
+  ◦ Biến được khai báo bên trong một hàm hoặc khối lệnh ({}).
+
+  ◦ Chỉ có thể truy cập trong phạm vi khai báo.
+
+  ◦ VD:
+
+        void example() {
+            int local_var = 10; // Biến cục bộ
+            printf("%d\n", local_var); // Hợp lệ
+        }
+        printf("%d\n", local_var); // Lỗi: local_var không tồn tại ngoài hàm
+
+* **Toàn cục (Global):**
+
+  ◦ Biến được khai báo bên ngoài tất cả các hàm.
+
+  ◦ Có thể truy cập từ bất kỳ đâu trong chương trình.
+
+  ◦ VD:
+
+        int global_var = 100; // Biến toàn cục
+        void example() {
+            printf("%d\n", global_var); // Hợp lệ
+        }
+
+* **Tĩnh (Static):**
+
+  ◦ Biến được khai báo với từ khóa static.
+
+  ◦ Chỉ có thể truy cập trong phạm vi khai báo, nhưng giữ giá trị giữa các lần gọi hàm.
+
+  ◦ Phân biệt static toàn cục và cục bộ:
+
+        static int file_scope_var = 0; // Chỉ visible trong file hiện tại (toàn cục tĩnh)
+
+        void func() {
+            static int local_static = 0; // Chỉ visible trong hàm này (cục bộ tĩnh)
+            local_static++;
+        }
+
+
+##### **1.4.2. Thời gian sống (Lifetime)**
+
+* **Cục bộ (Local):**
+
+  ◦ Biến cục bộ được tạo khi vào phạm vi (scope) và bị hủy khi thoát khỏi phạm vi.
+
+  ◦ VD:
+
+        void example() {
+            int temp = 5; // temp tồn tại trong hàm
+            printf("%d\n", temp);
+        } // temp bị hủy khi hàm kết thúc
+
+* **Toàn cục/Tĩnh:**
+
+  ◦ Biến toàn cục và biến tĩnh tồn tại suốt thời gian chạy của chương trình.
+
+  ◦ VD:
+
+        static int global_count = 0; // Tồn tại suốt chương trình
+        void counter() {
+            static int count = 0; // Tồn tại suốt chương trình
+            count++;
+            printf("Count: %d\n", count);
+        }
+
+* **VD MINH HỌA:**
+
+        #include <stdio.h>
+        static int global_count = 0; // Biến toàn cục tĩnh
+
+        void counter() {
+            static int count = 0; // Biến tĩnh, giữ giá trị
+            count++;
+            printf("Count: %d\n", count);
+        }
+
+        int main() {
+            counter(); // In: 1
+            counter(); // In: 2
+            printf("Global count: %d\n", global_count);
+            return 0;
+        }
+
+
+#### **1.5. Typedef và Enum**
+
+##### **1.5.1. Typedef**
+
+* **Mô tả:**
+
+  ◦ `typedef` cho phép tạo bí danh (alias) cho các kiểu dữ liệu, giúp mã nguồn dễ đọc và bảo trì hơn.
+
+  ◦ Cú pháp:
+
+        typedef <kiểu_dữ_liệu> <tên_bí_danh>;
+
+* **Ví dụ:**
+
+        typedef unsigned long ulong_t;
+        ulong_t large_num = 123456789UL; // UL chỉ rõ unsigned long
+        printf("%lu\n", large_num);
+
+##### **1.5.2. Enum**
+
+* **Mô tả:**
+
+  ◦ Enum (viết tắt của enumeration) là một kiểu dữ liệu do người dùng định nghĩa trong C, được sử dụng để tạo một tập hợp các hằng số nguyên có tên (còn gọi là enumerators).
+
+  ◦ Mỗi hằng số trong enum được gán một giá trị nguyên (int), giúp tăng tính rõ ràng và dễ đọc của mã nguồn, đặc biệt khi làm việc với các giá trị cố định hoặc trạng thái có ý nghĩa cụ thể.
+
+  ◦ Enum thường được dùng để biểu diễn các tập hợp giá trị liên quan đến nhau, ví dụ: ngày trong tuần, trạng thái, màu sắc, hoặc các mã trạng thái.
+
+  ◦ Cú pháp:
+
+        enum <tên_enum> { 
+            <danh_sách_hằng_số> 
+            };
+        
+        <tên_enum>: Tên của kiểu enum, được sử dụng để khai báo biến.
+        <danh_sách_hằng_số>: Các hằng số nguyên, cách nhau bởi dấu phẩy.
+
+* **Cách hoạt động của Enum:**
+
+  ◦ Gán giá trị cho hằng số
+
+        Mỗi hằng số trong enum được gán một giá trị nguyên (int). Theo mặc định:
+
+        Hằng số đầu tiên được gán giá trị 0.
+
+        Các hằng số tiếp theo được gán giá trị tăng dần (tăng thêm 1 so với hằng số trước đó).
+
+        Người dùng có thể tự gán giá trị cụ thể cho bất kỳ hằng số nào, và các hằng số tiếp theo sẽ tiếp tục tăng từ giá trị đó.
+
+  ◦ VD:
+
+        VD mặc định
+
+        enum Day { 
+            SUN, MON, TUE, WED, THU, FRI, SAT 
+            };
+        // Giá trị: SUN = 0, MON = 1, TUE = 2, WED = 3, THU = 4, FRI = 5, SAT = 6
+
+        VD gán giá trị cụ thể:
+
+        enum Week { 
+            SUN = 1, MON, TUE, WED, THU, FRI, SAT 
+            };
+        // Giá trị: SUN = 1, MON = 2, TUE = 3, WED = 4, THU = 5, FRI = 6, SAT = 7
+
+        VD gán giá trị không liên tiếp:
+
+        enum Status { OFF = 0, ON = 1, ERROR = -1, UNKNOWN = 99 };
+        // Giá trị: OFF = 0, ON = 1, ERROR = -1, UNKNOWN = 99
+
+* **Kiểu dữ liệu của Enum:**
+
+  ◦ Các hằng số trong enum có kiểu dữ liệu là int. Do đó, biến kiểu enum có thể được sử dụng trong các phép toán số học hoặc so sánh như các biến int thông thường.
+
+        #include <stdio.h>
+
+        enum Day { SUN, MON, TUE, WED, THU, FRI, SAT };
+
+        int main() {
+            enum Day today = MON;
+            printf("Today is: %d\n", today); // In: 1 (giá trị của MON)
+            if (today == 1) {
+                printf("It's Monday!\n");
+            }
+            return 0;
+        }
+
+* **Kết hợp với typedef:**
+
+  ◦ Để tăng tính gọn gàng và dễ sử dụng, enum thường được kết hợp với typedef để tạo bí danh cho kiểu enum.
+
+  ◦ Điều này giúp lược bỏ từ khóa enum khi khai báo biến.
+
+        typedef enum { 
+            FALSE, 
+            TRUE
+             } bool_t;
+        bool_t flag = TRUE;
+        printf("Flag: %d\n", flag); // In: 1
+
+* **Kích thước của Enum:**
+
+  ◦ Kích thước của một biến enum thường bằng kích thước của int (thường là 4 byte trên hệ thống 32/64-bit).
+
+  ◦ Để kiểm tra kích thước, sử dụng toán tử sizeof.
+
+        #include <stdio.h>
+
+        enum Day { SUN, MON, TUE };
+
+        int main() {
+            enum Day today = MON;
+            printf("Size of enum Day: %zu bytes\n", sizeof(today)); // Thường in: 4
+            return 0;
+        }
+
+
+
+</details>
