@@ -1217,6 +1217,450 @@
             return 0;
         }
 
+### **II. Nhập/xuất cơ bản**
 
+#### **2.1. Hàm printf**
+
+##### **2.1.1. Định nghĩa**
+
+* **Hàm printf (print formatted)** được sử dụng để in dữ liệu ra màn hình hoặc thiết bị đầu ra chuẩn (stdout) theo định dạng được chỉ định.
+
+* Hàm này thuộc thư viện chuẩn `<stdio.h>` và là một trong những hàm phổ biến nhất trong C để hiển thị dữ liệu.
+
+* **Cú pháp:**
+
+        int printf(const char *format, ...);
+
+  ◦ **format:** Chuỗi định dạng, chứa văn bản và các ký tự định dạng (`%`).
+
+  ◦ `...`: Danh sách các đối số tương ứng với các ký tự định dạng.
+
+  ◦ **Giá trị trả về:** Số ký tự được in ra (không tính ký tự null \0). Trả về giá trị âm nếu có lỗi.
+
+##### **2.1.2. Ký tự định dạng (Format Specifiers)**
+
+
+
+
+| Ký tự định dạng | Kiểu dữ liệu | Mô tả |
+|:---------------:|:------------:|:------|
+| %d hoặc %i | int | Số nguyên có dấu |
+| %u | unsigned int | Số nguyên không dấu |
+| %f | float | Số thực dấu chấm động |
+| %lf | double | Số thực dấu chấm động độ chính xác cao |
+| %c | char | Ký tự đơn |
+| %s | char* | Chuỗi ký tự (kết thúc bằng \0) |
+| %x hoặc %X | int | Số nguyên hiển thị dưới dạng hexa |
+| %o | int | Số nguyên hiển thị dưới dạng bát phân |
+| %p | void* | Địa chỉ con trỏ |
+
+
+##### **2.1.3. Ký tự đặc biệt**
+
+* **Một số ký tự đặc biệt thường được sử dụng trong chuỗi định dạng:** 
+
+  ◦ `\n`: Xuống dòng (newline).
+
+  ◦ `\t`: Ký tự tab ngang.
+
+  ◦ `\\`: Hiển thị dấu gạch chéo ngược (`\`).
+
+  ◦ `\"`: Hiển thị dấu nháy kép (").
+
+  ◦ `\0`: Ký tự null (kết thúc chuỗi).
+
+* **VD:** 
+
+        printf("Hello\nWorld\t!"); // In: Hello
+                                //     World    !
+
+
+##### **2.1.4. Formatted I/O Flags**
+
+* `printf` hỗ trợ các cờ (flags), độ rộng (width), và độ chính xác (precision) để tùy chỉnh cách hiển thị dữ liệu.
+
+* **Width:** Chỉ định số ký tự tối thiểu để hiển thị.
+
+  ◦ `%10d`: Chiếm ít nhất 10 ký tự, căn phải (mặc định).
+
+  ◦ `%-10d`: Chiếm 10 ký tự, căn trái.
+
+* **Precision:** Chỉ định số chữ số thập phân (cho kiểu `float`/`double`) hoặc độ dài chuỗi tối đa (cho `%s`).
+
+  ◦ `%.2f`: Hiển thị 2 chữ số thập phân.
+
+  ◦ `%.5s`: Hiển thị tối đa 5 ký tự của chuỗi.
+
+* **Flags:** 
+
+  ◦ `-`: Căn trái.
+
+  ◦ `+`: Luôn hiển thị dấu (+ hoặc -) cho số có dấu.
+
+  ◦ `0`: Điền số 0 vào các vị trí trống (thay vì khoảng trắng).
+
+  ◦ `#`: Thêm tiền tố (ví dụ: `0x` cho hexa, `0` cho bát phân).
+
+* **Precision:** Chỉ định số chữ số thập phân (cho kiểu `float`/`double`) hoặc độ dài chuỗi tối đa (cho `%s`).
+
+  ◦ `%.2f`: Hiển thị 2 chữ số thập phân.
+
+  ◦ `%.5s`: Hiển thị tối đa 5 ký tự của chuỗi.
+
+* **Dynamic width/precision:** Sử dụng * để truyền độ rộng hoặc độ chính xác qua đối số.
+
+  ◦ `%*d`: Độ rộng được cung cấp bởi một đối số kiểu int.
+
+  ◦ `%.*f`: Độ chính xác được cung cấp bởi một đối số kiểu int.
+
+* **VD:**
+
+        #include <stdio.h>
+
+        int main() {
+            printf("%-10s %10d\n", "Tên", 123);     // In: Tên          123
+            printf("%+d %.2f\n", 42, 3.14159);      // In: +42 3.14
+            printf("%0*d\n", 5, 42);                // In: 00042
+            printf("%*d\n", 5, 42);                 // In:    42
+            printf("%.*f\n", 3, 3.14159);           // In: 3.142
+            return 0;
+        }
+
+
+#### **2.2. Hàm scanf**
+
+##### **2.2.1. Định nghĩa**
+
+* **Hàm scanf (scan formatted)** được sử dụng để đọc dữ liệu từ bàn phím hoặc thiết bị đầu vào chuẩn (stdin) theo định dạng được chỉ định.
+
+* Hàm này thuộc thư viện `<stdio.h>`.
+
+* **Cú pháp:**
+
+        int scanf(const char *format, ...);
+
+  ◦ **format:** Chuỗi định dạng, tương tự như printf, xác định kiểu dữ liệu cần đọc.
+
+  ◦ `...`: Các con trỏ đến biến nơi dữ liệu sẽ được lưu trữ (thường cần dấu `&`, trừ `%s`).
+
+  ◦ **Giá trị trả về:** Số lượng đối số được đọc thành công. Nếu lỗi hoặc hết đầu vào (EOF), trả về giá trị nhỏ hơn số đối số mong đợi hoặc `-1`.
+
+##### **2.2.2. Ký tự định dạng (Format Specifiers)**
+
+* **Một số ký tự đặc biệt thường được sử dụng trong chuỗi định dạng:**
+
+    ◦ `%d`: Đọc số nguyên (`int`).
+
+    ◦  `%u`: Đọc số nguyên không dấu (`unsigned int`).
+
+    ◦  `%f`: Đọc số thực (`float`).
+
+    ◦  `%lf`: Đọc số thực độ chính xác cao (double).
+
+    ◦  `%c`: Đọc ký tự đơn.
+
+    ◦  `%s`: Đọc chuỗi ký tự (kết thúc bằng khoảng trắng hoặc \n).
+
+* **Lưu ý:**
+
+    ◦  Sử dụng dấu &
+
+        Khi đọc dữ liệu vào biến (trừ %s), cần truyền địa chỉ của biến bằng toán tử &.
+
+        Với %s, chỉ cần truyền con trỏ đến mảng ký tự (không cần &).
+
+    ◦  Kiểm tra giá trị trả về
+
+        Hàm scanf trả về số lượng đối số được đọc thành công. Kiểm tra giá trị này để phát hiện lỗi nhập liệu.
+
+    ◦  Ký tự khoảng trắng
+
+        scanf bỏ qua khoảng trắng (space, tab, newline) khi đọc số hoặc chuỗi, nhưng giữ lại khi đọc %c.
+
+        Điều này có thể gây lỗi nếu ký tự \n sót lại trong bộ đệm.
+
+        #include <stdio.h>
+
+        int main() {
+            int age;
+            float height;
+            printf("Nhập tuổi và chiều cao: ");
+            if (scanf("%d %f", &age, &height) == 2) {
+                printf("Tuổi: %d, Chiều cao: %.2f\n", age, height);
+            } else {
+                printf("Nhập lỗi!\n");
+            }
+            return 0;
+        }
+
+##### **2.2.3. Xử lý lỗi nhập liệu**
+
+* **Nhập sai định dạng:** Nếu người dùng nhập chuỗi vào %d, scanf sẽ thất bại và không gán giá trị cho biến.
+
+* **Ký tự thừa trong bộ đệm:** Ký tự \n hoặc các ký tự khác có thể sót lại trong bộ đệm đầu vào, gây lỗi khi đọc dữ liệu tiếp theo.
+
+* **Khắc phục:** 
+
+  ◦ Xóa bộ đệm trước khi đọc dữ liệu mới
+
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+  ◦ Hoặc sử dụng %*c trong scanf để bỏ qua ký tự cụ thể
+
+        scanf("%d%*c", &age); // Bỏ qua ký tự sau số
+
+
+* **Ví dụ xử lý bộ đệm:** 
+
+        #include <stdio.h>
+
+        int main() {
+            int age;
+            char grade;
+            printf("Nhập tuổi: ");
+            scanf("%d", &age);
+            // Xóa bộ đệm
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF);
+            printf("Nhập cấp độ (A/B/C): ");
+            scanf("%c", &grade);
+            printf("Tuổi: %d, Cấp độ: %c\n", age, grade);
+            return 0;
+        }
+
+
+#### **2.3. Hàm getline (POSIX)**
+
+##### **2.3.1. Định nghĩa**
+
+* **Hàm getline** là một hàm POSIX (không thuộc chuẩn C ANSI) dùng để đọc cả một dòng từ đầu vào (thường là stdin), tránh lỗi tràn bộ đệm (buffer overflow) thường gặp với `scanf` khi đọc chuỗi.
+
+* Hàm này thuộc thư viện <stdio.h> và yêu cầu hỗ trợ POSIX (ví dụ: Linux, macOS).
+
+* **Cú pháp:**
+
+        ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+
+  ◦ **lineptr:** Con trỏ đến con trỏ kiểu `char`, nơi lưu trữ chuỗi đọc được. Bộ nhớ sẽ được cấp phát động nếu cần.
+
+  ◦ `n`: Con trỏ đến kích thước bộ đệm. Hàm sẽ cập nhật kích thước nếu cấp phát lại bộ nhớ.
+
+  ◦ **stream:** Luồng đầu vào (thường là `stdin`).
+
+  ◦ Giá trị trả về: Số ký tự đọc được (bao gồm `\n`) hoặc `-1` nếu có lỗi hoặc hết đầu vào (EOF).
+
+* **Đặc điểm**
+
+  ◦ Tự động cấp phát bộ nhớ: Nếu `lineptr` là `NULL` và `*n` là 0, `getline` sẽ cấp phát bộ nhớ động.
+
+  ◦ An toàn hơn `scanf`: Không giới hạn độ dài chuỗi, tránh tràn bộ đệm.
+
+  ◦ Yêu cầu giải phóng bộ nhớ: Người dùng phải gọi `free` để giải phóng bộ nhớ được cấp phát.
+
+
+        #include <stdio.h>
+        #include <stdlib.h>
+
+        int main() {
+            char *line = NULL;
+            size_t len = 0;
+            printf("Nhập chuỗi: ");
+            if (getline(&line, &len, stdin) != -1) {
+                printf("Bạn nhập: %s", line);
+            } else {
+                printf("Lỗi đọc dòng!\n");
+            }
+            free(line); // Giải phóng bộ nhớ
+            return 0;
+        }
+
+##### **2.3.2. Ký tự định dạng (Format Specifiers)**
+
+* **Một số ký tự đặc biệt thường được sử dụng trong chuỗi định dạng:**
+
+    ◦ `%d`: Đọc số nguyên (`int`).
+
+    ◦  `%u`: Đọc số nguyên không dấu (`unsigned int`).
+
+    ◦  `%f`: Đọc số thực (`float`).
+
+    ◦  `%lf`: Đọc số thực độ chính xác cao (double).
+
+    ◦  `%c`: Đọc ký tự đơn.
+
+    ◦  `%s`: Đọc chuỗi ký tự (kết thúc bằng khoảng trắng hoặc \n).
+
+* **Lưu ý:**
+
+    ◦  Sử dụng dấu &
+
+        Khi đọc dữ liệu vào biến (trừ %s), cần truyền địa chỉ của biến bằng toán tử &.
+
+        Với %s, chỉ cần truyền con trỏ đến mảng ký tự (không cần &).
+
+    ◦  Kiểm tra giá trị trả về
+
+        Hàm scanf trả về số lượng đối số được đọc thành công. Kiểm tra giá trị này để phát hiện lỗi nhập liệu.
+
+    ◦  Ký tự khoảng trắng
+
+        scanf bỏ qua khoảng trắng (space, tab, newline) khi đọc số hoặc chuỗi, nhưng giữ lại khi đọc %c.
+
+        Điều này có thể gây lỗi nếu ký tự \n sót lại trong bộ đệm.
+
+        #include <stdio.h>
+
+        int main() {
+            int age;
+            float height;
+            printf("Nhập tuổi và chiều cao: ");
+            if (scanf("%d %f", &age, &height) == 2) {
+                printf("Tuổi: %d, Chiều cao: %.2f\n", age, height);
+            } else {
+                printf("Nhập lỗi!\n");
+            }
+            return 0;
+        }
+
+#### **2.4. Lỗi phổ biến và cách khắc phục**
+
+##### **2.4.1. Nhập sai định dạng**
+
+* **Vấn đề:** Người dùng nhập dữ liệu không khớp với định dạng được chỉ định (ví dụ: nhập chuỗi "abc" vào %d).
+
+* **Hậu quả:** scanf thất bại, không gán giá trị cho biến, và có thể để lại dữ liệu trong bộ đệm.
+
+* **Khắc phục:**
+
+  ◦ Kiểm tra giá trị trả về của scanf:
+
+        if (scanf("%d", &num) != 1) {
+            printf("Nhập sai định dạng!\n");
+        }
+
+  ◦ Xóa bộ đệm sau khi đọc thất bại
+
+        while ((c = getchar()) != '\n' && c != EOF);
+
+##### **2.4.2. Bộ đệm đầu vào (Input Buffer)**
+
+* **Vấn đề:** Ký tự `\n` hoặc các ký tự khác sót lại trong bộ đệm sau khi sử dụng `scanf`, gây lỗi khi đọc dữ liệu tiếp theo (đặc biệt với %c).
+
+* **Hậu quả:** Các lệnh `scanf` sau có thể đọc nhầm ký tự còn sót lại thay vì dữ liệu mới.
+
+* **Khắc phục:**
+
+  ◦ Xóa bộ đệm trước khi đọc dữ liệu mới:
+
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+  ◦ Sử dụng %*c để bỏ qua ký tự không mong muốn
+
+        scanf("%d%*c", &num);
+
+  ◦ Sử dụng `getline` hoặc `fgets` để đọc cả dòng và xử lý sau.
+
+
+        #include <stdio.h>
+
+        int main() {
+            int age;
+            char grade;
+            printf("Nhập tuổi: ");
+            scanf("%d", &age);
+            // Không xóa bộ đệm, scanf tiếp theo có thể đọc '\n'
+            printf("Nhập cấp độ (A/B/C): ");
+            scanf("%c", &grade); // Có thể đọc nhầm '\n'
+            printf("Tuổi: %d, Cấp độ: %c\n", age, grade);
+
+            // Cách khắc phục
+            printf("\nNhập lại tuổi: ");
+            scanf("%d", &age);
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF); // Xóa bộ đệm
+            printf("Nhập lại cấp độ (A/B/C): ");
+            scanf("%c", &grade);
+            printf("Tuổi: %d, Cấp độ: %c\n", age, grade);
+            return 0;
+        }
+
+##### **2.4.3. Tràn bộ đệm khi đọc chuỗi**
+
+* **Vấn đề:** Sử dụng `scanf` với `%s` mà không giới hạn độ dài chuỗi có thể gây tràn bộ đệm.
+
+* **Khắc phục:**
+
+  ◦ Sử dụng `%ns` để giới hạn số ký tự đọc:
+
+        char buffer[20];
+        scanf("%19s", buffer); // Đọc tối đa 19 ký tự, để chừa chỗ cho '\0'
+
+  ◦ Sử dụng `fgets` hoặc `getline` để đọc chuỗi an toàn hơn.
+
+##### **2.4.4. EOF và lỗi đầu vào**
+
+* **Vấn đề:** Người dùng nhập EOF (Ctrl+D trên Linux, Ctrl+Z trên Windows) hoặc đầu vào bị lỗi.
+
+* **Khắc phục:**
+
+  ◦ Kiểm tra giá trị trả về của `scanf` hoặc `getline` để xử lý trường hợp EOF hoặc lỗi.
+
+#### **2.5. Hàm xuất**
+
+##### **2.5.1. Hàm puts**
+
+* In chuỗi ra stdout và tự động thêm `\n`.
+
+* **Cú pháp:**
+
+        int puts(const char *s);
+
+* **VD:**
+
+        puts("Hello, World!"); // In: Hello, World! (với \n)
+
+##### **2.5.2. Hàm putchar**
+
+* In một ký tự ra stdout.
+
+* **Cú pháp:**
+
+        int putchar(int c);
+
+* **VD:**
+
+        putchar('A'); // In: A
+
+#### **2.6. Hàm nhập**
+
+##### **2.6.1. Hàm fgets**
+
+* Đọc một dòng hoặc số ký tự cụ thể từ một luồng (thường là stdin).
+
+* **Cú pháp:**
+
+        char *fgets(char *s, int size, FILE *stream);
+
+* **VD:**
+
+        char buffer[100];
+        if (fgets(buffer, 100, stdin)) {
+            printf("Bạn nhập: %s", buffer);
+        }
+
+##### **2.6.2. Hàm getchar**
+
+* Đọc một ký tự từ stdin.
+
+* **Cú pháp:**
+
+        int getchar(void);
+
+* **VD:**
+
+        int c = getchar();
+        printf("Ký tự nhập: %c\n", c);
 
 </details>
