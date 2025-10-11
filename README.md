@@ -1662,5 +1662,1172 @@
 
         int c = getchar();
         printf("Ký tự nhập: %c\n", c);
+### **III. Toán tử**
+
+#### **3.1. Toán tử số học**
+
+##### **3.1.1. Định nghĩa**
+
+* **Cộng (+):** Cộng hai giá trị.
+
+* **Trừ (-):** Trừ hai giá trị.
+
+* **Nhân (*):** Nhân hai giá trị.
+
+* **Chia (/):** Chia hai giá trị.
+
+  ◦ Khi cả hai toán hạng là kiểu int, kết quả sẽ bỏ phần thập phân (ví dụ: 7 / 2 = 3).
+
+  ◦ Với kiểu float hoặc double, kết quả sẽ bao gồm phần thập phân (ví dụ: 7.0 / 2 = 3.5).
+
+* **Chia lấy dư (%):** Trả về phần dư của phép chia (chỉ áp dụng cho kiểu int).
+
+  ◦ Ví dụ: 7 % 3 = 1.
+
+* **Tăng 1 (++):** Tăng giá trị biến lên 1
+
+  ◦ **Tiền tố (++i):** Tăng giá trị trước khi sử dụng.
+
+  ◦ **Hậu tố (i++):** Sử dụng giá trị hiện tại, sau đó tăng.
+
+* **Giảm 1 (--):** Giảm giá trị biến xuống 1
+
+  ◦ **Tiền tố (--i):** Giảm giá trị trước khi sử dụng.
+
+  ◦ **Hậu tố (i++):** Sử dụng giá trị hiện tại, sau đó giảm.
+
+##### **3.1.2. VD**
+
+        #include <stdio.h>
+        int main() {
+            int a = 10, b = 3;
+            printf("Cộng: %d\n", a + b);     // 13
+            printf("Trừ: %d\n", a - b);      // 7
+            printf("Nhân: %d\n", a * b);     // 30
+            printf("Chia: %d\n", a / b);     // 3 (bỏ phần thập phân)
+            printf("Chia lấy dư: %d\n", a % b); // 1
+            printf("Tiền tố ++a: %d\n", ++a);   // 11 (tăng trước, in 11)
+            printf("Hậu tố b++: %d\n", b++);    // 3 (in trước, tăng thành 4)
+            printf("Giá trị b sau: %d\n", b);   // 4
+            return 0;
+        }
+
+* **Lưu ý:**
+
+  ◦ Phép chia với số 0 sẽ gây lỗi (undefined behavior).
+
+  ◦ Toán tử tăng/giảm hậu tố có thể gây nhầm lẫn nếu dùng trong biểu thức phức tạp (ví dụ: a = i++ + i; là không rõ ràng).
+
+#### **3.2. Toán tử Logic**
+
+##### **3.2.1. Định nghĩa**
+
+* **Toán tử logic thực hiện các phép toán logic trên các giá trị boolean (0 là sai, khác 0 là đúng).**
+
+* Các toán tử này thường được sử dụng trong các biểu thức điều kiện để kiểm tra nhiều điều kiện cùng lúc, giúp quyết định luồng thực thi của chương trình.
+
+##### **3.2.2. Các toán tử chính**
+
+* **AND (&&):** Trả về `1` nếu cả hai vế đều đúng.
+
+* **OR (||):** Phép toán logic "hoặc". Trả về `1` (true) nếu ít nhất một vế đúng. Chỉ sai khi cả hai vế đều sai.
+
+* **NOT (!):** Phép toán logic "phủ định". Đảo ngược giá trị: `!0` = `1`, và `!non-zero` = `0`.
+
+* **Short-circuit evaluation**
+
+  ◦ **Với &&:** Nếu vế trái là sai (`0`), vế phải không được thực thi, vì toàn bộ biểu thức đã sai..
+
+  ◦ **Với ||:** Nếu vế trái là đúng (khác `0`), vế phải không được thực thi, vì toàn bộ biểu thức đã đúng.
+
+##### **3.2.3. Ứng dụng**
+
+* Kiểm tra điều kiện an toàn: `if (ptr != NULL && *ptr > 0)` – tránh dereference con trỏ NULL.
+
+* Xử lý lỗi: `if (file_open() || fallback_method())` – thử phương pháp thay thế nếu thất bại.
+
+##### **3.2.4. Lưu ý**
+
+* Các toán tử logic luôn trả về `0` hoặc `1`, không phải giá trị gốc của vế.
+
+* Không sử dụng với các biểu thức không phải boolean; C sẽ tự chuyển đổi ngầm định.
+
+##### **3.2.5. VD**
+        
+        #include <stdio.h>
+        int main() {
+            int a = 5, b = 0;
+            printf("a && b: %d\n", a && b); // 0 (b = 0, sai)
+            printf("a || b: %d\n", a || b); // 1 (a = 5, đúng)
+            printf("!a: %d\n", !a);         // 0 (a = 5, đảo thành sai)
+            
+            // Short-circuit
+            int x = 0, y = 10;
+            if (x && ++y) { } // y không tăng vì x = 0
+            printf("y: %d\n", y); // In: 10
+            return 0;
+        }
+        
+        
+        #include <stdio.h>
+        int expensive_function() {
+            printf("Hàm tốn kém được gọi!\n");
+            return 1;
+        }
+        int main() {
+            int x = 0;
+            if (x && expensive_function()) { } // Hàm không gọi vì x = 0
+            int z = 1;
+            if (z || expensive_function()) { } // Hàm không gọi vì z = 1
+            return 0;
+        }
+        
+#### **3.3. Toán tử so sánh**
+
+##### **3.3.1. Định nghĩa**
+
+* **Toán tử logic thực hiện các phép toán logic trên các giá trị boolean (0 là sai, khác 0 là đúng).**
+
+* Chúng được sử dụng rộng rãi trong các cấu trúc điều khiển như if, while, để quyết định luồng chương trình dựa trên mối quan hệ giữa các biến.
+
+##### **3.3.2. Các toán tử chính**
+
+* **Toán tử so sánh dùng để so sánh hai giá trị, trả về 1 (đúng) hoặc 0 (sai).**
+
+* **Bằng (==):** Kiểm tra hai giá trị có bằng nhau.
+
+* **Không bằng (!=):** Kiểm tra hai giá trị có khác nhau.
+
+* **Nhỏ hơn (<), Lớn hơn (>), Nhỏ hơn hoặc bằng (<=), Lớn hơn hoặc bằng (>=).**
+
+##### **3.3.3. Nguyên lý hoạt động**
+
+* Toán tử so sánh hoạt động trên các kiểu dữ liệu số (int, float, double), ký tự (char), và con trỏ (pointer). Với float/double, cần cẩn thận do lỗi làm tròn.
+
+* Kết quả luôn là 0 hoặc 1, có thể dùng trực tiếp trong biểu thức logic.
+
+##### **3.3.4. Lưu ý**
+
+* Không sử dụng `==` để so sánh chuỗi (string), phải dùng `strcmp` từ `<string.h>`.
+
+* Với con trỏ, `==` kiểm tra địa chỉ, không phải nội dung.
+
+* Tránh so sánh số thực trực tiếp do độ chính xác.
+
+* Dễ nhầm lẫn `==` với `=` (gán giá trị), dẫn đến lỗi logic (ví dụ: if (x = 5) luôn đúng và gán x=5).
+
+* Với số thực, nên sử dụng epsilon để so sánh (ví dụ: `fabs(a - b) < 1e-9` thay vì `a == b`).
+
+        #include <stdio.h>
+        int main() {
+            int a = 5, b = 3;
+            printf("a == b: %d\n", a == b); // 0
+            printf("a != b: %d\n", a != b); // 1
+            printf("a < b: %d\n", a < b);   // 0
+            printf("a >= b: %d\n", a >= b); // 1
+            return 0;
+        }
+
+
+
+#### **3.4. Toán tử gán**
+
+##### **3.4.1. Định nghĩa**
+
+* Toán tử gán dùng để gán giá trị từ vế phải cho vế trái
+
+* Chúng không chỉ đơn giản là gán mà còn có thể kết hợp với các phép toán khác để tạo ra các biểu thức ngắn gọn.
+
+##### **3.4.2. Các toán tử chính**
+
+* **Gán đơn giản (=):** Gán giá trị vế phải cho biến vế trái.
+
+* **Gán kết hợp:** Kết hợp phép toán với gán
+
+  ◦ `+=`: Cộng và gán (a += b tương đương a = a + b).cần.
+
+  ◦ `-=, *=, /=, %=`: Tương tự.
+
+* **VD1:**
+
+        #include <stdio.h>
+        int main() {
+            int a = 10;
+            a += 5;  // a = a + 5 = 15
+            printf("a += 5: %d\n", a);
+            a *= 2;  // a = a * 2 = 30
+            printf("a *= 2: %d\n", a);
+            return 0;
+        }
+
+* **VD2:**
+
+        #include <stdio.h>
+        int main() {
+            int a, b, c;
+            a = b = c = 10; // Chain gán
+            printf("a: %d, b: %d, c: %d\n", a, b, c); // 10 10 10
+            return 0;
+        }
+
+#### **3.5. Toán tử Bitwise**
+
+##### **3.5.1. Định nghĩa**
+
+* Toán tử bitwise hoạt động trực tiếp trên các bit của số nguyên, coi giá trị như dãy bit nhị phân
+
+* Chúng hữu ích cho lập trình cấp thấp, tối ưu hóa bộ nhớ và tốc độ.
+
+##### **3.5.2. Các toán tử chính**
+
+* **AND (&):** Bitwise AND – `1` nếu cả hai bit là `1`.
+
+* **OR (|):** Bitwise OR – `1` nếu ít nhất một bit là `1`.
+
+* **XOR (^):** Bitwise XOR – 1 nếu hai bit khác nhau.
+
+* **NOT (~):** Bitwise NOT – Đảo bit, nhưng với số có dấu, kết quả phụ thuộc vào biểu diễn (two's complement).
+
+* **Dịch trái (<<):** Dịch bit sang trái, nhân với 2^mũ (shift amount).
+
+* **Dịch phải (>>):** Dịch bit sang phải, chia cho 2^mũ; với số có dấu, giữ bit dấu (arithmetic shift).
+
+* **VD1:**
+
+        #include <stdio.h>
+        int main() {
+            int a = 10;
+            a += 5;  // a = a + 5 = 15
+            printf("a += 5: %d\n", a);
+            a *= 2;  // a = a * 2 = 30
+            printf("a *= 2: %d\n", a);
+            return 0;
+        }
+
+        #include <stdio.h>
+        int main() {
+            int a, b, c;
+            a = b = c = 10; // Chain gán
+            printf("a: %d, b: %d, c: %d\n", a, b, c); // 10 10 10
+            return 0;
+        }
+
+* **VD2:**
+
+        #include <stdio.h>
+        #define FLAG_READ  (1 << 0) // 0001
+        #define FLAG_WRITE (1 << 1) // 0010
+        int main() {
+            unsigned int flags = 0;
+            flags |= FLAG_READ;  // Bật flag read
+            if (flags & FLAG_READ) printf("Read enabled\n");
+            flags &= ~FLAG_READ; // Tắt flag read
+            return 0;
+        }
+
+##### **3.5.3. Lưu ý**
+
+* Sử dụng `unsigned` để tránh vấn đề với bit dấu.
+
+* Kích thước bit phụ thuộc nền tảng (thường 32/64 bit).
+
+
+#### **3.6. Độ ưu tiên toán tử**
+
+##### **3.6.1. Định nghĩa**
+
+* Độ ưu tiên (precedence) quyết định thứ tự thực hiện toán tử trong biểu thức phức tạp.
+
+* Nếu ưu tiên bằng nhau, tính kết hợp (associativity) quyết định (thường từ trái sang phải).
+
+##### **3.6.2. Thứ tự ưu tiên chi tiết (từ cao đến thấp):**
+
+* Ngoặc `()`
+
+* Tăng/giảm tiền tố `++, --`; NOT `!`; Bitwise NOT `~`
+
+* Nhân `*`, Chia `/`, Dư `%`
+
+* Cộng `+`, Trừ `-`
+
+* Dịch bit `<<`, `>>`
+
+* So sánh quan hệ `<`, `>`, `<=`, `>=`
+
+* So sánh bằng `==`, `!=`
+
+* Bitwise AND `&`
+
+* Bitwise XOR `^`
+
+* Bitwise OR 
+
+* Logic AND `&&`
+
+* Logic OR `||`
+
+* Ba ngôi `?:`
+
+* Gán `=, +=, v.v.`
+
+* **VD1:**
+
+        #include <stdio.h>
+        int main() {
+            int x = 10, y = 3, z = 2;
+            int result = x + y * z; // y * z trước
+            printf("Kết quả: %d\n", result); // 16
+            result = (x + y) * z;
+            printf("Kết quả với ngoặc: %d\n", result); // 26
+            return 0;
+        }
+
+* **VD2:**
+
+        #include <stdio.h>
+        int main() {
+            int a = 5;
+            int res = a++ + a; // Hậu tố ++ ưu tiên thấp, res = 5 + 6 = 11? Không, undefined behavior
+            printf("res: %d\n", res); // Tránh code này
+            return 0;
+        }
+
+### **IV. Câu lệnh điều kiện**
+
+#### **4.1. if-else**
+
+##### **4.1.1. Định nghĩa**
+
+* Câu lệnh `if-else` thực thi mã dựa trên điều kiện boolean. 
+
+* Nếu điều kiện đúng, thực thi khối `if`; ngược lại, thực thi `else` (nếu có).
+
+##### **4.1.2. Cú pháp**
+
+        if (điều_kiện) {
+            // Mã thực thi nếu điều_kiện đúng
+        } else if (điều_kiện_khác) {
+            // Mã thực thi nếu điều_kiện_khác đúng
+        } else {
+            // Mã thực thi nếu không điều kiện nào đúng
+        }
+
+##### **4.1.3. Nguyên lý hoạt động**
+
+* Điều kiện là biểu thức trả về `khác 0 (true)` hoặc `0 (false)`.
+
+* Có thể lồng ghép hoặc dùng `else if` cho nhiều trường hợp.
+
+##### **4.1.4. Ứng dụng**
+
+* **Kiểm tra đầu vào:** Kiểm tra tính hợp lệ của dữ liệu người dùng (ví dụ: số dương, chuỗi không rỗng).
+
+* **Xử lý lỗi:** Kiểm tra trạng thái trước khi thực thi (ví dụ: kiểm tra con trỏ NULL).
+
+        #include <stdio.h>
+        int main() {
+            int age;
+            float income;
+            printf("Nhập tuổi và thu nhập hàng tháng (triệu): ");
+            scanf("%d %f", &age, &income);
+            if (age >= 18) {
+                if (income >= 10.0) {
+                    printf("Đủ điều kiện vay vốn\n");
+                } else {
+                    printf("Thu nhập không đủ để vay\n");
+                }
+            } else {
+                printf("Chưa đủ tuổi để vay\n");
+            }
+            return 0;
+        }
+
+#### **4.2. switch-case**
+
+##### **4.2.1. Định nghĩa**
+
+* `switch-case` xử lý nhiều giá trị cụ thể của biểu thức (thường int/char).
+
+##### **4.2.2. Cú pháp**
+
+        switch (biểu_thức) {
+            case giá_trị_1:
+                // Mã thực thi nếu biểu_thức == giá_trị_1
+                break;
+            case giá_trị_2:
+                // Mã thực thi nếu biểu_thức == giá_trị_2
+                break;
+            default:
+                // Mã thực thi nếu không khớp với case nào
+        }
+
+##### **4.2.3. Nguyên lý hoạt động**
+
+* **Biểu thức:** Được đánh giá một lần, so sánh với các giá trị hằng trong các case.
+
+* **Case:** Chỉ chấp nhận hằng số nguyên (int) hoặc ký tự (char). Không hỗ trợ khoảng giá trị hoặc biểu thức.
+
+* **break:** Ngăn hiện tượng "fall-through" (thực thi các case tiếp theo). Nếu không có break, chương trình sẽ tiếp tục chạy tất cả các case phía dưới.
+
+* **default:** Xử lý trường hợp không khớp với bất kỳ case nào, tương tự else.
+
+##### **4.2.4. Ứng dụng thực tế**
+
+* **Menu lựa chọn:** Xử lý các tùy chọn trong giao diện người dùng.
+
+* **Phân loại:** Phân loại dựa trên giá trị cụ thể (ví dụ: xếp loại điểm, trạng thái).
+
+* **Trạng thái máy (state machine):** Chuyển đổi trạng thái trong hệ thống nhúng.
+
+        #include <stdio.h>
+        int main() {
+            char grade = 'B';
+            switch (grade) {
+                case 'A':
+                case 'B':
+                    printf("Đạt yêu cầu\n"); // Fall-through: cả A và B đều đạt
+                    break;
+                case 'C':
+                    printf("Cần cải thiện\n");
+                    break;
+                default:
+                    printf("Không hợp lệ\n");
+            }
+            return 0;
+        }
+
+#### **4.3. Toán tử ba ngôi**
+
+##### **4.3.1. Định nghĩa**
+
+* Toán tử ba ngôi `(?:)` là phiên bản ngắn của `if-else`, trả về giá trị dựa trên điều kiện.
+
+##### **4.3.2. Cú pháp**
+
+        điều_kiện ? biểu_thức_1 : biểu_thức_2
+
+* Nguyên lý hoạt động:
+
+    ◦ điều_kiện: Biểu thức boolean (khác 0 là true, 0 là false).
+
+    ◦ Nếu điều kiện đúng, trả về biểu_thức_1; nếu sai, trả về biểu_thức_2.
+
+    ◦ Kết quả có thể được gán cho biến hoặc sử dụng trực tiếp.
+
+        #include <stdio.h>
+        int main() {
+            int a = 5, b = 8;
+            int max = a > b ? a : b;
+            printf("Giá trị lớn nhất: %d\n", max); // In: 8
+            return 0;
+        }
+
+##### **4.3.3. Ứng dụng**
+
+* **Gán giá trị điều kiện:** Ví dụ, gán giá trị lớn nhất giữa hai số
+
+* **In kết quả ngắn gọn:** Thay thế if-else trong các trường hợp đơn giản.
+
+* **Biểu thức trong hàm:*** Trả về giá trị dựa trên điều kiện.
+
+##### **4.3.4. Lưu ý**
+
+* Tránh lồng ghép quá nhiều toán tử ba ngôi (nested ternary) để giữ mã dễ đọc.
+
+* Đảm bảo kiểu dữ liệu của `biểu_thức_1` và `biểu_thức_2` tương thích.       
+
+        #include <stdio.h>
+        int main() {
+            int x = 10, y = 0;
+            // Không nên: y++ là side effect
+            printf("%d\n", x > 5 ? y++ : y); // Không rõ y++ có chạy không
+            // Nên dùng if-else để rõ ràng
+            if (x > 5) {
+                printf("%d\n", y++);
+            } else {
+                printf("%d\n", y);
+            }
+            return 0;
+        }
+
+### **V. Vòng lặp**
+
+#### **5.1. for**
+
+##### **5.1.1. Định nghĩa**
+
+* Vòng lặp for được sử dụng khi số lần lặp đã biết trước, tích hợp ba thành phần: khởi tạo, điều kiện, và cập nhật trong một dòng. 
+
+##### **5.1.2. Cú pháp**
+
+        for (khởi_tạo; điều_kiện; bước_nhảy) {
+            // Mã thực thi
+        }
+
+##### **5.1.3. Nguyên lý hoạt động**
+
+* **khởi_tạo:** Thực thi một lần trước khi vòng lặp bắt đầu (thường khởi tạo biến đếm).
+
+* **điều_kiện:** Kiểm tra trước mỗi lần lặp; nếu sai (0), vòng lặp dừng.
+
+* **bước_nhảy:** Thực thi sau mỗi lần lặp, thường cập nhật biến đếm.
+
+        #include <stdio.h>
+        int main() {
+            int arr[] = {10, 20, 30, 40, 50};
+            int n = 5;
+            for (int i = 0; i < n; i++) {
+                printf("Phần tử %d: %d\n", i, arr[i]);
+            }
+            return 0;
+        }
+
+##### **5.1.4. Lưu ý**
+
+* Biến khai báo trong `for` (C99 trở lên) có phạm vi cục bộ, không tồn tại ngoài vòng lặp.
+
+* Có thể bỏ qua bất kỳ phần nào trong `for` (khởi tạo, điều kiện, bước nhảy), nhưng phải giữ dấu `;`.
+
+* Tránh thay đổi biến đếm trong thân vòng lặp để tránh lỗi logic.
+
+##### **5.1.5. Ứng dụng**
+
+* **Duyệt mảng:** Truy cập từng phần tử của mảng.
+
+* **Tính toán lặp:** Tính tổng, tích, hoặc bảng cửu chương.
+
+* **Thuật toán:** Vòng lặp trong sắp xếp, tìm kiếm.
+        
+
+#### **5.2. while**
+
+##### **5.2.1. Định nghĩa**
+
+* Vòng lặp `while` thực thi mã khi điều kiện đúng, kiểm tra điều kiện trước mỗi lần lặp.
+
+##### **5.2.2. Cú pháp**
+
+        while (điều_kiện) {
+            // Mã thực thi
+        }
+
+##### **5.2.3. Nguyên lý hoạt động**
+
+* **điều_kiện:** Được kiểm tra trước mỗi lần lặp; nếu sai (0), vòng lặp dừng.
+
+* Nếu điều kiện sai ngay từ đầu, thân vòng lặp không được thực thi.
+
+        #include <stdio.h>
+        int main() {
+            int num;
+            printf("Nhập số (âm để dừng): ");
+            scanf("%d", &num);
+            while (num >= 0) {
+                printf("Bạn nhập: %d\n", num);
+                printf("Nhập số (âm để dừng): ");
+                scanf("%d", &num);
+            }
+            printf("Kết thúc\n");
+            return 0;
+        }
+
+##### **5.2.4. Ứng dụng thực tế**
+
+* **Đọc dữ liệu:** Đọc file hoặc nhập liệu đến khi gặp điều kiện dừng.
+
+* **Thuật toán tìm kiếm:** Tìm phần tử trong danh sách không có kích thước cố định.
+
+* **Xử lý sự kiện:** Lặp cho đến khi nhận tín hiệu dừng.
+
+
+#### **5.3. do-while**
+
+##### **5.3.1. Định nghĩa**
+
+* Vòng lặp `do-while` tương tự `while`, nhưng đảm bảo thân vòng lặp được thực thi ít nhất một lần, với điều kiện kiểm tra sau.
+
+##### **5.3.2. Cú pháp**
+
+        do {
+            // Mã thực thi
+        } while (điều_kiện);
+
+* Nguyên lý hoạt động:
+
+    ◦ Thân vòng lặp chạy trước, sau đó kiểm tra điều kiện.
+
+    ◦ Nếu điều kiện đúng, lặp tiếp; nếu sai, dừng.
+
+        #include <stdio.h>
+        int main() {
+            int choice;
+            do {
+                printf("1. Xem\n2. Sửa\n3. Thoát\nChọn: ");
+                scanf("%d", &choice);
+                switch (choice) {
+                    case 1: printf("Đang xem...\n"); break;
+                    case 2: printf("Đang sửa...\n"); break;
+                    case 3: printf("Thoát\n"); break;
+                    default: printf("Lựa chọn không hợp lệ\n");
+                }
+            } while (choice != 3);
+            return 0;
+        }
+
+##### **5.3.3. Ứng dụng**
+
+* **Nhập liệu:** Nhập cho đến khi hợp lệ (ví dụ: số dương).
+
+* **Menu lặp:** Hiển thị menu và yêu cầu người dùng chọn đến khi thoát.
+
+##### **5.3.4. Lưu ý**
+
+* Cú pháp yêu cầu dấu `;` sau while.
+
+* Đảm bảo điều kiện được cập nhật để tránh lặp vô hạn.
+
+#### **5.4. Điều khiển vòng lặp**
+
+##### **5.4.1. Định nghĩa**
+
+* Câu lệnh `break` và `continue` điều khiển luồng thực thi trong vòng lặp.
+
+  ◦ **break:** Thoát hoàn toàn khỏi vòng lặp gần nhất (hoặc switch).
+
+  ◦ **continue:** Bỏ qua phần còn lại của lần lặp hiện tại, chuyển sang lần lặp tiếp theo.
+
+##### **5.4.2. Nguyên lý hoạt động**
+
+* **break:** Chuyển điều khiển ra ngoài vòng lặp, kết thúc nó ngay lập tức.
+
+* **continue:** Bỏ qua mã phía sau trong thân vòng, nhưng vẫn kiểm tra điều kiện cho lần lặp tiếp theo.
+
+* **VD1:**
+
+        #include <stdio.h>
+        int main() {
+            int n = 17, isPrime = 1;
+            for (int i = 2; i * i <= n; i++) {
+                if (n % i == 0) {
+                    isPrime = 0;
+                    break; // Thoát khi tìm thấy ước
+                }
+            }
+            printf("%d %s số nguyên tố\n", n, isPrime ? "là" : "không phải");
+            return 0;
+        }
+
+* **VD2:**
+
+        #include <stdio.h>
+        int main() {
+            for (int i = 1; i <= 10; i++) {
+                if (i % 2 != 0) continue; // Bỏ qua số lẻ
+                printf("%d ", i); // In: 2 4 6 8 10
+            }
+            return 0;
+        }
+
+### **VI. Hàm**
+
+#### **6.1. Định nghĩa**
+
+##### **6.1.1. Lý thuyết**
+
+* Hàm là một khối mã có tên, nhận đầu vào (tham số), thực hiện xử lý, và có thể trả về một giá trị. Hàm giúp tách biệt logic, tăng tính tái sử dụng và giảm độ phức tạp.
+
+##### **6.1.2. Cú pháp**
+
+        kiểu_trả_về tên_hàm(kiểu_tham_số tham_số_1, kiểu_tham_số tham_số_2, ...) {
+            // Mã thực thi
+            return giá_trị; // Nếu kiểu_trả_về không phải void
+        }
+
+##### **6.1.3. Nguyên lý hoạt động**
+
+* **kiểu_trả_về:** Kiểu dữ liệu của giá trị trả về (int, float, void, v.v.). Nếu là void, hàm không trả về gì.
+
+* **tên_hàm:** Tuân theo quy tắc đặt tên biến (bắt đầu bằng chữ hoặc _, không chứa ký tự đặc biệt).
+
+* **tham_số:** Danh sách tham số đầu vào, có thể rỗng.
+
+* **Prototype:** Khai báo hàm trước khi sử dụng (trong header hoặc đầu file) để trình biên dịch biết cấu trúc hàm.
+
+        #include <stdio.h>
+        float rectangle_area(float length, float width) {
+            if (length <= 0 || width <= 0) return -1; // Lỗi
+            return length * width;
+        }
+        int main() {
+            float area = rectangle_area(5.0, 3.0);
+            if (area < 0) {
+                printf("Kích thước không hợp lệ\n");
+            } else {
+                printf("Diện tích: %.2f\n", area); // In: 15.00
+            }
+            return 0;
+        }
+
+##### **6.1.4. Lưu ý**
+
+* Khai báo prototype trong tệp header hoặc trước main nếu hàm định nghĩa sau.
+
+* Tránh hàm quá dài; chia thành các hàm nhỏ hơn.
+
+* Kiểm tra giá trị trả về để xử lý lỗi.
+
+##### **6.1.5. Ứng dụng**
+
+* **Hàm toán học:** Tính giai thừa, tổng, bình phương
+
+* **Xử lý chuỗi:** Sao chép, nối chuỗi.
+
+* **Tổ chức chương trình:** Tách logic giao diện, xử lý dữ liệu.
+
+#### **6.2. Tham số**
+
+##### **6.2.1. Lý thuyết**
+
+* Tham số là cách truyền dữ liệu vào hàm, có hai cơ chế chính: pass-by-value và pass-by-reference.
+
+* **Pass-by-value:**
+
+  ◦ Truyền bản sao giá trị của biến vào hàm.
+
+  ◦ Thay đổi tham số trong hàm không ảnh hưởng biến gốc.
+
+* **Pass-by-reference:**
+
+  ◦ Truyền địa chỉ (con trỏ) của biến.
+
+  ◦ Thay đổi giá trị qua con trỏ ảnh hưởng biến gốc.
+
+##### **6.2.2. Cú pháp**
+
+* **Pass-by-value:** `void func(int x);`
+
+* **Pass-by-reference:** `void func(int *x);`
+
+##### **6.2.3. Nguyên lý hoạt động**
+
+* **Value:** Hàm nhận bản sao, hoạt động độc lập với biến gốc. An toàn nhưng tốn bộ nhớ nếu tham số lớn (như cấu trúc).
+
+* **Reference:** Hàm truy cập trực tiếp địa chỉ bộ nhớ, tiết kiệm bộ nhớ nhưng cần cẩn thận tránh lỗi con trỏ.
+
+        #include <stdio.h>
+        void swapByValue(int a, int b) {
+            int temp = a; a = b; b = temp;
+        }
+        void swapByReference(int *a, int *b) {
+            int temp = *a; *a = *b; *b = temp;
+        }
+        int main() {
+            int x = 5, y = 10;
+            swapByValue(x, y);
+            printf("Pass-by-value: x = %d, y = %d\n", x, y); // Không đổi: 5, 10
+            swapByReference(&x, &y);
+            printf("Pass-by-reference: x = %d, y = %d\n", x, y); // Đổi: 10, 5
+            return 0;
+        }
+
+##### **6.2.4. Lưu ý**
+
+* Khai báo prototype trong tệp header hoặc trước main nếu hàm định nghĩa sau.
+
+* Tránh hàm quá dài; chia thành các hàm nhỏ hơn.
+
+* Kiểm tra giá trị trả về để xử lý lỗi.
+
+##### **6.2.5. Ứng dụng**
+
+* **Sử dụng const với con trỏ để ngăn sửa đổi:** `void func(const int *x);`.
+
+* Kiểm tra con trỏ NULL trước khi sử dụng.
+
+* Tránh truyền cấu trúc lớn bằng value, thay bằng con trỏ.
+
+
+#### **6.3. Hàm Đệ quy**
+
+##### **6.3.1. Lý thuyết**
+
+* Hàm đệ quy là hàm tự gọi chính nó để giải quyết một bài toán bằng cách chia nhỏ bài toán thành các bài toán con có dạng tương tự.
+
+* Đệ quy là một kỹ thuật lập trình mạnh mẽ, đặc biệt hữu ích trong các bài toán có cấu trúc lặp lại, như tính giai thừa, dãy Fibonacci, duyệt cây, hoặc các thuật toán chia để trị (divide-and-conquer).
+
+##### **6.3.2. Cấu trúc**
+
+* **Điều kiện dừng (base case):** 
+
+  ◦ Điều kiện để hàm ngừng gọi đệ quy, tránh lặp vô hạn.
+
+  ◦ Nếu không có điều kiện dừng, chương trình sẽ gây lỗi tràn ngăn xếp (stack overflow).
+
+* **Bước đệ quy (recursive case):**
+
+  ◦ Phần mã nơi hàm gọi chính nó với tham số được điều chỉnh để tiến gần hơn đến điều kiện dừng.
+
+
+##### **6.3.3. Nguyên lý hoạt động**
+
+* Mỗi lần hàm đệ quy được gọi, một bản sao của hàm (cùng với các biến cục bộ) được tạo trên ngăn xếp (call stack).
+
+* Khi điều kiện dừng đạt được, các lần gọi hàm được giải phóng theo thứ tự ngược lại (LIFO - Last In, First Out), trả về kết quả từng bước.
+
+        #include <stdio.h>
+        unsigned long long factorial(int n) {
+            if (n == 0 || n == 1) return 1; // Điều kiện dừng
+            return n * factorial(n - 1);    // Bước đệ quy
+        }
+        int main() {
+            int n = 5;
+            printf("Giai thừa của %d là: %llu\n", n, factorial(n)); // In: 120
+            return 0;
+        }
+
+##### **6.3.4. Lưu ý**
+
+* Luôn đảm bảo có điều kiện dừng rõ ràng.
+
+* Kiểm tra giới hạn của ngăn xếp khi xử lý dữ liệu lớn.
+
+* Có thể tối ưu bằng tail recursion (đệ quy đuôi) nếu trình biên dịch hỗ trợ tối ưu hóa.
+
+* Hiệu suất có thể thấp hơn so với vòng lặp (iterative) trong một số trường hợp.
+
+* Tiêu tốn bộ nhớ ngăn xếp, đặc biệt với các bài toán có độ sâu đệ quy lớn.
+
+* **Tối ưu đệ quy bằng Memoization:**
+
+        #include <stdio.h>
+        #define MAX_N 100
+        unsigned long long memo[MAX_N] = {0};
+        unsigned long long fibonacci_memo(int n) {
+            if (n <= 1) return n;
+            if (memo[n] != 0) return memo[n]; // Trả về giá trị đã tính
+            memo[n] = fibonacci_memo(n - 1) + fibonacci_memo(n - 2);
+            return memo[n];
+        }
+        int main() {
+            int n = 6;
+            printf("Fibonacci thứ %d là: %llu\n", n, fibonacci_memo(n)); // In: 8
+            return 0;
+        }
+
+##### **6.3.5. Ứng dụng**
+
+* **Tính toán toán học:** Giai thừa, Fibonacci, tổ hợp.
+
+* **Thuật toán:** Quicksort, mergesort, duyệt cây (DFS).
+
+* **Xử lý cấu trúc đệ quy:** Cây nhị phân, biểu thức toán học.
+
+#### **6.4. Hàm inline**
+
+##### **6.4.1. Lý thuyết**
+
+* `Hàm inline` là một gợi ý cho trình biên dịch chèn trực tiếp mã của hàm vào nơi hàm được gọi, thay vì thực hiện một lời gọi hàm thông thường.
+
+* Điều này giúp giảm chi phí gọi hàm (function call overhead), đặc biệt với các hàm nhỏ và được gọi thường xuyên.
+
+
+##### **6.4.2. Nguyên lý hoạt động**
+
+* Thông thường, khi gọi hàm, chương trình phải:
+
+  ◦ Lưu trạng thái hiện tại (đẩy các thanh ghi vào ngăn xếp).
+
+  ◦ Chuyển điều khiển đến hàm
+
+  ◦ Thực thi hàm và trả về kết quả
+
+  ◦ Khôi phục trạng thái.
+
+* Với `inline`, mã hàm được chèn trực tiếp vào vị trí gọi, loại bỏ các bước trên, giúp tăng tốc độ thực thi.
+
+* **VD1:**
+
+        #include <stdio.h>
+        inline int square(int x) {
+            return x * x;
+        }
+        int main() {
+            printf("Bình phương: %d\n", square(5)); // In: 25
+            return 0;
+        }
+
+* **VD2:**
+
+        #include <stdio.h>
+        #include <time.h>
+        inline int inline_square(int x) {
+            return x * x;
+        }
+        int normal_square(int x) {
+            return x * x;
+        }
+        int main() {
+            clock_t start, end;
+            int result = 0;
+            start = clock();
+            for (int i = 0; i < 1000000; i++) {
+                result += inline_square(i);
+            }
+            end = clock();
+            printf("Thời gian inline: %f giây\n", (double)(end - start) / CLOCKS_PER_SEC);
+
+            start = clock();
+            for (int i = 0; i < 1000000; i++) {
+                result += normal_square(i);
+            }
+            end = clock();
+            printf("Thời gian không inline: %f giây\n", (double)(end - start) / CLOCKS_PER_SEC);
+            return 0;
+        }
+
+##### **6.4.4. Lưu ý**
+
+* Từ khóa `inline` chỉ là gợi ý, trình biên dịch có thể quyết định không inline nếu không tối ưu.
+
+* Không nên sử dụng inline cho các hàm phức tạp hoặc có vòng lặp lớn.
+
+* Kích thước mã tăng có thể ảnh hưởng đến bộ nhớ cache
+
+
+##### **6.4.5. Ứng dụng**
+
+* **Các hàm tiện ích nhỏ:** Tính bình phương, lập phương, kiểm tra điều kiện đơn giản.
+
+* Tối ưu hóa hiệu suất trong các ứng dụng thời gian thực hoặc nhúng.
+
+#### **6.5. Static Inline**
+
+##### **6.5.1. Lý thuyết**
+
+* `Hàm static inline` kết hợp hai đặc tính:
+
+  ◦ `static:` Giới hạn phạm vi của hàm trong tệp hiện tại, ngăn hàm được truy cập từ các tệp khác.
+
+  ◦ `inline:` Gợi ý trình biên dịch chèn mã hàm trực tiếp, tối ưu hóa hiệu suất.
+
+##### **6.5.2. Nguyên lý hoạt động**
+
+* Tương tự hàm `inline`, nhưng thêm thuộc tính `static` để đảm bảo hàm chỉ được sử dụng trong phạm vi tệp biên dịch, tránh xung đột tên với các tệp khác.
+
+* Trình biên dịch có thể tạo một bản sao mã hàm trong tệp hiện tại mà không cần liên kết (linking) với các tệp khác.
+
+* **VD1:**
+
+        #include <stdio.h>
+        static inline int cube(int x) {
+            return x * x * x;
+        }
+        int main() {
+            printf("Lập phương: %d\n", cube(3)); // In: 27
+            return 0;
+        }
+
+* **VD2:**
+
+   ◦ Tệp `utils.h`
+
+        #ifndef UTILS_H
+        #define UTILS_H
+        static inline int cube(int x) {
+            return x * x * x;
+        }
+        #endif
+
+   ◦ Tệp `main.c`
+
+        #include <stdio.h>
+        #include "utils.h"
+        int main() {
+            printf("Lập phương: %d\n", cube(4)); // In: 64
+            return 0;
+        }
+
+##### **6.5.3. Lưu ý**
+
+* Trình biên dịch có thể bỏ qua `inline` nếu hàm quá phức tạp.
+
+* `static inline` thường được dùng trong các tệp header để đảm bảo tính đóng gói.
+
+
+##### **6.5.4. Ứng dụng**
+
+* Tối ưu hóa các hàm tiện ích nội bộ trong các hệ thống nhúng.
+
+* Sử dụng trong các thư viện hoặc mã nguồn lớn để tránh xung đột.
+
+#### **6.6. Variadic Functions**
+
+##### **6.6.1. Lý thuyết**
+
+* Hàm variadic (hàm với số lượng tham số biến đổi) cho phép truyền vào một số lượng tham số không cố định.
+
+* Trong C, điều này được thực hiện bằng cách sử dụng thư viện `<stdarg.h>`, cung cấp các macro để xử lý danh sách tham số.
+
+##### **6.6.2. Cấu trúc và macro chính**
+
+  ◦ `va_list`: Kiểu dữ liệu lưu danh sách tham số biến đổi.
+
+  ◦ `va_start(ap, last)`: Khởi tạo danh sách tham số, với last là tham số cố định cuối cùng.
+
+  ◦ `va_arg(ap, type)`: Lấy tham số tiếp theo, chỉ định kiểu dữ liệu (int, double, v.v.).
+
+  ◦ `va_end(ap)`: Kết thúc xử lý danh sách tham số, giải phóng tài nguyên.
+
+##### **6.6.3. Nguyên lý hoạt động**
+
+* Hàm variadic cần ít nhất một tham số cố định để xác định số lượng hoặc kiểu của các tham số biến đổi.
+
+* Các tham số được lưu trữ liên tiếp trong bộ nhớ, và `va_arg` truy cập chúng theo thứ tự.
+
+* Trình biên dịch không kiểm tra kiểu hoặc số lượng tham số, nên lập trình viên phải tự đảm bảo tính chính xác.
+
+* **VD1:**
+
+        #include <stdio.h>
+        #include <stdarg.h>
+        int sum(int count, ...) {
+            va_list ap;
+            va_start(ap, count);
+            int total = 0;
+            for (int i = 0; i < count; i++) {
+                total += va_arg(ap, int);
+            }
+            va_end(ap);
+            return total;
+        }
+        int main() {
+            printf("Tổng: %d\n", sum(4, 1, 2, 3, 4)); // In: 10
+            return 0;
+        }
+
+* **VD2:**
+
+        #include <stdio.h>
+        #include <stdarg.h>
+        double average(int count, ...) {
+            va_list ap;
+            va_start(ap, count);
+            double total = 0;
+            for (int i = 0; i < count; i++) {
+                total += va_arg(ap, double);
+            }
+            va_end(ap);
+            return count > 0 ? total / count : 0;
+        }
+        int main() {
+            printf("Trung bình: %.2f\n", average(3, 1.5, 2.5, 3.5)); // In: 2.50
+            return 0;
+        }
+
+##### **6.6.4. Lưu ý**
+
+* Luôn sử dụng tham số cố định để xác định số lượng tham số biến đổi (ví dụ: `count` trong hàm sum).
+
+* Kiểm tra kỹ kiểu dữ liệu khi dùng `va_arg`.
+
+* Không gọi `va_arg` quá số lượng tham số thực tế, sẽ gây lỗi.
+
+
+##### **6.6.4. Ứng dụng**
+
+* **Hàm xuất/nhập chuẩn:** printf, scanf.
+
+* **Hàm xử lý tổng hợp:** Tính tổng, trung bình, hoặc xử lý danh sách tham số.
+
+#### **6.7. Assert**
+
+##### **6.7.1. Lý thuyết**
+
+* `assert` là một macro trong thư viện `<assert.h>`, dùng để kiểm tra điều kiện tại thời điểm chạy chương trình. 
+
+* Nếu điều kiện sai, chương trình sẽ dừng và in thông báo lỗi, bao gồm tên tệp, dòng mã, và thông điệp tùy chỉnh.
+
+
+##### **6.7.2. Nguyên lý hoạt động**
+
+* Macro `assert(expr)` kiểm tra biểu thức expr.
+
+* Nếu `expr` trả về `0` (sai), chương trình dừng và in thông báo lỗi.
+
+* Nếu `expr` trả về `khác 0` (đúng), chương trình tiếp tục chạy.
+
+* Để tắt `assert`, định nghĩa macro `NDEBUG` trước khi bao gồm `<assert.h>`.
+
+##### **6.7.3. Cú pháp**
+
+        #include <assert.h>
+        assert(biểu_thức && "Thông điệp lỗi");
+
+* **VD1:**
+
+        #include <stdio.h>
+        #include <assert.h>
+        void check_positive(int x) {
+            assert(x > 0 && "Số phải dương");
+            printf("Số hợp lệ: %d\n", x);
+        }
+        int main() {
+            check_positive(5);  // Chạy bình thường
+            check_positive(-1); // Gây lỗi, chương trình dừng
+            return 0;
+        }
+
+* **VD2:**
+
+        #include <stdio.h>
+        #include <assert.h>
+        void print_array(int *arr, int size) {
+            assert(arr != NULL && "Mảng không được NULL");
+            assert(size > 0 && "Kích thước phải dương");
+            for (int i = 0; i < size; i++) {
+                printf("%d ", arr[i]);
+            }
+            printf("\n");
+        }
+        int main() {
+            int arr[] = {1, 2, 3};
+            print_array(arr, 3); // In: 1 2 3
+            print_array(NULL, 3); // Gây lỗi
+            return 0;
+        }
+
+* **VD3:**
+
+        #define NDEBUG
+        #include <assert.h>
+        #include <stdio.h>
+        void check_positive(int x) {
+            assert(x > 0 && "Số phải dương"); // Bị bỏ qua
+            printf("Số hợp lệ: %d\n", x);
+        }
+        int main() {
+            check_positive(-1); // Không gây lỗi, tiếp tục chạy
+            return 0;
+        }
+
+##### **6.7.4. Lưu ý**
+
+* Chỉ sử dụng `assert` cho các điều kiện được giả định luôn đúng trong mã.
+
+* Không sử dụng `assert` cho xử lý lỗi người dùng (dùng if-else thay thế).
+
+* Tránh đặt các lệnh có tác dụng phụ (side effects) trong `assert`, vì chúng sẽ bị bỏ qua khi `NDEBUG` được định nghĩa.
+
+
+##### **6.7.5. Ứng dụng**
+
+* **Kiểm tra đầu vào:** Đảm bảo tham số hợp lệ (ví dụ: số dương, con trỏ không NULL).
+
+* **Kiểm tra trạng thái:** Xác minh trạng thái chương trình trước khi thực thi.
+
+* **Gỡ lỗi:** Phát hiện lỗi logic trong mã.
+
+
+
 
 </details>
