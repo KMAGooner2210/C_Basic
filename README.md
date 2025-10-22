@@ -2831,3 +2831,1127 @@
 
 
 </details>
+<details>
+	<summary><strong>CHƯƠNG 3: MẢNG VÀ CHUỖI</strong></summary>
+
+## **CHƯƠNG 3: MẢNG VÀ CHUỖI**
+
+### **I. Mảng**
+
+#### **1.1. Mảng một chiều**
+
+##### **1.1.1. Định nghĩa**
+
+* **Mảng** là một cấu trúc dữ liệu dùng để lưu trữ tập hợp các phần tử có cùng kiểu dữ liệu (ví dụ: int, float, char, v.v.), được lưu trữ liên tiếp trong bộ nhớ.
+
+* **Truy cập:** Các phần tử của mảng được truy cập thông qua chỉ số (index), bắt đầu từ `0` và kết thúc tại `kích_thước - 1`.
+
+* **Ưu điểm:** 
+
+  ◦ Truy cập nhanh thông qua chỉ số (O(1)).
+
+  ◦ Tối ưu hóa bộ nhớ nhờ lưu trữ liên tiếp.
+
+* **Nhược điểm:** 
+
+  ◦ Kích thước cố định khi khai báo (trừ khi dùng mảng động).
+
+  ◦ Không thể chèn hoặc xóa phần tử một cách dễ dàng.
+
+##### **1.1.2. Khai báo và khởi tạo**
+
+* **Khai báo:** 
+
+  ◦ Cú pháp: `kiểu_dữ_liệu tên_mảng[kích_thước];`
+
+        kiểu_dữ_liệu: Có thể là int, float, double, char, v.v.
+
+        kích_thước: Số lượng phần tử của mảng, phải là hằng số nguyên dương.
+
+        Ví dụ: int arr[5]; (khai báo mảng 5 phần tử kiểu int).
+
+* **Khởi tạo:** 
+
+  ◦ Khởi tạo trực tiếp
+
+        Gán giá trị ngay khi khai báo.
+
+        Ví dụ: int arr[5] = {1, 2, 3, 4, 5};
+
+        Các phần tử được gán lần lượt theo thứ tự.
+
+  ◦ Khởi tạo một phần
+
+        Nếu chỉ cung cấp một số giá trị, các phần tử còn lại sẽ được gán 0 (hoặc giá trị mặc định của kiểu dữ liệu).
+
+        Ví dụ: int arr[5] = {1, 2}; → Kết quả: {1, 2, 0, 0, 0}.
+
+  ◦ Khởi tạo tự động kích thước
+
+        Nếu không chỉ định kích thước, trình biên dịch sẽ tự xác định dựa trên số lượng giá trị khởi tạo.
+
+        Ví dụ: int arr[] = {1, 2, 3}; → Mảng có kích thước 3.
+
+  ◦ Khởi tạo toàn bộ bằng 0
+
+        Ví dụ: int arr[5] = {0}; → Tất cả phần tử đều là 0.
+
+* **Mảng động (Dynamic Array):** 
+
+  ◦ Sử dụng `malloc` hoặc `calloc` để cấp phát bộ nhớ (không cần kích thước cố định tại biên dịch)
+
+        #include <stdlib.h>
+        int *arr = malloc(5 * sizeof(int));
+        if (arr == NULL) {
+            fprintf(stderr, "Memory allocation failed\n");
+            exit(1);
+            }
+        arr[0] = 1;  // Gán giá trị
+        free(arr);  // Giải phóng bộ nhớ
+        }
+
+  ◦ Sử dụng `realloc` để thay đổi kích thước mảng động
+
+        arr = realloc(arr, 10 * sizeof(int));
+
+* **Lưu ý:** 
+
+  ◦ **Kích thước mảng** phải được xác định tại thời điểm biên dịch (trừ khi sử dụng mảng động với malloc).
+
+  ◦ Luôn truyền kích thước mảng khi pass vào hàm để tránh out-of-bounds. Sử dụng `sizeof(arr) / sizeof(arr[0])` để tính kích thước động.
+
+  ◦ Truy cập phần tử ngoài phạm vi mảng (out-of-bounds) gây lỗi undefined behavior, có thể dẫn đến crash chương trình.
+
+#### **1.2. Mảng đa chiều**
+
+##### **1.2.1. Định nghĩa**
+
+* **Mảng đa chiều** là mảng của các mảng, thường được sử dụng để biểu diễn ma trận hoặc bảng dữ liệu.
+
+##### **1.2.2. Khai báo và khởi tạo**
+
+* **Khai báo:** 
+
+  ◦ Cú pháp: `kiểu_dữ_liệu tên_mảng[số_hàng][số_cột];`
+
+        Ví dụ:  int matrix[2][3]; (ma trận 2x3).
+
+* **Khởi tạo:** 
+
+  ◦ Ví dụ ma trận 2x3
+
+        int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
+
+  ◦ Hoặc:
+
+        int matrix[2][3] = {1, 2, 3, 4, 5, 6}; // Tự động chia theo hàng
+
+* **Truy cập:** 
+
+  ◦ Sử dụng chỉ số: `matrix[i][j]` để truy cập phần tử tại hàng `i`, cột `j`.
+
+        `matrix[0][1]` truy cập giá trị `2` trong ma trận trên.
+
+        #include <stdio.h>
+        int main() {
+            int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 3; j++) {
+                    printf("%d ", matrix[i][j]); // In: 1 2 3 4 5 6
+                }
+                printf("\n");
+            }
+            return 0;
+        }
+
+* **Mảng đa chiều động:** 
+
+  ◦ Sử dụng con trỏ để cấp phát.
+
+        int rows = 2, cols = 3;
+        int **matrix = malloc(rows * sizeof(int *));
+        for (int i = 0; i < rows; i++) {
+            matrix[i] = malloc(cols * sizeof(int));
+        }
+        // Giải phóng: for (int i = 0; i < rows; i++) free(matrix[i]); free(matrix);
+
+* **Lưu ý:** 
+
+  ◦ Trong C, mảng đa chiều được lưu theo row-major order (ưu tiên hàng), tức là các phần tử trong cùng một hàng được lưu liên tiếp trong bộ nhớ.
+
+  ◦ Khi truyền mảng đa chiều vào hàm, chỉ cần chỉ định kích thước chiều sau: `void func(int rows, int cols, int matrix[][cols]);`
+
+#### **1.3. Mảng con trỏ (Array of Pointers)**
+
+##### **1.3.1. Định nghĩa**
+
+* Mảng chứa các con trỏ (pointers) trỏ tới các biến hoặc vùng nhớ khác.
+
+##### **1.3.2. Khai báo và khởi tạo**
+
+* **Khai báo:** 
+
+  ◦ Cú pháp: `kiểu_dữ_liệu *tên_mảng[kích_thước];`
+
+* **Khởi tạo:** 
+
+  ◦ Khởi tạo với biến thường
+
+        int a=1, b=2, c=3; 
+        int *arr[] = {&a, &b, &c};
+
+  ◦ Khởi tạo với chuỗi hằng
+
+        char *names[] = {"An", "Binh", "Cuong"};
+
+  ◦ Khởi tạo một phần (phần còn lại NULL)
+
+        int x=10, y=20;
+        int *ptrs[5] = {&x, &y};
+
+  ◦  Khởi tạo toàn bộ NULL
+
+        int *null_arr[5] = {NULL};
+
+  ◦  Khởi tạo với malloc
+
+        int *dynamic[] = {malloc(sizeof(int)), malloc(sizeof(int))};
+
+  ◦  Khởi tạo mảng 2D con trỏ
+
+        int a=1, b=2, c=3, d=4;
+        int *matrix[2][2] = {{&a, &b}, {&c, &d}};
+
+  ◦  Khởi tạo với cấu trúc
+
+        typedef struct {
+            int x,y;
+            } Point;
+        Point p1={1,2}, p2={3,4};
+        Point *points[] = {&p1, &p2};
+
+  ◦  Khởi tạo con trỏ hàm
+
+        void func1(){} void func2(){}
+        void (*funcs[])() = {func1, func2};
+
+  ◦  Khởi tạo tự động kích thước
+
+        float x=1.1, y=2.2;
+        float *auto_size[] = {&x, &y}; // kích thước = 2
+
+* **Mảng con trỏ động:** 
+
+        char **strings = malloc(3 * sizeof(char *));
+        for (int i = 0; i < 3; i++) {
+            strings[i] = malloc(10 * sizeof(char));
+            strcpy(strings[i], "Test");
+        }
+        // Giải phóng: for (int i = 0; i < 3; i++) free(strings[i]); free(strings);
+
+
+* **Ứng dụng:** 
+
+  ◦ Lưu trữ địa chỉ của nhiều biến.
+
+  ◦ Quản lý mảng động hoặc danh sách chuỗi (ví dụ mảng các chuỗi).
+
+        `matrix[0][1]` truy cập giá trị `2` trong ma trận trên.
+
+        #include <stdio.h>
+        int main() {
+            int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 3; j++) {
+                    printf("%d ", matrix[i][j]); // In: 1 2 3 4 5 6
+                }
+                printf("\n");
+            }
+            return 0;
+        }
+
+
+#### **1.4. Pointer Arithmetic và Array Decay**
+
+##### **1.4.1. Định nghĩa**
+
+* **Array Decay:** 
+
+  ◦ Biểu thức mảng (trừ operand của sizeof, &, hoặc initializer) chuyển thành con trỏ đến phần tử đầu tên
+
+        Ví dụ: int arr[3]; int *p = arr; – p trỏ đến arr[0].
+
+* **Pointer Arithmetic:** 
+
+  ◦ `arr[i] == *(arr + i)`. 
+  
+  ◦ Tăng/giảm con trỏ di chuyển theo kích thước phần tử.
+
+  ◦ Hợp lệ chỉ trong phạm vi mảng (bao gồm vị trí sau phần tử cuối, nhưng không dereference).
+
+##### **1.4.2. Lỗi thường gặp**
+
+* **Lỗi mất thông tin kích thước:** 
+
+  ◦ Khi mảng decay thành con trỏ, `sizeof(arr)` trả về kích thước con trỏ.
+
+        void process_array(int arr[]) {
+            // LỖI: sizeof(arr) trả về kích thước con trỏ, không phải mảng
+            size_t size = sizeof(arr) / sizeof(arr[0]); // Luôn bằng 1 hoặc 2
+        }
+
+  ◦ Hậu quả
+
+        Tính toán kích thước sai
+
+        Duyệt vượt quá giới hạn mảng
+
+        Truy cập bộ nhớ không hợp lệ
+
+* **Lỗi truy cập ngoài biên:** 
+
+  ◦ Pointer arithmetic vượt quá phạm vi hợp lệ của mảng.
+
+        int arr[5] = {1, 2, 3, 4, 5};
+        int *p = arr;
+
+        // LỖI: Truy cập ngoài biên
+        int value1 = *(p + 10);    // Quá xa về phía sau
+        int value2 = *(p - 1);     // Trước phần tử đầu tiên
+        int value3 = p[100];       // Chỉ số quá lớn
+
+  ◦ Hậu quả
+
+        Đọc/ghi vào vùng nhớ không thuộc về chương trình
+
+        Làm hỏng dữ liệu của biến khác
+
+        Crash chương trình không xác định được nguyên nhân
+
+* **Lỗi so sánh con trỏ không hợp lệ:** 
+
+  ◦ So sánh con trỏ từ các mảng khác nhau hoặc con trỏ không liên quan.
+
+        int arr1[5] = {1, 2, 3, 4, 5};
+        int arr2[5] = {6, 7, 8, 9, 10};
+
+        // LỖI: So sánh con trỏ từ các mảng khác nhau
+        if (&arr1[3] < &arr2[1]) { // UNDEFINED BEHAVIOR
+            // Kết quả không xác định
+        }
+
+  ◦ Hậu quả
+
+        Kết quả so sánh không đáng tin cậy
+
+        Điều kiện logic hoạt động sai
+
+        Khó debug do hành vi thay đổi giữa các lần chạy
+
+* **Lỗi nhầm lẫn giữa &array và array:** 
+
+  ◦ Không phân biệt được giữa con trỏ đến mảng và con trỏ đến phần tử đầu tiên.
+
+        int arr[3] = {1, 2, 3};
+        int (*ptr_to_array)[3] = &arr;  // Con trỏ đến mảng 3 phần tử
+        int *ptr_to_first = arr;        // Con trỏ đến phần tử đầu
+
+        // LỖI: Nhầm lẫn kiểu con trỏ
+        ptr_to_array + 1;  // Nhảy 12 bytes (3 * sizeof(int))
+        ptr_to_first + 1;  // Nhảy 4 bytes (sizeof(int))
+
+  ◦ Hậu quả
+
+        Tính toán địa chỉ sai
+
+        Truy cập nhầm vùng nhớ
+
+        Khó phát hiện do compiler không báo lỗi
+
+* **Lỗi với con trỏ void:** 
+
+  ◦ Thực hiện pointer arithmetic trên con trỏ void* mà không ép kiểu.
+
+        int arr[3] = {1, 2, 3};
+        void *void_ptr = arr;
+
+        // LỖI: Pointer arithmetic trên void*
+        void_ptr = void_ptr + 1; // COMPILER ERROR
+
+  ◦ Hậu quả
+
+        Lỗi biên dịch
+
+        Phải ép kiểu phức tạp, dễ sai
+
+        Mất tính type safety
+
+* **Lỗi trong generic functions:** 
+
+  ◦ Sử dụng void* và pointer arithmetic không an toàn.
+
+        // Hàm generic copy không an toàn
+        void unsafe_memcpy(void *dest, void *src, size_t n) {
+            char *d = dest;
+            char *s = src;
+            
+            for(size_t i = 0; i < n; i++) {
+                d[i] = s[i]; // Có thể gây misaligned access
+            }
+        }
+
+  ◦ Hậu quả
+
+        Misaligned memory access
+
+        Hiệu suất giảm trên một số kiến trúc
+
+        Crash trên các hệ thống yêu cầu alignment nghiêm ngặt
+
+* **Lỗi vòng lặp vô tận do con trỏ:** 
+
+  ◦ Điều kiện dừng vòng lặp dựa trên con trỏ không chính xác.
+
+        int arr[5] = {1, 2, 3, 4, 5};
+        int *p = arr;
+
+        // LỖI: Điều kiện dừng sai
+        while (p <= &arr[5]) { // Nên là p < &arr[5]
+            *p = 0;
+            p++;
+        }
+
+  ◦ Hậu quả
+
+        Vòng lặp vô tận
+
+        Ghi đè lên vùng nhớ sau mảng
+
+        Stack/heap corruption
+
+* **Lỗi với mảng đa chiều:** 
+
+  ◦ Nhầm lẫn giữa các cách biểu diễn mảng đa chiều.
+
+        int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
+
+        // LỖI: Coi mảng 2D như mảng 1D
+        int *wrong_ptr = matrix;        // Cảnh báo compiler
+        int *correct_ptr = &matrix[0][0]; // Đúng
+
+        // LỖI: Pointer arithmetic sai
+        int value = *(matrix + 2);      // Sai về ngữ nghĩa
+        int value_correct = matrix[0][2]; // Đúng
+
+  ◦ Hậu quả
+
+        Truy cập sai phần tử
+
+        Khó hiểu và bảo trì code
+
+        Hành vi không xác định
+
+* **Lỗi không kiểm tra NULL:** 
+
+  ◦ Thực hiện pointer arithmetic trên con trỏ NULL.
+
+        int *ptr = NULL;
+        int value = ptr[5]; // LỖI: Dereference NULL pointer
+
+        // Hoặc
+        int *arr = malloc(10 * sizeof(int));
+        if (arr == NULL) {
+            // Quên return/exit
+        }
+        arr[0] = 1; // LỖI: Nếu malloc thất bại
+
+  ◦ Hậu quả
+
+        Segment fault
+
+        Crash chương trình ngay lập tức
+
+        Mất dữ liệu chưa được lưu
+
+* **Lỗi Alignment:** 
+
+  ◦ Con trỏ không đảm bảo alignment requirement của kiến trúc.
+
+        char buffer[100];
+        int *int_ptr = (int*)(buffer + 1); // LỖI: Misaligned
+
+        // Trên các kiến trúc yêu cầu alignment
+        *int_ptr = 42; // Có thể gây crash
+
+  ◦ Hậu quả
+
+        Crash trên các kiến trúc RISC
+
+        Hiệu suất giảm trên các kiến trúc khác
+
+        Khó phát hiện do chỉ xảy ra trên một số platform
+
+* **Lỗi Strict Aliasing Violation:** 
+
+  ◦ Truy cập cùng vùng nhớ qua các kiểu con trỏ không tương thích.
+
+        int value = 0x12345678;
+        float *float_ptr = (float*)&value; // L ERR: Vi phạm strict aliasing
+        printf("%f", *float_ptr);          // UNDEFINED BEHAVIOR
+
+  ◦ Hậu quả
+
+        Kết quả không xác định
+
+        Trình biên dịch tối ưu hóa sai
+
+        Khó debug do hành vi thay đổi theo optimization level
+
+### **II. Chuỗi**
+
+#### **2.1. Định nghĩa**
+
+* **Chuỗi** trong C là một mảng ký tự (`char`) kết thúc bằng ký tự null (`\0`), được gọi là null-terminated byte string (NTBS). Đây là chuỗi byte nonzero theo sau bởi byte 0.
+
+* **Vai trò:** Dùng để lưu trữ và xử lý văn bản (chuỗi ký tự), mã hóa theo charset như ASCII.
+
+* **Lưu trữ:** Chuỗi được lưu liên tiếp trong bộ nhớ, với ký tự \0 đánh dấu điểm kết thúc. Không có \0 dẫn đến đọc vô tận.
+
+#### **2.2. Khai báo và khởi tạo**
+
+##### **2.2.1. Khai báo**
+
+* **Cú pháp:** `char tên_chuỗi[kích_thước]`;
+
+  ◦ `kích_thước:` Bao gồm chỗ cho ký tự \0.
+
+  ◦ Ví dụ: `char str[6];` (có thể chứa chuỗi dài tối đa 5 ký tự + \0).
+
+##### **2.2.2. Khởi tạo**
+
+* **Dùng chuỗi ký tự:** 
+
+  ◦ C tự động thêm \0 vào cuối chuỗi.
+
+  ◦ Ví dụ: `char str[] = "Hello"`; → Kích thước tự động là 6 (5 ký tự + \0).
+
+* **Dùng mảng ký tự:** 
+
+  ◦ Gán từng ký tự, phải thêm \0 thủ công.
+
+  ◦ Ví dụ:  `char str[6] = {'H', 'e', 'l', 'l', 'o', '\0'}`;
+
+* **Khởi tạo một phần:** 
+
+  ◦ Các phần tử còn lại được gán `0` (hoặc \0 cho char).
+
+  ◦ Ví dụ:  `Ví dụ: char str[10] = "Hi"`; → Kết quả: {'H', 'i', '\0', 0, 0, ...}.
+
+* **Khởi tạo an toàn:** 
+
+  ◦ Sử dụng `memset` để zero buffer
+
+  ◦ Ví dụ:  
+
+        char str[10];
+        memset(str, 0, sizeof(str));
+        strcpy(str, "Hi");
+
+* **Lưu ý:** 
+
+  ◦ Luôn đảm bảo kích thước mảng đủ lớn để chứa chuỗi và \0.
+
+  ◦ Nếu không có \0, chuỗi không được xem là hợp lệ, có thể gây lỗi khi xử lý.
+
+  ◦ Khởi tạo buffer bằng `memset` để zero.
+
+#### **2.3. Thư viện <string.h>**
+
+##### **2.3.1. Nhóm 1: Hàm xử lý chuỗi**
+
+* `size_t strlen(const char *str)`
+
+  ◦ **Chức năng:** Trả về độ dài của chuỗi str (không tính ký tự \0).
+
+  ◦ **Tham số:** str - Con trỏ đến chuỗi null-terminated.
+
+  ◦ **Trả về:** Số ký tự trong chuỗi (kiểu size_t).
+
+  ◦ **Lưu ý:**
+
+        Nếu str không phải chuỗi hợp lệ (không có \0), gây undefined behavior.
+
+        Không hỗ trợ chuỗi multibyte/wide (dùng wcslen từ <wchar.h>).
+
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[] = "Hello";
+            printf("Độ dài: %zu\n", strlen(str)); // In: 5
+            return 0;
+        }
+
+
+* `char *strcpy(char *restrict dest, const char *restrict src)`
+
+  ◦ **Chức năng:** Sao chép chuỗi `src` (bao gồm \0) sang bộ nhớ bắt đầu tại `dest`.
+
+  ◦ **Tham số:** 
+
+        dest: Con trỏ đến vùng nhớ đích.
+
+        src: Con trỏ đến chuỗi nguồn.
+
+  ◦ **Trả về:** Con trỏ đến `dest`.
+
+  ◦ **Lưu ý:**
+
+        Không kiểm tra kích thước `dest`, dễ gây buffer overflow.
+
+        `dest` và `src` không được trùng lặp (overlap), nếu không gây undefined behavior.
+
+    
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char dest[10];
+            char src[] = "Hello";
+            strcpy(dest, src);
+            printf("Sao chép: %s\n", dest); // In: Hello
+            return 0;
+        }
+
+* `char *strncpy(char *restrict dest, const char *restrict src, size_t n)`
+
+  ◦ **Chức năng:** Sao chép tối đa n ký tự từ `src` sang `dest`. Nếu src ngắn hơn n, phần còn lại của dest được điền bằng \0.
+
+  ◦ **Tham số:** 
+
+        Như strcpy, thêm n - số ký tự tối đa.
+
+  ◦ **Trả về:** Con trỏ đến `dest`.
+
+  ◦ **Lưu ý:**
+
+        Nếu src không có \0 trong n ký tự, dest không được null-terminated.
+
+        An toàn hơn strcpy nhưng vẫn cần kiểm tra kích thước dest.
+
+    
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char dest[10];
+            char src[] = "HelloWorld";
+            strncpy(dest, src, 5);
+            dest[5] = '\0'; // Đảm bảo null-terminated
+            printf("Sao chép: %s\n", dest); // In: Hello
+            return 0;
+        }
+
+* `char *strcat(char *restrict dest, const char *restrict src)`
+
+  ◦ **Chức năng:** Nối chuỗi src (bao gồm \0) vào cuối chuỗi dest (thay \0 của dest).
+
+  ◦ **Tham số:** Như strcpy.
+
+  ◦ **Trả về:** Con trỏ đến `dest`.
+
+  ◦ **Lưu ý:** Rủi ro buffer overflow nếu dest không đủ lớn.
+
+    
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char dest[20] = "Hi, ";
+            char src[] = "World";
+            strcat(dest, src);
+            printf("Nối: %s\n", dest); // In: Hi, World
+            return 0;
+        }
+
+* `char *strncat(char *restrict dest, const char *restrict src, size_t n)`
+
+  ◦ **Chức năng:** Nối tối đa n ký tự từ src vào cuối dest, đảm bảo dest null-terminated.
+
+  ◦ **Tham số:** Như strcat, thêm n..
+
+  ◦ **Trả về:** Con trỏ đến `dest`.
+
+  ◦ **Lưu ý:** An toàn hơn strcat, nhưng cần đảm bảo dest đủ lớn.
+
+    
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char dest[20] = "Hi, ";
+            char src[] = "World";
+            strncat(dest, src, 3);
+            printf("Nối: %s\n", dest); // In: Hi, Wor
+            return 0;
+        }
+
+* `int strcmp(const char *str1, const char *str2)`
+
+  ◦ **Chức năng:** So sánh hai chuỗi theo thứ tự từ điển (lexicographical order).
+
+  ◦ **Trả về:** 
+  
+        0: Nếu str1 bằng str2.
+
+        Số âm: Nếu str1 < str2.
+
+        Số dương: Nếu str1 > str2.
+
+  ◦ **Lưu ý:**
+
+        Không kiểm tra kích thước `dest`, dễ gây buffer overflow.
+
+        `dest` và `src` không được trùng lặp (overlap), nếu không gây undefined behavior.
+
+    
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str1[] = "Hello";
+            char str2[] = "Hello";
+            printf("So sánh: %d\n", strcmp(str1, str2)); // In: 0
+            return 0;
+        }     
+
+* `char *strchr(const char *str, int c)`
+
+  ◦ **Chức năng:** Tìm vị trí đầu tiên của ký tự c (cast sang unsigned char) trong str.
+
+  ◦ **Trả về:** Con trỏ đến ký tự đầu tiên hoặc NULL nếu không tìm thấy.
+
+  ◦ **Lưu ý:** Ký tự \0 cũng được tìm kiếm.
+
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[] = "Hello";
+            char *p = strchr(str, 'l');
+            printf("Tìm 'l': %s\n", p); // In: llo
+            return 0;
+        }
+
+
+* `char *strrchr(const char *str, int c)`
+
+  ◦ **Chức năng:** Tìm vị trí cuối cùng của ký tự c trong str.
+
+  ◦ **Trả về:** Như strchr..
+    
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[] = "Hello";
+            char *p = strrchr(str, 'l');
+            printf("Tìm 'l' cuối: %s\n", p); // In: lo
+            return 0;
+        }
+
+* `char *strstr(const char *haystack, const char *needle)`
+
+  ◦ **Chức năng:** Tìm chuỗi con needle trong chuỗi haystack.
+
+  ◦ **Trả về:** Con trỏ đến vị trí đầu tiên hoặc NULL nếu không tìm thấy..
+  
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[] = "Hello World";
+            char *p = strstr(str, "Wor");
+            printf("Tìm chuỗi con: %s\n", p); // In: World
+            return 0;
+        }
+
+* `char *strtok(char *restrict str, const char *restrict delim)`
+
+  ◦ **Chức năng:** Phân tách chuỗi `str` thành các token dựa trên bộ phân cách `delim`.
+
+  ◦ **Trả về:** Con trỏ đến token tiếp theo hoặc NULL nếu hết.
+
+  ◦ **Lưu ý:** 
+
+        Không thread-safe (dùng trạng thái nội bộ).
+
+        Sửa đổi chuỗi gốc bằng cách chèn \0.
+
+        Gọi lần đầu với str, các lần sau với NULL.
+  
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[] = "Hello,World,Test";
+            char *token = strtok(str, ",");
+            while (token) {
+                printf("Token: %s\n", token); // In: Hello, World, Test
+                token = strtok(NULL, ",");
+            }
+            return 0;
+        }
+
+* `char *strdup(const char *src)`
+
+  ◦ **Chức năng:** Cấp phát động và sao chép chuỗi src
+
+  ◦ **Trả về:** Con trỏ đến chuỗi mới hoặc NULL nếu thất bại.
+
+  ◦ **Lưu ý:** Cần free bộ nhớ.
+   
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        #include <stdlib.h>
+        int main() {
+            char *copy = strdup("Hello");
+            if (copy) {
+                printf("Sao chép: %s\n", copy); // In: Hello
+                free(copy);
+            }
+            return 0;
+        }
+
+* `char *strerror(int errnum)`
+
+  ◦ **Chức năng:** Trả về chuỗi mô tả mã lỗi errnum (thường từ errno).
+
+  ◦ **Trả về:** Con trỏ đến chuỗi tĩnh (không sửa đổi).
+
+  ◦ **Lưu ý:** Không thread-safe ở một số hệ thống.
+
+    
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        #include <errno.h>
+        int main() {
+            errno = EACCES;
+            printf("Lỗi: %s\n", strerror(errno)); // In: Permission denied
+            return 0;
+        }  
+
+* `int strcoll(const char *str1, const char *str2)`
+
+  ◦ **Chức năng:** So sánh chuỗi theo locale hiện tại (locale-aware).
+
+  ◦ **Trả về:** Như strcmp, nhưng dựa trên quy tắc locale.
+
+  ◦ **Lưu ý:** Dùng setlocale để thiết lập locale.
+  
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        #include <locale.h>
+        int main() {
+            setlocale(LC_COLLATE, "");
+            char str1[] = "äpple";
+            char str2[] = "apple";
+            printf("So sánh locale: %d\n", strcoll(str1, str2));
+            return 0;
+        }
+
+* `size_t strspn(const char *str, const char *accept)`
+
+  ◦ **Chức năng:** Tính độ dài đoạn đầu của str chỉ chứa các ký tự trong accept.
+
+  ◦ **Trả về:** Số ký tự hợp lệ.
+   
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[] = "123abc";
+            printf("Độ dài số: %zu\n", strspn(str, "0123456789")); // In: 3
+            return 0;
+        }
+
+* `size_t strcspn(const char *str, const char *reject)`
+
+  ◦ **Chức năng:** Tính độ dài đoạn đầu của str không chứa ký tự nào trong reject
+
+  ◦ **Trả về:** Số ký tự không bị reject.
+
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[] = "Hello123";
+            printf("Độ dài trước số: %zu\n", strcspn(str, "0123456789")); // In: 5
+            return 0;
+        } 
+
+* `char *strpbrk(const char *str, const char *accept)`
+
+  ◦ **Chức năng:** Tìm ký tự đầu tiên trong str thuộc tập accept.
+
+  ◦ **Trả về:** Con trỏ đến ký tự đầu tiên hoặc NULL.
+   
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[] = "Hello123";
+            char *p = strpbrk(str, "0123456789");
+            printf("Ký tự số đầu tiên: %s\n", p); // In: 123
+            return 0;
+        }
+
+##### **2.3.2. Nhóm 2: Hàm xử lý bộ nhớ (Byte Operations)**
+
+* `void *memchr(const void *s, int c, size_t n)`
+
+  ◦ **Chức năng:** Tìm byte c (cast sang unsigned char) trong n byte đầu tiên của s.
+
+  ◦ **Trả về:** Con trỏ đến byte đầu tiên hoặc NULL.
+
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[] = "Hello";
+            void *p = memchr(str, 'l', 5);
+            printf("Tìm 'l': %s\n", (char *)p); // In: llo
+            return 0;
+        }
+
+
+* `int memcmp(const void *s1, const void *s2, size_t n)`
+
+  ◦ **Chức năng:** So sánh n byte đầu tiên của s1 và s2.
+
+  ◦ **Trả về:** Trả về: Như strcmp.
+
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char s1[] = "abc";
+            char s2[] = "abd";
+            printf("So sánh: %d\n", memcmp(s1, s2, 3)); // In: -1
+            return 0;
+        }
+
+* `void *memset(void *s, int c, size_t n)`
+
+  ◦ **Chức năng:** Điền n byte của s bằng giá trị c (cast sang unsigned char).
+
+  ◦ **Trả về:** Con trỏ đến `s`.
+ 
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[10];
+            memset(str, 'A', 5);
+            str[5] = '\0';
+            printf("Điền: %s\n", str); // In: AAAAA
+            return 0;
+        }
+
+* `void *memcpy(void *restrict dest, const void *restrict src, size_t n)`
+
+  ◦ **Chức năng:** Sao chép n byte từ src sang dest.
+
+  ◦ **Trả về:** Con trỏ đến `dest`.
+
+  ◦ **Lưu ý:** Không xử lý overlap (dùng memmove nếu có overlap).
+
+    
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char src[] = "Hello";
+            char dest[10];
+            memcpy(dest, src, 6);
+            printf("Sao chép: %s\n", dest); // In: Hello
+            return 0;
+        }
+
+* `void *memmove(void *dest, const void *src, size_t n)`
+
+  ◦ **Chức năng:** Như memcpy, nhưng an toàn với vùng nhớ overlap.
+
+  ◦ **Trả về:** Con trỏ đến dest.
+
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <string.h>
+        int main() {
+            char str[] = "HelloWorld";
+            memmove(str + 2, str, 5);
+            printf("Dịch chuyển: %s\n", str); // In: HeHelloWld
+            return 0;
+        }
+
+##### **2.3.3. Nhóm 3: Hàm phân loại ký tự từ <ctype.h>**
+
+* `int isalpha(int c)`
+
+  ◦ **Chức năng:** Kiểm tra c có phải ký tự chữ cái (a-z, A-Z).
+
+  ◦ **Trả về:** Non-zero nếu đúng, 0 nếu sai.
+ 
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <ctype.h>
+        int main() {
+            char c = 'A';
+            printf("Là chữ cái: %d\n", isalpha(c)); // In: non-zero
+            return 0;
+        }
+
+* `int tolower(int c)`
+
+  ◦ **Chức năng:** Chuyển ký tự c thành chữ thường.
+
+  ◦ **Trả về:** Ký tự chữ thường hoặc c nếu không áp dụng.
+  
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <ctype.h>
+        int main() {
+            char c = 'A';
+            printf("Chữ thường: %c\n", tolower(c)); // In: a
+            return 0;
+        }
+
+* `int toupper(int c)`
+
+  ◦ **Chức năng:** Chuyển ký tự c thành chữ hoa.
+
+  ◦ **Trả về:** Ký tự chữ hoa hoặc c nếu không áp dụng.
+  
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <ctype.h>
+        int main() {
+            char c = 'a';
+            printf("Chữ hoa: %c\n", toupper(c)); // In: A
+            return 0;
+        }
+
+* `int isspace(int c)`
+
+  ◦ **Chức năng:** Kiểm tra xem ký tự c có phải là ký tự khoảng trắng hay không. Các ký tự khoảng trắng bao gồm: 
+  
+        space (' ')
+
+        tab ngang ('\t')
+
+        tab dọc ('\v')
+
+        xuống dòng ('\n')
+
+        carriage return ('\r')
+
+        form feed ('\f').
+
+  ◦ **Trả về:** Non-zero (thường là 1) nếu c là ký tự khoảng trắng và 0 nếu c không phải là ký tự khoảng trắng.
+  
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <ctype.h>
+        int main() {
+            char c = ' ';
+            printf("Là khoảng trắng: %d\n", isspace(c)); // In: non-zero
+            c = '\t';
+            printf("Là khoảng trắng: %d\n", isspace(c)); // In: non-zero
+            c = 'A';
+            printf("Là khoảng trắng: %d\n", isspace(c)); // In: 0
+            return 0;
+        }
+
+  ◦ **Lưu ý:** 
+  
+        Hàm này hữu ích khi phân tích chuỗi để bỏ qua các ký tự khoảng trắng (ví dụ: khi tokenize chuỗi).
+  
+        Nếu cần kiểm tra khoảng trắng trong chuỗi Unicode/wide-character, dùng các hàm từ <wctype.h> như iswspace.
+
+* `int isdigit(int c)`
+
+  ◦ **Chức năng:** Kiểm tra xem ký tự c có phải là ký tự số thập phân (0-9) hay không.
+
+  ◦ **Trả về:** Non-zero (thường là 1) nếu c là ký tự số (từ '0' đến '9') còn 0 nếu c không phải là ký tự số.
+  
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <ctype.h>
+        int main() {
+            char c = '5';
+            printf("Là số: %d\n", isdigit(c)); // In: non-zero
+            c = 'A';
+            printf("Là số: %d\n", isdigit(c)); // In: 0
+            return 0;
+        }
+
+  ◦ **Lưu ý:** Hàm chỉ kiểm tra các ký tự số thập phân ASCII (mã 48 đến 57) và Ký tự c phải được truyền dưới dạng int (thường là giá trị ASCII của ký tự), và giá trị trả về cũng là int.
+
+* `int isprint(int c)`
+
+  ◦ **Chức năng:** Kiểm tra xem ký tự c có phải là ký tự in được (printable character) hay không.
+
+        Ký tự in được bao gồm các ký tự hiển thị được trên màn hình (chữ cái, số, dấu câu, và ký tự space), nhưng không bao gồm các ký tự điều khiển (control characters) như \n, \t.
+
+  ◦ **Trả về:** Non-zero (thường là 1) nếu c là ký tự in được (mã ASCII từ 32 đến 126) còn 0 nếu c không phải là ký tự in được.
+  
+  ◦ **VD:**
+
+        #include <stdio.h>
+        #include <ctype.h>
+        int main() {
+            char c = 'A';
+            printf("Là ký tự in được: %d\n", isprint(c)); // In: non-zero
+            c = ' ';
+            printf("Là ký tự in được: %d\n", isprint(c)); // In: non-zero
+            c = '\n';
+            printf("Là ký tự in được: %d\n", isprint(c)); // In: 0
+            return 0;
+        }
+
+  ◦ **Lưu ý:** 
+
+        Ký tự space (' ') được coi là ký tự in được, nhưng các ký tự điều khiển như \n, \t thì không.
+
+        Để kiểm tra cả ký tự điều khiển, có thể dùng iscntrl từ <ctype.h>.
+
+</details>
