@@ -1,12 +1,32 @@
 ## **Mảng (Arrays)**
-**1.In mảng** 
-```
-o	Yêu cầu: Nhập mảng số nguyên từ bàn phím và in ra các phần tử.
-o	Output mẫu: 
-Nhap kich thuoc mang: 5
-Nhap mang: 1 2 3 4 5
-Mang: 1 2 3 4 5
-```
+
+* **Bài 1: Nhập và in mảng số nguyên**
+
+  o Yêu cầu:
+  
+        Viết chương trình nhập vào kích thước mảng n và các phần tử của mảng số nguyên từ bàn phím
+     
+        In ra mảng vừa nhập
+
+  o Mô tả chi tiết:
+  
+        Nhập kích thước mảng n (số nguyên dương)
+     
+        Nhập n phần tử của mảng số nguyên
+
+        In ra tất cả các phần tử của mảng
+  
+  o Input mẫu:
+  
+        5
+        1 2 3 4 5
+
+  o Output mẫu:
+  
+        Nhap kich thuoc mang: 5
+        Nhap mang: 1 2 3 4 5
+        Mang: 1 2 3 4 5
+
 **2.Tính tổng mảng**
 ```
 o	Yêu cầu: Nhập mảng số nguyên, tính tổng tất cả các phần tử.
