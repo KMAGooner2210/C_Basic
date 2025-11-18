@@ -27,14 +27,28 @@
         Nhap mang: 1 2 3 4 5
         Mang: 1 2 3 4 5
 
-**2.Tính tổng mảng**
-```
-o	Yêu cầu: Nhập mảng số nguyên, tính tổng tất cả các phần tử.
-o	Output mẫu: 
-Nhap kich thuoc mang: 4
-Nhap mang: 1 2 3 4
-Tong mang: 10
-```
+* **Bài 2: Tính tổng mảng**
+
+  o Yêu cầu:
+  
+        Nhập kích thước mảng số nguyên từ bàn phím
+     
+        Cấp phát động bộ nhớ cho mảng
+
+        Nhập các phần tử của mảng từ bàn phím
+        
+        Hiển thị mảng vừa nhập
+        
+        Tính và in ra tổng của tất cả các phần tử trong mảng
+  
+  o Output mẫu:
+  
+        Nhap kich thuoc mang: 4
+        Nhap mang: 1 2 3 4
+        Mang: 1 2 3 4 
+        Tong mang: 10
+
+
 **3.Tính trung bình mảng**
 ``` 
 o	Yêu cầu: Nhập mảng số nguyên, tính trung bình cộng các phần tử.
