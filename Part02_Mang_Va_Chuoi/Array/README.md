@@ -73,23 +73,27 @@ o	Output mẫu:
         Nhap mang: 1 2 3 4 5
         Mang dao nguoc: 5 4 3 2 1
 
-**5.Tìm số lớn nhất/nhỏ nhất**
-```
+**Bài 5.Tìm số lớn nhất/nhỏ nhất**
+
 o	Yêu cầu: Nhập mảng số nguyên, tìm và in giá trị lớn nhất và nhỏ nhất.
+
 o	Output mẫu: 
-Nhap kich thuoc mang: 5
-Nhap mang: 3 1 4 1 5
-So lon nhat: 5
-So nho nhat: 1
-```
-**6.Sắp xếp mảng**
-``` 
+
+        Nhap kich thuoc mang: 5
+        Nhap mang: 3 1 4 1 5
+        So lon nhat: 5
+        So nho nhat: 1
+
+**Bài 6.Sắp xếp mảng**
+
 o	Yêu cầu: Nhập mảng số nguyên, sắp xếp theo thứ tự tăng dần (sử dụng bubble sort hoặc selection sort).
+
 o	Output mẫu: 
-Nhap kich thuoc mang: 5
-Nhap mang: 5 2 8 1 9
-Mang sau khi sap xep: 1 2 5 8 9
-```
+
+        Nhap kich thuoc mang: 5
+        Nhap mang: 5 2 8 1 9
+        Mang sau khi sap xep: 1 2 5 8 9
+
 
 **7.Xóa phần tử**
 ``` 
