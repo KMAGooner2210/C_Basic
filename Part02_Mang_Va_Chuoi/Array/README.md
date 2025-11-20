@@ -49,22 +49,30 @@
         Tong mang: 10
 
 
-**3.Tính trung bình mảng**
-``` 
-o	Yêu cầu: Nhập mảng số nguyên, tính trung bình cộng các phần tử.
+* **Bài 3.Tính trung bình mảng**
+
+o	Yêu cầu: 
+
+        Nhập mảng số nguyên, tính trung bình cộng các phần tử.
+      
+o Output mẫu: 
+
+        Nhap kich thuoc mang: 4
+        Nhap mang: 1 2 3 4
+        Trung binh mang: 2.50
+
+* **Bài 4.Đảo ngược mảng**
+
+o	Yêu cầu: 
+
+        Nhập mảng số nguyên, in mảng theo thứ tự ngược lại.
+        
 o	Output mẫu: 
-Nhap kich thuoc mang: 4
-Nhap mang: 1 2 3 4
-Trung binh mang: 2.50
-```
-**4.Đảo ngược mảng**
-``` 
-o	Yêu cầu: Nhập mảng số nguyên, in mảng theo thứ tự ngược lại.
-o	Output mẫu: 
-Nhap kich thuoc mang: 5
-Nhap mang: 1 2 3 4 5
-Mang dao nguoc: 5 4 3 2 1
-```
+
+        Nhap kich thuoc mang: 5
+        Nhap mang: 1 2 3 4 5
+        Mang dao nguoc: 5 4 3 2 1
+
 **5.Tìm số lớn nhất/nhỏ nhất**
 ```
 o	Yêu cầu: Nhập mảng số nguyên, tìm và in giá trị lớn nhất và nhỏ nhất.
