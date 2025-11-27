@@ -86,13 +86,26 @@ o	Output mẫu:
 
 **Bài 6.Sắp xếp mảng**
 
-o	Yêu cầu: Nhập mảng số nguyên, sắp xếp theo thứ tự tăng dần (sử dụng bubble sort hoặc selection sort).
+o	Yêu cầu: Viết chương trình nhập mảng số nguyên với kích thước n nhập từ bàn phím. Thực hiện sắp xếp mảng theo thứ tự tăng dần và giảm dần bằng cách sử dụng hàm qsort trong thư viện <stdlib.h>. In mảng ban đầu và kết quả sau khi sắp xếp ra màn hình.
 
 o	Output mẫu: 
 
-        Nhap kich thuoc mang: 5
-        Nhap mang: 5 2 8 1 9
-        Mang sau khi sap xep: 1 2 5 8 9
+      Nhap so luong phan tu: 5
+      Nhap 5 so nguyen:
+      arr[0]: 5
+      arr[1]: 2
+      arr[2]: 8
+      arr[3]: 1
+      arr[4]: 9
+      
+      --- Mang ban dau ---
+      5 2 8 1 9 
+      
+      --- Sap xep tang dan ---
+      1 2 5 8 9 
+      
+      --- Sap xep giam dan ---
+      9 8 5 2 1
 
 
 **7.Xóa phần tử**
