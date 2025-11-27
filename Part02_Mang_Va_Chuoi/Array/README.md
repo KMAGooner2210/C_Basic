@@ -108,25 +108,29 @@ o	Output mẫu:
       9 8 5 2 1
 
 
-**7.Xóa phần tử**
-``` 
+**Bài 7. Xóa phần tử**
+
 o	Yêu cầu: Nhập mảng số nguyên và vị trí cần xóa, xóa phần tử tại vị trí đó và in mảng mới.
+
 o	Output mẫu: 
-Nhap kich thuoc mang: 5
-Nhap mang: 1 2 3 4 5
-Nhap vi tri can xoa: 2
-Mang sau khi xoa: 1 2 4 5
-```
-**8.Chèn phần tử**
-```
+
+    Nhap kich thuoc mang: 5
+    Nhap mang: 1 2 3 4 5
+    Nhap vi tri can xoa: 2
+    Mang sau khi xoa: 1 2 4 5
+
+**Bài 8.Chèn phần tử**
+
 o	Yêu cầu: Nhập mảng số nguyên, vị trí và giá trị cần chèn, chèn phần tử vào vị trí đó và in mảng mới.
+
 o	Output mẫu: 
-Nhap kich thuoc mang: 5
-Nhap mang: 1 2 3 4 5
-Nhap vi tri chen: 2
-Nhap gia tri chen: 10
-Mang sau khi chen: 1 2 10 3 4 5
-```
+
+  Nhap kich thuoc mang: 5
+  Nhap mang: 1 2 3 4 5
+  Nhap vi tri chen: 2
+  Nhap gia tri chen: 10
+  Mang sau khi chen: 1 2 10 3 4 5
+
 **9.Tìm kiếm phần tử**
 ``` 
 o	Yêu cầu: Nhập mảng số nguyên và giá trị cần tìm, trả về chỉ số đầu tiên của giá trị hoặc -1 nếu không tìm thấy.
