@@ -1,3 +1,10 @@
+// **5.Sao chép chuỗi**
+// ``` 
+// o	Yêu cầu: Nhập chuỗi, sao chép sang chuỗi khác bằng strcpy và in kết quả.
+// o	Output mẫu: 
+// Nhap chuoi: hello
+// Chuoi sao chep: hello
+
 #include<stdio.h>
 #include<string.h>
 int main(){
