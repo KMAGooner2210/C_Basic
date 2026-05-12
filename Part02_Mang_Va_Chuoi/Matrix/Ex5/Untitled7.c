@@ -1,3 +1,19 @@
+// **5.	Hoán đổi hàng/cột** 
+// ```
+// o	Yêu cầu: Nhập ma trận và hai chỉ số hàng hoặc cột, hoán đổi chúng.
+// o	Output mẫu: 
+// Nhap ma tran 2x3:
+// matrix[0][0] = 1
+// matrix[0][1] = 2
+// matrix[0][2] = 3
+// matrix[1][0] = 4
+// matrix[1][1] = 5
+// matrix[1][2] = 6
+// Nhap hai hang can hoan doi: 0 1
+// Ma tran sau khi hoan doi:
+// 4 5 6
+// 1 2 3
+// ```
 #include<stdio.h>
 int main(){
 	int rows, cols;
