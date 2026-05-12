@@ -1,3 +1,15 @@
+// * **Bài 3.Tính trung bình mảng**
+
+// o	Yêu cầu: 
+
+//         Nhập mảng số nguyên, tính trung bình cộng các phần tử.
+      
+// o Output mẫu: 
+
+//         Nhap kich thuoc mang: 4
+//         Nhap mang: 1 2 3 4
+//         Trung binh mang: 2.50
+
 #include<stdio.h>
 #include<stdlib.h>
 
