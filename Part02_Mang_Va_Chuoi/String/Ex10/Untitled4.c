@@ -1,3 +1,10 @@
+// **10.Kiểm tra chuỗi đối xứng**
+// ``` 
+// o	Yêu cầu: Nhập chuỗi, kiểm tra xem chuỗi có phải là palindrome (đọc xuôi ngược giống nhau).
+// o	Output mẫu: 
+// Nhap chuoi: radar
+// Chuoi la palindrome.
+
 #include<stdio.h>
 #include<string.h>
 
