@@ -1,3 +1,17 @@
+// **2.Tính tổng ma trận** 
+// ```
+// o	Yêu cầu: Nhập ma trận, tính tổng tất cả các phần tử.
+// o	Output mẫu: 
+// Nhap ma tran 2x3:
+// matrix[0][0] = 1
+// matrix[0][1] = 2
+// matrix[0][2] = 3
+// matrix[1][0] = 4
+// matrix[1][1] = 5
+// matrix[1][2] = 6
+// Tong ma tran: 21
+// ```
+
 #include<stdio.h>
 int main(){
 	int rows, cols, sum = 0;
