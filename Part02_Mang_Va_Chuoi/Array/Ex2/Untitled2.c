@@ -1,3 +1,24 @@
+// * **Bài 2: Tính tổng mảng**
+
+//   o Yêu cầu:
+  
+//         Nhập kích thước mảng số nguyên từ bàn phím
+     
+//         Cấp phát động bộ nhớ cho mảng
+
+//         Nhập các phần tử của mảng từ bàn phím
+        
+//         Hiển thị mảng vừa nhập
+        
+//         Tính và in ra tổng của tất cả các phần tử trong mảng
+  
+//   o Output mẫu:
+  
+//         Nhap kich thuoc mang: 4
+//         Nhap mang: 1 2 3 4
+//         Mang: 1 2 3 4 
+//         Tong mang: 10
+
 #include<stdio.h>
 #include<stdlib.h>
 
