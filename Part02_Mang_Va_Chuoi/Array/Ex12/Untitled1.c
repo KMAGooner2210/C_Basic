@@ -1,3 +1,13 @@
+// **Bài 12.Xóa phần tử trùng lặp**
+
+// o	Yêu cầu: Nhập mảng số nguyên, xóa các phần tử trùng lặp, chỉ giữ lại bản duy nhất, và in mảng mới.
+
+// o	Output mẫu: 
+
+//     Nhap kich thuoc mang: 6
+//     Nhap mang: 1 2 2 3 3 4
+//     Mang sau khi xoa trung lap: 1 2 3 4
+
 #include<stdio.h>
 #define MAX_SIZE 100
 int main(){
