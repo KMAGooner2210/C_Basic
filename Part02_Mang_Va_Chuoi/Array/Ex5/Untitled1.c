@@ -1,3 +1,14 @@
+// **Bài 5.Tìm số lớn nhất/nhỏ nhất**
+
+// o	Yêu cầu: Nhập mảng số nguyên, tìm và in giá trị lớn nhất và nhỏ nhất.
+
+// o	Output mẫu: 
+
+//         Nhap kich thuoc mang: 5
+//         Nhap mang: 3 1 4 1 5
+//         So lon nhat: 5
+//         So nho nhat: 1
+
 #include<stdio.h>
 #include<limits.h>
 #include<stdlib.h>
