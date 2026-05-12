@@ -1,3 +1,11 @@
+// **7.Chuyển đổi chữ hoa/thường** 
+// ```
+// o	Yêu cầu: Nhập chuỗi, chuyển tất cả ký tự thành chữ hoa hoặc chữ thường.
+// o	Output mẫu: 
+// Nhap chuoi: HeLLo
+// Chuoi chu hoa: HELLO
+// Chuoi chu thuong: hello
+
 #include<stdio.h>
 #include<string.h>
 
