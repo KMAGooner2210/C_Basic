@@ -1,3 +1,14 @@
+// **Bài 10.Đếm số lần xuất hiện**
+
+// o	Yêu cầu: Nhập mảng số nguyên và giá trị cần đếm, in ra số lần xuất hiện của giá trị đó.
+
+// o	Output mẫu: 
+
+//     Nhap kich thuoc mang: 5
+//     Nhap mang: 1 2 3 2 2
+//     Nhap gia tri can dem: 2
+//     So lan xuat hien: 3
+
 #include<stdio.h>
 #include<stdlib.h>
 
