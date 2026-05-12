@@ -1,3 +1,20 @@
+// **3.	Tính tổng hàng/cột** 
+// ```
+// o	Yêu cầu: Nhập ma trận, tính tổng từng hàng và từng cột.
+// o	Output mẫu: 
+// Nhap ma tran 2x3:
+// matrix[0][0] = 1
+// matrix[0][1] = 2
+// matrix[0][2] = 3
+// matrix[1][0] = 4
+// matrix[1][1] = 5
+// matrix[1][2] = 6
+// Tong hang 0: 6
+// Tong hang 1: 15
+// Tong cot 0: 5
+// Tong cot 1: 7
+// Tong cot 2: 9
+// ```
 #include<stdio.h>
 int main(){
 	int matrix[100][100];
