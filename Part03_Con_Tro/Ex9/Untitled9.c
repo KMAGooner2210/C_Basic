@@ -1,3 +1,10 @@
+//**Bài 9: Sử dụng con trỏ đến con trỏ** 
+//•	Yêu cầu: Khai báo một con trỏ đến con trỏ (int**), in giá trị của biến gốc và địa chỉ của con trỏ cấp một.
+//•	Hướng dẫn: 
+//o	Chạy và kiểm tra đầu ra.
+//o	Thử thay đổi giá trị x qua **pptr (ví dụ: **pptr = 100;) và in lại x.
+
+
 #include<stdio.h>
 int main(){
 	int x = 10;
