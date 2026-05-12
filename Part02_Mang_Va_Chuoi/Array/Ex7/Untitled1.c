@@ -1,3 +1,14 @@
+// **Bài 7. Xóa phần tử**
+
+// o	Yêu cầu: Nhập mảng số nguyên và vị trí cần xóa, xóa phần tử tại vị trí đó và in mảng mới.
+
+// o	Output mẫu: 
+
+//     Nhap kich thuoc mang: 5
+//     Nhap mang: 1 2 3 4 5
+//     Nhap vi tri can xoa: 2
+//     Mang sau khi xoa: 1 2 4 5
+
 #include <stdio.h>
 #include <stdlib.h>
 
