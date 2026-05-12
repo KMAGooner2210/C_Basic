@@ -1,3 +1,11 @@
+// **4.So sánh chuỗi** 
+// ``` 
+// o	Yêu cầu: Nhập hai chuỗi, kiểm tra xem chúng có giống nhau không bằng strcmp.
+// o	Output mẫu: 
+// Nhap chuoi thu nhat: hello
+// Nhap chuoi thu hai: hello
+// Hai chuoi giong nhau.
+
 #include<stdio.h>
 #include <string.h>
 int main(){
