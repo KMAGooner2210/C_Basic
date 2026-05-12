@@ -1,3 +1,13 @@
+// **13.Tách chuỗi** 
+// ```  
+// o	Yêu cầu: Nhập chuỗi, tách thành các từ dựa trên dấu phân cách (ví dụ: khoảng trắng).
+// o	Output mẫu: 
+// Nhap chuoi: hello world everyone
+// Cac tu: 
+// 1. hello
+// 2. world
+// 3. everyone
+
 #include<stdio.h>
 #include<string.h>
 
