@@ -1,3 +1,11 @@
+// **9.Xóa ký tự** 
+// ```
+// o	Yêu cầu: Nhập chuỗi và ký tự, xóa tất cả các ký tự đó khỏi chuỗi.
+// o	Output mẫu: 
+// Nhap chuoi: banana
+// Nhap ky tu: a
+// Chuoi sau khi xoa: bnn
+	
 #include<stdio.h>
 #include<string.h>
 
