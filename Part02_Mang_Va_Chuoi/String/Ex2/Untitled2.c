@@ -1,3 +1,9 @@
+// **2.Tính độ dài chuỗi** 
+// ```
+// o	Yêu cầu: Nhập chuỗi, tính độ dài bằng strlen hoặc thủ công.
+// o	Output mẫu: 
+// Nhap chuoi: hello
+// Do dai chuoi: 5
 #include<stdio.h>
 #include <string.h>
 int main(){
