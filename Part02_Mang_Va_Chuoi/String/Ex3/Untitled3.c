@@ -1,3 +1,10 @@
+// **3.Nối chuỗi** 
+// ``` 
+// o	Yêu cầu: Nhập hai chuỗi, nối chúng bằng strcat và in kết quả.
+// o	Output mẫu: 
+// Nhap chuoi thu nhat: hello
+// Nhap chuoi thu hai: world
+// Chuoi sau khi noi: helloworld
 #include<stdio.h>
 #include <string.h>
 int main(){
