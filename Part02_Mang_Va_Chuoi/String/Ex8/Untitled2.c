@@ -1,3 +1,11 @@
+// **8.Đếm ký tự**
+// ```
+// o	Yêu cầu: Nhập chuỗi và ký tự, đếm số lần xuất hiện của ký tự đó.
+// o	Output mẫu: 
+// Nhap chuoi: banana
+// Nhap ky tu: a
+// So lan xuat hien: 3
+
 #include<stdio.h>
 #include<string.h>
 
