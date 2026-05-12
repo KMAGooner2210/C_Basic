@@ -1,3 +1,15 @@
+// * **Bài 4.Đảo ngược mảng**
+
+// o	Yêu cầu: 
+
+//         Nhập mảng số nguyên, in mảng theo thứ tự ngược lại.
+        
+// o	Output mẫu: 
+
+//         Nhap kich thuoc mang: 5
+//         Nhap mang: 1 2 3 4 5
+//         Mang dao nguoc: 5 4 3 2 1
+
 #include<stdio.h>
 #include<stdlib.h>
 
