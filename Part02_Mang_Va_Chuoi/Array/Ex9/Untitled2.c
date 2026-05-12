@@ -1,3 +1,14 @@
+// **Bài 9.Tìm kiếm phần tử**
+
+// o	Yêu cầu: Nhập mảng số nguyên và giá trị cần tìm, trả về chỉ số đầu tiên của giá trị hoặc -1 nếu không tìm thấy.
+
+// o	Output mẫu: 
+
+//     Nhap kich thuoc mang: 5
+//     Nhap mang: 1 2 3 2 5
+//     Nhap gia tri can tim: 2
+//     Vi tri: 1
+
 #include <stdio.h>
 #include <stdlib.h>
 
