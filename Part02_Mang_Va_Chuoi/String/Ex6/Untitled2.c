@@ -1,3 +1,10 @@
+// **6.Đảo ngược chuỗi**
+// ``` 
+// o	Yêu cầu: Nhập chuỗi, đảo ngược thứ tự ký tự (ví dụ: "hello" → "olleh").
+// o	Output mẫu: 
+// Nhap chuoi: hello
+// Chuoi dao nguoc: olleh
+
 #include<stdio.h>
 #include<string.h>
 int main(){
