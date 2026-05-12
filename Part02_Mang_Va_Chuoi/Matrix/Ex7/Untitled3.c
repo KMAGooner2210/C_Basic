@@ -1,3 +1,25 @@
+// **7.	Nhân ma trận** 
+// ```
+// o	Yêu cầu: Nhập hai ma trận, tính tích của chúng theo quy tắc toán học và in kết quả.
+// o	Output mẫu: 
+// Nhap ma tran A 2x3:
+// matrixA[0][0] = 1
+// matrixA[0][1] = 2
+// matrixA[0][2] = 3
+// matrixA[1][0] = 4
+// matrixA[1][1] = 5
+// matrixA[1][2] = 6
+// Nhap ma tran B 3x2:
+// matrixB[0][0] = 7
+// matrixB[0][1] = 8
+// matrixB[1][0] = 9
+// matrixB[1][1] = 10
+// matrixB[2][0] = 11
+// matrixB[2][1] = 12
+// Ma tran tich:
+// 58 64
+// 139 154
+// ```
 #include<stdio.h>
 
 int main(){
